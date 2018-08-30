@@ -55,11 +55,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\MvGame.cs" />
     <Compile Include="Core\Params.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Graph\Analyse.cs" />
     <Compile Include="Core\MvFolder.cs" />
+    <Compile Include="Graph\TempoChangePathsJeux.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graph\TempoChangePathsJeux.Designer.cs">
+      <DependentUpon>TempoChangePathsJeux.cs</DependentUpon>
+    </Compile>
     <Compile Include="Languages\Lang.fr.Designer.cs">
       <DependentUpon>Lang.fr.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -96,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Graph\S_Platform.fr.resx">
       <DependentUpon>S_Platform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graph\TempoChangePathsJeux.resx">
+      <DependentUpon>TempoChangePathsJeux.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>

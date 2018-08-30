@@ -62,7 +62,7 @@ namespace SappPasRoot.Graph
         /// <summary>
         /// Make list of folders - Ne pas utiliser hors plugin
         /// </summary>
-        public void Initialization()
+        internal void Initialization()
         {
             PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
             boxLog.Text = "Initialisation";

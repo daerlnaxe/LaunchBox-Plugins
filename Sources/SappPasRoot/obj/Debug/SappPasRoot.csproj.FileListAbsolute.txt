@@ -41,7 +41,6 @@ E:\Programmation\CSharp\PluginsLaunchBox\SappPasRoot\bin\Debug\SappPasRoot\DxPat
 E:\Programmation\CSharp\PluginsLaunchBox\SappPasRoot\bin\Debug\SappPasRoot\DxPaths.pdb
 E:\Programmation\CSharp\PluginsLaunchBox\SappPasRoot\obj\Debug\SappPasRoot.Graph.Change_Path.fr.resources
 E:\Programmation\CSharp\PluginsLaunchBox\SappPasRoot\obj\Debug\SappPasRoot.Graph.S_Platform.fr.resources
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.csprojAssemblyReference.cache
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.Graph.Change_Path.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.Languages.Lang.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.Graph.S_Platform.resources
@@ -52,3 +51,15 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPas
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.csproj.CoreCompileInputs.cache
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.pdb
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\SappPasRoot.dll.config
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\SappPasRoot.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\SappPasRoot.pdb
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\fr\SappPasRoot.resources.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\CCLaunchBox.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\DxPaths.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\Unbroken.LaunchBox.Plugins.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\CCLaunchBox.pdb
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\DxPaths.pdb
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.Graph.TempoChangePathsJeux.resources
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\fr\SappPasRoot.resources.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.csproj.CopyComplete

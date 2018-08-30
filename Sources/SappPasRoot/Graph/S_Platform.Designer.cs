@@ -33,6 +33,7 @@
             this.lvPlatforms = new System.Windows.Forms.ListView();
             this.colPlatformName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -62,10 +63,18 @@
             // 
             resources.ApplyResources(this.colPath, "colPath");
             // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // S_Platform
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lvPlatforms);
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
@@ -82,5 +91,6 @@
         private System.Windows.Forms.ListView lvPlatforms;
         private System.Windows.Forms.ColumnHeader colPlatformName;
         private System.Windows.Forms.ColumnHeader colPath;
+        private System.Windows.Forms.Button button1;
     }
 }

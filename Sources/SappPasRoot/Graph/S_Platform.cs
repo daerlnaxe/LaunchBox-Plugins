@@ -61,5 +61,12 @@ namespace SappPasRoot.Graph
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TempoChangePathsJeux tcpj = new TempoChangePathsJeux();
+            tcpj.Initialization();
+            tcpj.ShowDialog();
+        }
     }
 }
