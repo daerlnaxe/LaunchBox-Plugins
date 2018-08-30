@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,6 +18,7 @@ namespace SappPasRoot.Graph
         public S_Platform()
         {
             InitializeComponent();
+            this.Text += $" {Assembly.GetAssembly(typeof(Main)).GetName().Version.ToString()}";
             ListPlatform();
             PluginHelper.LaunchBoxMainForm.FormClosing += new FormClosingEventHandler(Fermeture);
         }

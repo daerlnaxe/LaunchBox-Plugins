@@ -80,13 +80,15 @@
             this.tlpMain.Controls.Add(this.boxLog, 1, 1);
             this.tlpMain.Controls.Add(this.panelTop, 1, 0);
             this.tlpMain.Name = "tlpMain";
+            this.toolTip1.SetToolTip(this.tlpMain, resources.GetString("tlpMain.ToolTip"));
             // 
             // boxLog
             // 
-            this.boxLog.BackColor = System.Drawing.SystemColors.InfoText;
             resources.ApplyResources(this.boxLog, "boxLog");
+            this.boxLog.BackColor = System.Drawing.SystemColors.InfoText;
             this.boxLog.ForeColor = System.Drawing.Color.Lime;
             this.boxLog.Name = "boxLog";
+            this.toolTip1.SetToolTip(this.boxLog, resources.GetString("boxLog.ToolTip"));
             // 
             // panelTop
             // 
@@ -98,6 +100,7 @@
             this.panelTop.Controls.Add(this.lbMore);
             this.panelTop.Controls.Add(this.tlpInfos);
             this.panelTop.Name = "panelTop";
+            this.toolTip1.SetToolTip(this.panelTop, resources.GetString("panelTop.ToolTip"));
             this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
             // 
             // tlpFolders
@@ -122,16 +125,19 @@
             // 
             resources.ApplyResources(this.titCCodes, "titCCodes");
             this.titCCodes.Name = "titCCodes";
+            this.toolTip1.SetToolTip(this.titCCodes, resources.GetString("titCCodes.ToolTip"));
             // 
             // titGames
             // 
             resources.ApplyResources(this.titGames, "titGames");
             this.titGames.Name = "titGames";
+            this.toolTip1.SetToolTip(this.titGames, resources.GetString("titGames.ToolTip"));
             // 
             // tbGames
             // 
             resources.ApplyResources(this.tbGames, "tbGames");
             this.tbGames.Name = "tbGames";
+            this.toolTip1.SetToolTip(this.tbGames, resources.GetString("tbGames.ToolTip"));
             this.tbGames.TextChanged += new System.EventHandler(this.MenuChanged);
             this.tbGames.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FolderNameVerif);
             // 
@@ -139,11 +145,13 @@
             // 
             resources.ApplyResources(this.titManuals, "titManuals");
             this.titManuals.Name = "titManuals";
+            this.toolTip1.SetToolTip(this.titManuals, resources.GetString("titManuals.ToolTip"));
             // 
             // tbManual
             // 
             resources.ApplyResources(this.tbManual, "tbManual");
             this.tbManual.Name = "tbManual";
+            this.toolTip1.SetToolTip(this.tbManual, resources.GetString("tbManual.ToolTip"));
             this.tbManual.TextChanged += new System.EventHandler(this.MenuChanged);
             this.tbManual.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FolderNameVerif);
             // 
@@ -151,11 +159,13 @@
             // 
             resources.ApplyResources(this.titImages, "titImages");
             this.titImages.Name = "titImages";
+            this.toolTip1.SetToolTip(this.titImages, resources.GetString("titImages.ToolTip"));
             // 
             // tbImages
             // 
             resources.ApplyResources(this.tbImages, "tbImages");
             this.tbImages.Name = "tbImages";
+            this.toolTip1.SetToolTip(this.tbImages, resources.GetString("tbImages.ToolTip"));
             this.tbImages.TextChanged += new System.EventHandler(this.MenuChanged);
             this.tbImages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FolderNameVerif);
             // 
@@ -163,6 +173,7 @@
             // 
             resources.ApplyResources(this.tbVideo, "tbVideo");
             this.tbVideo.Name = "tbVideo";
+            this.toolTip1.SetToolTip(this.tbVideo, resources.GetString("tbVideo.ToolTip"));
             this.tbVideo.TextChanged += new System.EventHandler(this.MenuChanged);
             this.tbVideo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FolderNameVerif);
             // 
@@ -170,16 +181,19 @@
             // 
             resources.ApplyResources(this.titVideos, "titVideos");
             this.titVideos.Name = "titVideos";
+            this.toolTip1.SetToolTip(this.titVideos, resources.GetString("titVideos.ToolTip"));
             // 
             // titMusic
             // 
             resources.ApplyResources(this.titMusic, "titMusic");
             this.titMusic.Name = "titMusic";
+            this.toolTip1.SetToolTip(this.titMusic, resources.GetString("titMusic.ToolTip"));
             // 
             // tbMusic
             // 
             resources.ApplyResources(this.tbMusic, "tbMusic");
             this.tbMusic.Name = "tbMusic";
+            this.toolTip1.SetToolTip(this.tbMusic, resources.GetString("tbMusic.ToolTip"));
             this.tbMusic.TextChanged += new System.EventHandler(this.MenuChanged);
             this.tbMusic.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FolderNameVerif);
             // 
@@ -188,11 +202,13 @@
             resources.ApplyResources(this.tbCCodes, "tbCCodes");
             this.tbCCodes.Name = "tbCCodes";
             this.tbCCodes.ReadOnly = true;
+            this.toolTip1.SetToolTip(this.tbCCodes, resources.GetString("tbCCodes.ToolTip"));
             // 
             // btResetFactory
             // 
             resources.ApplyResources(this.btResetFactory, "btResetFactory");
             this.btResetFactory.Name = "btResetFactory";
+            this.toolTip1.SetToolTip(this.btResetFactory, resources.GetString("btResetFactory.ToolTip"));
             this.btResetFactory.UseVisualStyleBackColor = true;
             this.btResetFactory.Click += new System.EventHandler(this.btResetFactory_Click);
             // 
@@ -202,6 +218,7 @@
             this.flpPaths.BackColor = System.Drawing.Color.DarkGreen;
             this.flpPaths.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flpPaths.Name = "flpPaths";
+            this.toolTip1.SetToolTip(this.flpPaths, resources.GetString("flpPaths.ToolTip"));
             // 
             // tableLayoutPanel1
             // 
@@ -210,16 +227,19 @@
             this.tableLayoutPanel1.Controls.Add(this.tbMainPath, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 2, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.toolTip1.SetToolTip(this.tableLayoutPanel1, resources.GetString("tableLayoutPanel1.ToolTip"));
             // 
             // titChooseFolder
             // 
             resources.ApplyResources(this.titChooseFolder, "titChooseFolder");
             this.titChooseFolder.Name = "titChooseFolder";
+            this.toolTip1.SetToolTip(this.titChooseFolder, resources.GetString("titChooseFolder.ToolTip"));
             // 
             // tbMainPath
             // 
             resources.ApplyResources(this.tbMainPath, "tbMainPath");
             this.tbMainPath.Name = "tbMainPath";
+            this.toolTip1.SetToolTip(this.tbMainPath, resources.GetString("tbMainPath.ToolTip"));
             this.tbMainPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbMainPath_KeyDown);
             this.tbMainPath.Validating += new System.ComponentModel.CancelEventHandler(this.txbMainPath_Validating);
             // 
@@ -232,11 +252,13 @@
             this.flowLayoutPanel1.Controls.Add(this.button1);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.tableLayoutPanel1.SetRowSpan(this.flowLayoutPanel1, 2);
+            this.toolTip1.SetToolTip(this.flowLayoutPanel1, resources.GetString("flowLayoutPanel1.ToolTip"));
             // 
             // btBrowse
             // 
             resources.ApplyResources(this.btBrowse, "btBrowse");
             this.btBrowse.Name = "btBrowse";
+            this.toolTip1.SetToolTip(this.btBrowse, resources.GetString("btBrowse.ToolTip"));
             this.btBrowse.UseVisualStyleBackColor = true;
             this.btBrowse.Click += new System.EventHandler(this.btBrowse_Click);
             // 
@@ -260,6 +282,7 @@
             // 
             resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
+            this.toolTip1.SetToolTip(this.button1, resources.GetString("button1.ToolTip"));
             this.button1.UseVisualStyleBackColor = true;
             // 
             // lbMore
@@ -280,41 +303,48 @@
             this.tlpInfos.Controls.Add(this.titCRPath, 0, 2);
             this.tlpInfos.Controls.Add(this.tboxROldPath, 1, 2);
             this.tlpInfos.Name = "tlpInfos";
+            this.toolTip1.SetToolTip(this.tlpInfos, resources.GetString("tlpInfos.ToolTip"));
             // 
             // labPName
             // 
             resources.ApplyResources(this.labPName, "labPName");
             this.labPName.Name = "labPName";
+            this.toolTip1.SetToolTip(this.labPName, resources.GetString("labPName.ToolTip"));
             // 
             // titPlatform
             // 
             resources.ApplyResources(this.titPlatform, "titPlatform");
             this.titPlatform.Name = "titPlatform";
+            this.toolTip1.SetToolTip(this.titPlatform, resources.GetString("titPlatform.ToolTip"));
             // 
             // titCPath
             // 
             resources.ApplyResources(this.titCPath, "titCPath");
             this.titCPath.Name = "titCPath";
+            this.toolTip1.SetToolTip(this.titCPath, resources.GetString("titCPath.ToolTip"));
             // 
             // tboxHOldPath
             // 
-            this.tboxHOldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.tboxHOldPath, "tboxHOldPath");
+            this.tboxHOldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tboxHOldPath.Name = "tboxHOldPath";
             this.tboxHOldPath.ReadOnly = true;
+            this.toolTip1.SetToolTip(this.tboxHOldPath, resources.GetString("tboxHOldPath.ToolTip"));
             this.tboxHOldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
             // 
             // titCRPath
             // 
             resources.ApplyResources(this.titCRPath, "titCRPath");
             this.titCRPath.Name = "titCRPath";
+            this.toolTip1.SetToolTip(this.titCRPath, resources.GetString("titCRPath.ToolTip"));
             // 
             // tboxROldPath
             // 
-            this.tboxROldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.tboxROldPath, "tboxROldPath");
+            this.tboxROldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tboxROldPath.Name = "tboxROldPath";
             this.tboxROldPath.ReadOnly = true;
+            this.toolTip1.SetToolTip(this.tboxROldPath, resources.GetString("tboxROldPath.ToolTip"));
             this.tboxROldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
             // 
             // toolTip1
@@ -330,6 +360,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MinimizeBox = false;
             this.Name = "Change_Path";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.Change_Path_Load);
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();

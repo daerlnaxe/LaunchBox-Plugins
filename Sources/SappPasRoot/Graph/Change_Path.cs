@@ -55,7 +55,7 @@ namespace SappPasRoot.Graph
         public Change_Path()
         {
             InitializeComponent();
-
+            
         }
 
         #region Initialisations
@@ -90,7 +90,8 @@ namespace SappPasRoot.Graph
         /// private à la compil
         /// </summary>
         public void DebugTest()
-        {
+        {          
+
             DebugMode = true;
             boxLog.Text = "Debug Mode";
 
@@ -454,7 +455,7 @@ namespace SappPasRoot.Graph
                         break;
 
                     default:
-                        hardPath = Path.Combine(_NewRoot, tbImages.Text, Platform);
+                        hardPath = Path.Combine(_NewRoot, tbImages.Text, Platform, amvF.MediaType);
                         break;
 
                 }

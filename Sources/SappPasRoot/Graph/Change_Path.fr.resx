@@ -118,55 +118,61 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="tlpChoose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1031, 29</value>
-  </data>
-  <data name="labPName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>153, 0</value>
-  </data>
-  <data name="titPlatform.Text" xml:space="preserve">
-    <value>Plateforme:</value>
-  </data>
-  <data name="titCPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 16</value>
-  </data>
-  <data name="titCPath.Text" xml:space="preserve">
-    <value>Dossier actuel:</value>
-  </data>
-  <data name="tboxHOldPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 23</value>
-  </data>
-  <data name="titCRPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 16</value>
-  </data>
-  <data name="titCRPath.Text" xml:space="preserve">
-    <value>Dossier relatif actuel:</value>
-  </data>
-  <data name="tboxROldPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 43</value>
-  </data>
-  <data name="btBrowse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>426, 3</value>
-  </data>
-  <data name="btBrowse.Text" xml:space="preserve">
-    <value>Naviguer ...</value>
-  </data>
-  <data name="txbMainPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>220, 3</value>
-  </data>
   <data name="titChooseFolder.Size" type="System.Drawing.Size, System.Drawing">
     <value>211, 25</value>
   </data>
   <data name="titChooseFolder.Text" xml:space="preserve">
     <value>Choisir un nouveau dossier:</value>
   </data>
-  <data name="btApply.Location" type="System.Drawing.Point, System.Drawing">
-    <value>507, 3</value>
+  <data name="tbMainPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 8</value>
+  </data>
+  <data name="tbMainPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 20</value>
+  </data>
+  <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>433, 3</value>
+  </data>
+  <data name="btBrowse.Text" xml:space="preserve">
+    <value>Naviguer ...</value>
   </data>
   <data name="btApply.Text" xml:space="preserve">
     <value>Appliquer...</value>
   </data>
+  <data name="labPName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>153, 0</value>
+  </data>
+  <data name="titPlatform.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 19</value>
+  </data>
+  <data name="titPlatform.Text" xml:space="preserve">
+    <value>Plateforme:</value>
+  </data>
+  <data name="titCPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 19</value>
+  </data>
+  <data name="titCPath.Text" xml:space="preserve">
+    <value>Dossier actuel:</value>
+  </data>
+  <data name="tboxHOldPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>156, 35</value>
+  </data>
+  <data name="tboxHOldPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 13</value>
+  </data>
+  <data name="titCRPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 19</value>
+  </data>
+  <data name="titCRPath.Text" xml:space="preserve">
+    <value>Dossier relatif actuel:</value>
+  </data>
+  <data name="tboxROldPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>156, 65</value>
+  </data>
+  <data name="tboxROldPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 13</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Modifier les chemins - One Path to rule them all, One path to find them; One path to bring them all ...</value>
+    <value>SappPasRoot - Modifier les chemins            One Path to rule them all, One path to find them; One path to bring them all ...</value>
   </data>
 </root>
