@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CCLaunchBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CSharp\PluginsLaunchBox\CCLaunchBox\bin\Debug\CCLaunchBox.dll</HintPath>
+    </Reference>
+    <Reference Include="DxPaths, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CSharp\DxPaths\bin\Debug\DxPaths.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -110,16 +118,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\DxPaths\DxPaths.csproj">
-      <Project>{cf0f0767-b96b-499d-9638-e39f608169ad}</Project>
-      <Name>DxPaths</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CCLaunchBox\CCLaunchBox.csproj">
-      <Project>{cf2d4af7-8a6e-453a-b59b-c3e1a7072c72}</Project>
-      <Name>CCLaunchBox</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
