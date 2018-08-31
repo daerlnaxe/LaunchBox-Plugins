@@ -19,7 +19,7 @@ using System.Text.RegularExpressions;
 
 namespace SappPasRoot.Graph
 {
-    public partial class Change_Path : Form
+    public partial class CPlatformPaths : Form
     {
         public string Platform { get; set; }
 
@@ -52,7 +52,7 @@ namespace SappPasRoot.Graph
         private bool MoreShowed = false;
         //   private Color _BColor = Color.White;
 
-        public Change_Path()
+        public CPlatformPaths()
         {
             InitializeComponent();
             

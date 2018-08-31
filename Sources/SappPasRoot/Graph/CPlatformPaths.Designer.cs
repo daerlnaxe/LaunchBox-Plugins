@@ -1,7 +1,7 @@
 ﻿namespace SappPasRoot.Graph
 
 {
-    partial class Change_Path
+    partial class CPlatformPaths
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Change_Path));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CPlatformPaths));
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.boxLog = new System.Windows.Forms.RichTextBox();
             this.panelTop = new System.Windows.Forms.Panel();

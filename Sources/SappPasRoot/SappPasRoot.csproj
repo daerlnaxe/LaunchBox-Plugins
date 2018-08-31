@@ -62,11 +62,11 @@
     </Compile>
     <Compile Include="Graph\Analyse.cs" />
     <Compile Include="Core\MvFolder.cs" />
-    <Compile Include="Graph\TempoChangePathsJeux.cs">
+    <Compile Include="Graph\CGamesPaths.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graph\TempoChangePathsJeux.Designer.cs">
-      <DependentUpon>TempoChangePathsJeux.cs</DependentUpon>
+    <Compile Include="Graph\CGamesPaths.Designer.cs">
+      <DependentUpon>CGamesPaths.cs</DependentUpon>
     </Compile>
     <Compile Include="Languages\Lang.fr.Designer.cs">
       <DependentUpon>Lang.fr.resx</DependentUpon>
@@ -74,11 +74,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Main.cs" />
-    <Compile Include="Graph\Change_Path.cs">
+    <Compile Include="Graph\CPlatformPaths.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graph\Change_Path.Designer.cs">
-      <DependentUpon>Change_Path.cs</DependentUpon>
+    <Compile Include="Graph\CPlatformPaths.Designer.cs">
+      <DependentUpon>CPlatformPaths.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -91,36 +91,36 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
-    <Compile Include="Graph\S_Platform.cs">
+    <Compile Include="Graph\List_Platform.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graph\S_Platform.Designer.cs">
-      <DependentUpon>S_Platform.cs</DependentUpon>
+    <Compile Include="Graph\List_Platform.Designer.cs">
+      <DependentUpon>List_Platform.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graph\Change_Path.fr.resx">
-      <DependentUpon>Change_Path.cs</DependentUpon>
+    <EmbeddedResource Include="Graph\CPlatformPaths.fr.resx">
+      <DependentUpon>CPlatformPaths.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Graph\S_Platform.fr.resx">
-      <DependentUpon>S_Platform.cs</DependentUpon>
+    <EmbeddedResource Include="Graph\List_Platform.fr.resx">
+      <DependentUpon>List_Platform.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Graph\TempoChangePathsJeux.resx">
-      <DependentUpon>TempoChangePathsJeux.cs</DependentUpon>
+    <EmbeddedResource Include="Graph\CGamesPaths.resx">
+      <DependentUpon>CGamesPaths.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Lang.fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Graph\Change_Path.resx">
-      <DependentUpon>Change_Path.cs</DependentUpon>
+    <EmbeddedResource Include="Graph\CPlatformPaths.resx">
+      <DependentUpon>CPlatformPaths.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Lang.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Graph\S_Platform.resx">
-      <DependentUpon>S_Platform.cs</DependentUpon>
+    <EmbeddedResource Include="Graph\List_Platform.resx">
+      <DependentUpon>List_Platform.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SappPasRoot.Graph
-
 {
     static class Analyse
     {

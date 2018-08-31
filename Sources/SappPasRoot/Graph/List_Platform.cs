@@ -47,7 +47,7 @@ namespace SappPasRoot.Graph
 
         private void lvPlatforms_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Change_Path cp = new Change_Path();
+            CPlatformPaths cp = new CPlatformPaths();
             //MessageBox.Show($"plat {lvPlatforms.SelectedItems[0].Text}");
             cp.Platform = lvPlatforms.SelectedItems[0].Text;
             cp.Initialization();
@@ -65,7 +65,7 @@ namespace SappPasRoot.Graph
 
         private void button1_Click(object sender, EventArgs e)
         {
-            TempoChangePathsJeux tcpj = new TempoChangePathsJeux();
+            CGamesPaths tcpj = new CGamesPaths();
             tcpj.Initialization();
             tcpj.ShowDialog();
         }

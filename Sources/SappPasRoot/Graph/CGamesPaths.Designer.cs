@@ -1,6 +1,6 @@
 ﻿namespace SappPasRoot.Graph
 {
-    partial class TempoChangePathsJeux
+    partial class CGamesPaths
     {
         /// <summary>
         /// Required designer variable.

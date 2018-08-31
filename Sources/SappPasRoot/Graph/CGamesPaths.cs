@@ -13,7 +13,7 @@ using Unbroken.LaunchBox.Plugins.Data;
 
 namespace SappPasRoot.Graph
 {
-    public partial class TempoChangePathsJeux : Form
+    public partial class CGamesPaths : Form
     {
         /// <summary>
         ///  Dossier de l'application - Utile au debugmode qui peut forcer du coup
@@ -36,7 +36,7 @@ namespace SappPasRoot.Graph
 
         private bool DebugMode;
 
-        public TempoChangePathsJeux()
+        public CGamesPaths()
         {
             InitializeComponent();
         }
