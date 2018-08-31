@@ -180,7 +180,7 @@ namespace SappPasRoot.Graph
             Game.Platform = Platform;
             Game.MediaType = "Game";
 
-
+            // Conversion to MvFolder
             //Dictionary<string, IPlatformFolder> dicFolder = new Dictionary<string, IPlatformFolder>();
             aMVFolders = MvFolder.Convert(IPFolders, AppPath);
 
@@ -358,8 +358,7 @@ namespace SappPasRoot.Graph
 
         private void ResizeTextBox(object sender, EventArgs e)
         {
-            TextBox tb = (TextBox)sender;
-            tb.Width = TextRenderer.MeasureText(tb.Text, tb.Font).Width;
+            GraphFunc.ResizeTextBox(sender);
         }
 
         #endregion

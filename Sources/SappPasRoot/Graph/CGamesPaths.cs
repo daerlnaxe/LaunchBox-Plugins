@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,18 +16,21 @@ namespace SappPasRoot.Graph
 {
     public partial class CGamesPaths : Form
     {
+        public string PlatformName { get; set; }
+
         /// <summary>
         ///  Dossier de l'application - Utile au debugmode qui peut forcer du coup
         /// </summary>
         private string AppPath;
+        private string _PlatformNameRL;
+        private string _PlatformNameHL;
 
         /// <summary>
         /// Liste originale desjeux
         /// </summary>
-        private IGame[] _ListGames;
+        private IGame[] IPGames;
 
 
-        public string PlatformName { get; set; }
         /// <summary>
         /// Copie de la plateforme
         /// </summary>
@@ -50,16 +54,18 @@ namespace SappPasRoot.Graph
 
         internal void Initialization(IPlatform platform)
         {
+            PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
+
             boxLog.Text = boxLog.Text.Insert(0, $@"Initialization" + Environment.NewLine);
 
             _PlatformObject = platform;
             boxLog.Text = boxLog.Text.Insert(0, $@"Platform '{_PlatformObject.Name}' selected" + Environment.NewLine);
 
-            PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
 
+            // Application folder
             AppPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            _ListGames = _PlatformObject.GetAllGames(true, true)//(false, false)
+            IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
                                     .OrderBy(x => x.Title).ToArray();
 
         }
@@ -69,7 +75,7 @@ namespace SappPasRoot.Graph
         {
             DebugMode = true;
             AppPath = @"I:\Frontend\LaunchBox\";
-            _ListGames = fakelist;
+            IPGames = fakelist;
 
         }
 
@@ -78,9 +84,23 @@ namespace SappPasRoot.Graph
         /// </summary>
         private void GrabMyShovel()
         {
+            _PlatformNameRL = _PlatformObject.Folder;
+            _PlatformNameHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformNameRL));
+
+            FillInformation();
+
+            // Assignation du dernier chemin visité
+            if (string.IsNullOrEmpty(Properties.Settings.Default.LastKPath))
+            {
+                Properties.Settings.Default.LastKPath = _PlatformNameHL;
+            }
 
 
-            foreach (var game in _ListGames)
+            // Conversion to MvGame
+            var aMvGames = MvGame.Convert(IPGames, AppPath  );
+
+            // stoppé là
+            foreach (var game in IPGames)
             {
                 Console.WriteLine(game.Id);
                 ListViewItem lvi = new ListViewItem();
@@ -94,7 +114,7 @@ namespace SappPasRoot.Graph
                 //lvi.SubItems.Add(game.DosBoxConfigurationPath);
 
                 // ?
-                
+
 
                 Console.WriteLine();
 
@@ -105,13 +125,35 @@ namespace SappPasRoot.Graph
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
+        private void FillInformation()
+        {
+            boxLog.Text = boxLog.Text.Insert(0, @"Filling of information fields" + Environment.NewLine);
+            boxLog.Text = boxLog.Text.Insert(0, @"Transformation RelatLink To HardLink " + Environment.NewLine); ;
+
+            //boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
+
+            // conversion en dur du lien vers le dossier actuel           
+            /*_CRelatLink = PlatformFolder.Replace($@"\{Platform}", "");
+            _CRelatLink = _CRelatLink.Substring(0, _CRelatLink.LastIndexOf('\\'));
+            _CHardLink = Path.GetFullPath(Path.Combine(AppPath, _CRelatLink));
+
+            _NewRoot = _CHardLink;
+
+            this.tboxROldPath.Text = _CRelatLink;
+            this.tboxHOldPath.Text = tbMainPath.Text = _CHardLink;*/
+            
+            this.labPName.Text = PlatformName;
+            this.tboxROldPath.Text = _PlatformNameRL;
+            this.tboxHOldPath.Text = _PlatformNameHL;
+        }
+
 
         /// <summary>
         /// Makes fake list code for debugtest
         /// </summary>
         private void FakeGenerator()
         {
-            foreach (var rameuh in _ListGames)
+            foreach (var rameuh in IPGames)
             {
                 var titlemod = rameuh.Title.Replace(' ', '_');
                 boxLog.Text += $"MvGame {titlemod} = new MvGame();" + Environment.NewLine;
@@ -125,6 +167,9 @@ namespace SappPasRoot.Graph
             this.Close();
         }
 
-
+        private void ResizeTextBox(object sender, EventArgs e)
+        {
+            GraphFunc.ResizeTextBox(sender);
+        }
     }
 }
