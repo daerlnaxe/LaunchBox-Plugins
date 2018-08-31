@@ -39,7 +39,7 @@ namespace SappPasRoot
 
         public void OnSelected()
         {
-            S_Platform sp = new S_Platform();
+            List_Platform sp = new List_Platform();
             sp.ShowDialog();
         }
 

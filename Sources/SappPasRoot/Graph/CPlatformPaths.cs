@@ -34,7 +34,7 @@ namespace SappPasRoot.Graph
         private MvFolder[] aMVFolders { get; set; }
         private MvFolder Game { get; set; }
 
-        private IPlatform _OPlatform;
+        private IPlatform _PlatformObject;
 
         // Current folders
         private string _CHardLink;
@@ -71,11 +71,11 @@ namespace SappPasRoot.Graph
             boxLog.Text = boxLog.Text.Insert(0, $@"LaunchBox main path: {AppPath}" + Environment.NewLine); ;
 
             // récupération de la plateforme concernée
-            _OPlatform = PluginHelper.DataManager.GetPlatformByName(Platform);
-            PlatformFolder = _OPlatform.Folder;
+            _PlatformObject = PluginHelper.DataManager.GetPlatformByName(Platform);
+            PlatformFolder = _PlatformObject.Folder;
 
             // Récupération de tous les dossiers + tri
-            IPFolders = _OPlatform.GetAllPlatformFolders()
+            IPFolders = _PlatformObject.GetAllPlatformFolders()
                                                     .OrderBy(x => x.MediaType).ToArray();
             //var foldersOrdered = ArrPlatFolder.OrderBy(x => x.MediaType).ToArray();
 
@@ -500,7 +500,7 @@ namespace SappPasRoot.Graph
 
             if (!DebugMode)
             {
-                _OPlatform.Folder = Game.FolderPath;
+                _PlatformObject.Folder = Game.FolderPath;
 
                 PluginHelper.DataManager.Save();
             }

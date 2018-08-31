@@ -1,6 +1,6 @@
 ﻿namespace SappPasRoot.Graph
 {
-    partial class S_Platform
+    partial class List_Platform
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(S_Platform));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(List_Platform));
             this.label1 = new System.Windows.Forms.Label();
             this.lvPlatforms = new System.Windows.Forms.ListView();
             this.colPlatformName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));

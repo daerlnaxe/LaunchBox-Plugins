@@ -8,7 +8,7 @@ using Unbroken.LaunchBox.Plugins.Data;
 
 namespace SappPasRoot.Core
 {
-    class MvGame
+    public class MvGame
     {
 
 
@@ -25,6 +25,7 @@ namespace SappPasRoot.Core
         public MvGame()
         {
         }
+
 
         public static MvGame[] MvGames(IGame[] ArrGame, string LaunchBoxRoot)
         {

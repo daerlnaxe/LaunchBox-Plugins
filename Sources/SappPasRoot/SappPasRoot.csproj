@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\LBGame.cs" />
     <Compile Include="Core\MvGame.cs" />
     <Compile Include="Core\Params.cs">
       <SubType>Form</SubType>

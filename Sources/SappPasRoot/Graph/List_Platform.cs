@@ -13,9 +13,9 @@ using Unbroken.LaunchBox.Plugins;
 
 namespace SappPasRoot.Graph
 {
-    public partial class S_Platform : Form
+    public partial class List_Platform : Form
     {
-        public S_Platform()
+        public List_Platform()
         {
             InitializeComponent();
             this.Text += $" {Assembly.GetAssembly(typeof(Main)).GetName().Version.ToString()}";
@@ -61,6 +61,7 @@ namespace SappPasRoot.Graph
         {
 
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {

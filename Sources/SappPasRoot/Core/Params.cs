@@ -8,7 +8,7 @@ using SappPasRoot.Graph;
 
 namespace SappPasRoot.Core
 {
-    class Params : Change_Path
+    class Params : CPlatformPaths
     {
         public string CCodesFolder;
         public string GamesFolder;
@@ -38,7 +38,7 @@ namespace SappPasRoot.Core
         {
         }
 
-        public static void Reset(Change_Path cp, string AppFolder, string Platform)
+        public static void Reset(CPlatformPaths cp, string AppFolder, string Platform)
         {
             cp.tbCCodes.Text = FactoryCCodesFolder;
             cp.tbGames.Text = FactoryGameFolder;
