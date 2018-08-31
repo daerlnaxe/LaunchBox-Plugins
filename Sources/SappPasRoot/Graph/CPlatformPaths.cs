@@ -72,7 +72,15 @@ namespace SappPasRoot.Graph
 
             // récupération de la plateforme concernée
             _PlatformObject = PluginHelper.DataManager.GetPlatformByName(Platform);
+
+            // Correction de bug
             PlatformFolder = _PlatformObject.Folder;
+            if (String.IsNullOrEmpty(PlatformFolder))
+            {
+                MessageBox.Show("Platform folder null, the plugin will use default value (prototype)");
+                PlatformFolder = $@".\{Params.FactoryGameFolder}\{_PlatformObject.Name}";
+            }
+            boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
 
             // Récupération de tous les dossiers + tri
             IPFolders = _PlatformObject.GetAllPlatformFolders()
@@ -157,7 +165,6 @@ namespace SappPasRoot.Graph
         /// </summary>
         private async void GrabMyShovel()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Transformation RelatLink To HardLink " + Environment.NewLine); ;
 
             FillInformation();
 
@@ -197,7 +204,9 @@ namespace SappPasRoot.Graph
         private void FillInformation()
         {
             boxLog.Text = boxLog.Text.Insert(0, @"Filling of information fields" + Environment.NewLine);
+            boxLog.Text = boxLog.Text.Insert(0, @"Transformation RelatLink To HardLink " + Environment.NewLine); ;
 
+            boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
 
             // conversion en dur du lien vers le dossier actuel           
             _CRelatLink = PlatformFolder.Replace($@"\{Platform}", "");
@@ -209,7 +218,6 @@ namespace SappPasRoot.Graph
             this.tboxROldPath.Text = _CRelatLink;
             this.tboxHOldPath.Text = tbMainPath.Text = _CHardLink;
             this.labPName.Text = Platform;
-
         }
 
         /// <summary>
@@ -253,7 +261,7 @@ namespace SappPasRoot.Graph
         /// <returns></returns>
         private async Task GenerateInfoPath(MvFolder[] folders)
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine); ;
+            boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
             BandHeight = 60;
 
             flpPaths.Controls.Clear();

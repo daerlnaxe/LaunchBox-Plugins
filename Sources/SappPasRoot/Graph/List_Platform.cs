@@ -10,17 +10,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unbroken.LaunchBox.Plugins;
+using Unbroken.LaunchBox.Plugins.Data;
 
 namespace SappPasRoot.Graph
 {
     public partial class List_Platform : Form
     {
+        // LaunchBox refuse two platforms with same name (to watching)
+        private Dictionary<string, IPlatform> dicPlatforms = new Dictionary<string, IPlatform>();
+
+
         public List_Platform()
         {
             InitializeComponent();
-            this.Text += $" {Assembly.GetAssembly(typeof(Main)).GetName().Version.ToString()}";
-            ListPlatform();
             PluginHelper.LaunchBoxMainForm.FormClosing += new FormClosingEventHandler(Fermeture);
+            
+            this.Text += $" {Assembly.GetAssembly(typeof(Main)).GetName().Version.ToString()}";
+
+
+            ListPlatform();
         }
 
         private void Fermeture(object sender, FormClosingEventArgs e)
@@ -31,7 +39,7 @@ namespace SappPasRoot.Graph
         private void ListPlatform()
         {
 
-            var platforms = PluginHelper.DataManager.GetAllPlatforms();
+            IPlatform[] platforms = PluginHelper.DataManager.GetAllPlatforms();
 
             foreach (var platform in platforms)
             {
@@ -39,6 +47,8 @@ namespace SappPasRoot.Graph
                 ListViewItem lvi = new ListViewItem(platform.Name);
                 lvi.SubItems.Add(platform.Folder);
                 lvPlatforms.Items.Add(lvi);
+
+                dicPlatforms.Add(platform.Name, platform);
             }
 
             lvPlatforms.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -65,8 +75,11 @@ namespace SappPasRoot.Graph
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string platSel = lvPlatforms.SelectedItems[0].Text;
+
+
             CGamesPaths tcpj = new CGamesPaths();
-            tcpj.Initialization();
+            tcpj.Initialization(dicPlatforms[platSel]);
             tcpj.ShowDialog();
         }
     }

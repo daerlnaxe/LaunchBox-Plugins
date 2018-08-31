@@ -10,10 +10,41 @@ namespace SappPasRoot.Core
 {
     public class MvGame
     {
-
+        // ?
+        public string Id {get;}
 
         public string Title { get; set; }
         public string ApplicationPath { get; set; }
+        
+        //public string DetailsWithPlatform {get;}
+
+        //public string DetailsWithoutPlatform {get;}
+        
+        /// <summary>
+        /// ..??
+        /// </summary>
+        public int? LaunchBoxDbId {get;set; }
+        
+        public string ThemeVideoPath {get;set; }
+
+        /// <summary>
+        /// ???
+        /// </summary>
+        public string ConfigurationPath { get; set; }
+
+        public string ManualPath { get; set; }
+        public string MusicPath { get; set; }
+        public string ScreenshotImagePath { get; }
+        public string FrontImagePath { get; }
+        public string MarqueeImagePath { get; }
+        public string BackImagePath { get; }
+        public string Box3DImagePath { get; }
+        public string BackgroundImagePath { get; }
+        public string Cart3DImagePath { get; }
+        public string CartFrontImagePath { get; }
+        public string CartBackImagePath { get; }
+        public string ClearLogoImagePath { get; }
+        public string VideoPath { get; set; }
 
         public MvGame(IGame srcGame, string launchBoxRoot)
         {
