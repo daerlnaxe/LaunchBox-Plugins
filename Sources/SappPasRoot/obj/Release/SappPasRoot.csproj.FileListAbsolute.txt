@@ -42,3 +42,4 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\fr\Sa
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.csproj.CopyComplete
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.pdb
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.csprojAssemblyReference.cache

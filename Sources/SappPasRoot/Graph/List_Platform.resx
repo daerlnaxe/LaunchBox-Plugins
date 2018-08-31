@@ -163,7 +163,7 @@
     <value>15, 25</value>
   </data>
   <data name="lvPlatforms.Size" type="System.Drawing.Size, System.Drawing">
-    <value>803, 415</value>
+    <value>803, 444</value>
   </data>
   <data name="lvPlatforms.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -191,6 +191,9 @@
   </data>
   <data name="button1.Text" xml:space="preserve">
     <value>button1</value>
+  </data>
+  <data name="button1.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;button1.Name" xml:space="preserve">
     <value>button1</value>
