@@ -75,11 +75,13 @@ namespace SappPasRoot.Graph
             _PlatformObject = platform;
             boxLog.Text = boxLog.Text.Insert(0, $@"Platform '{_PlatformObject.Name}' selected" + Environment.NewLine);
 
-            _PlatformFolderRL = _PlatformObject.Folder;
-            _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
 
             // Application folder
             AppPath = AppDomain.CurrentDomain.BaseDirectory;
+
+            _PlatformFolderRL = _PlatformObject.Folder;
+            _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
+
 
             IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
                                     .OrderBy(x => x.Title).ToArray();
