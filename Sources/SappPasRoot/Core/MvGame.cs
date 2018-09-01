@@ -12,62 +12,68 @@ namespace SappPasRoot.Core
     {
         // ?
         public string Id { get; }
+        public int? LaunchBoxDbId { get; set; }
 
         public string Title { get; set; }
-        public string ApplicationPath { get; set; }
+
+        public PathsCollec ApplicationPath { get; set; }
+        public PathsCollec ManualPath { get; set; }
+        public PathsCollec MusicPath { get; set; }
+        public PathsCollec VideoPath { get; set; }
 
         /// <summary>
         /// ..??
         /// </summary>
-        public int? LaunchBoxDbId { get; set; }
 
         /// <summary>
         /// ??? pas inclus
         /// </summary>
-        public string ThemeVideoPath { get; set; }
+        //public string ThemeVideoPath { get; set; }
 
         /// <summary>
         /// ??? pas inclus
         /// </summary>
-        public string ConfigurationPath { get; set; }
+        //public string ConfigurationPath { get; set; }
 
-        public string ManualPath { get; set; }
-        public string MusicPath { get; set; }
-        public string VideoPath { get; set; }
 
         #region images
-        public string ScreenshotImagePath { get; }
-        public string FrontImagePath { get; }
-        public string MarqueeImagePath { get; }
-        public string BackImagePath { get; }
-        public string Box3DImagePath { get; }
-        public string BackgroundImagePath { get; }
-        public string Cart3DImagePath { get; }
-        public string CartFrontImagePath { get; }
-        public string CartBackImagePath { get; }
-        public string ClearLogoImagePath { get; }
+        public PathsCollec ClearLogoImagePath { get; }
+        public PathsCollec ScreenshotImagePath { get; }
+        public PathsCollec FrontImagePath { get; }
+        public PathsCollec MarqueeImagePath { get; }
+        public PathsCollec BackImagePath { get; }
+        public PathsCollec Box3DImagePath { get; }
+        public PathsCollec BackgroundImagePath { get; }
+        public PathsCollec Cart3DImagePath { get; }
+        public PathsCollec CartFrontImagePath { get; }
+        public PathsCollec CartBackImagePath { get; }
+
         #endregion
 
         public MvGame(IGame srcGame, string launchBoxRoot)
         {
             Title = srcGame.Title;
-            ApplicationPath = srcGame.ApplicationPath;
+            Id = srcGame.Id;
             LaunchBoxDbId = srcGame.LaunchBoxDbId;
-            ManualPath = srcGame.ManualPath;
-            MusicPath = srcGame.ManualPath;
-            VideoPath = srcGame.VideoPath;
+
+            #region Présent dans platform.xml
+            ApplicationPath = new PathsCollec("ApplicationPath", srcGame.ApplicationPath, launchBoxRoot);
+            ManualPath = new PathsCollec("ManualPath", srcGame.ManualPath, launchBoxRoot);
+            MusicPath = new PathsCollec("MusicPath", srcGame.ManualPath, launchBoxRoot);
+            VideoPath = new PathsCollec("VideoPath", srcGame.VideoPath, launchBoxRoot);
+            #endregion
 
             #region images
-            ScreenshotImagePath = srcGame.ScreenshotImagePath;
-            FrontImagePath = srcGame.FrontImagePath;
-            MarqueeImagePath = srcGame.MarqueeImagePath;
-            BackImagePath = srcGame.BackImagePath;
-            Box3DImagePath = srcGame.Box3DImagePath;
-            BackgroundImagePath = srcGame.BackgroundImagePath;
-            Cart3DImagePath = srcGame.Cart3DImagePath;
-            CartFrontImagePath = srcGame.CartFrontImagePath;
-            CartBackImagePath = srcGame.CartBackImagePath;
-            ClearLogoImagePath = srcGame.ClearLogoImagePath;
+            ScreenshotImagePath = new PathsCollec("ScreenshotImagePath", srcGame.ScreenshotImagePath, launchBoxRoot);
+            FrontImagePath = new PathsCollec("FrontImagePath", srcGame.FrontImagePath, launchBoxRoot);
+            MarqueeImagePath = new PathsCollec("MarqueeImagePath", srcGame.MarqueeImagePath, launchBoxRoot);
+            BackImagePath = new PathsCollec("BackImagePath", srcGame.BackImagePath, launchBoxRoot);
+            Box3DImagePath = new PathsCollec("Box3DImagePath", srcGame.Box3DImagePath, launchBoxRoot);
+            BackgroundImagePath = new PathsCollec("BackgroundImagePath", srcGame.BackgroundImagePath, launchBoxRoot);
+            Cart3DImagePath = new PathsCollec("Cart3DImagePath", srcGame.Cart3DImagePath, launchBoxRoot);
+            CartFrontImagePath = new PathsCollec("CartFrontImagePath", srcGame.CartFrontImagePath, launchBoxRoot);
+            CartBackImagePath = new PathsCollec("CartBackImagePath", srcGame.CartBackImagePath, launchBoxRoot);
+            ClearLogoImagePath = new PathsCollec("ClearLogoImagePath", srcGame.ClearLogoImagePath, launchBoxRoot);
             #endregion
 
         }

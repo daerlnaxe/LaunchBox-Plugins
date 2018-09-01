@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "e",
             "e\""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "e",
             "r"}, -1);
             this.boxLog = new System.Windows.Forms.RichTextBox();
@@ -60,10 +60,13 @@
             this.tboxHOldPath = new System.Windows.Forms.TextBox();
             this.titCRPath = new System.Windows.Forms.Label();
             this.tboxROldPath = new System.Windows.Forms.TextBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.tlpInfos.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // boxLog
@@ -103,11 +106,11 @@
             this.columnHeader6,
             this.columnHeader7});
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem5,
+            listViewItem6});
             this.listView1.Location = new System.Drawing.Point(700, 20);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(277, 86);
+            this.listView1.Size = new System.Drawing.Size(172, 86);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -150,7 +153,7 @@
             this.panelTop.Controls.Add(this.tlpInfos);
             this.panelTop.Location = new System.Drawing.Point(22, 12);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1095, 544);
+            this.panelTop.Size = new System.Drawing.Size(990, 544);
             this.panelTop.TabIndex = 6;
             // 
             // flpPaths
@@ -184,7 +187,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1079, 33);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 33);
             this.tableLayoutPanel1.TabIndex = 27;
             // 
             // titChooseFolder
@@ -206,7 +209,7 @@
             this.tbMainPath.MaximumSize = new System.Drawing.Size(400, 4);
             this.tbMainPath.MinimumSize = new System.Drawing.Size(4, 20);
             this.tbMainPath.Name = "tbMainPath";
-            this.tbMainPath.Size = new System.Drawing.Size(400, 20);
+            this.tbMainPath.Size = new System.Drawing.Size(351, 20);
             this.tbMainPath.TabIndex = 1;
             // 
             // flowLayoutPanel1
@@ -214,7 +217,7 @@
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.btBrowse);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(585, 3);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(533, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.tableLayoutPanel1.SetRowSpan(this.flowLayoutPanel1, 2);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(81, 27);
@@ -337,16 +340,34 @@
             this.tboxROldPath.WordWrap = false;
             this.tboxROldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 583);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1107, 22);
+            this.statusStrip1.TabIndex = 7;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
             // CGamesPaths
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 605);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.boxLog);
             this.Controls.Add(this.panelTop);
             this.Name = "CGamesPaths";
             this.Text = "TempoChangePathsJeux";
             this.Load += new System.EventHandler(this.CGamesPaths_Load);
+            this.Shown += new System.EventHandler(this.CGamesPaths_Shown);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -354,6 +375,8 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.tlpInfos.ResumeLayout(false);
             this.tlpInfos.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,5 +409,7 @@
         protected internal System.Windows.Forms.TextBox tboxHOldPath;
         private System.Windows.Forms.Label titCRPath;
         protected internal System.Windows.Forms.TextBox tboxROldPath;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }

@@ -43,11 +43,13 @@ namespace SappPasRoot.Graph
         private string _NewRoot;
 
         private Dictionary<string, int> _Cols { get; set; }
-        private List<Bandeau> lBandeaux = new List<Bandeau>();
+        private List<PlatformBandeau> lBandeaux = new List<PlatformBandeau>();
 
         // Largeur du flowlayout principal
         private int ContWidth;
         private int BandHeight;
+        private Font bRelatFont = new Font(FontFamily.GenericSansSerif, 10F, FontStyle.Bold);
+        private Font bHardFont = new Font(FontFamily.GenericSansSerif, 7F);
 
         private bool MoreShowed = false;
         //   private Color _BColor = Color.White;
@@ -55,7 +57,7 @@ namespace SappPasRoot.Graph
         public CPlatformPaths()
         {
             InitializeComponent();
-            
+
         }
 
         #region Initialisations
@@ -98,14 +100,14 @@ namespace SappPasRoot.Graph
         /// private à la compil
         /// </summary>
         public void DebugTest()
-        {          
+        {
 
             DebugMode = true;
             boxLog.Text = "Debug Mode";
 
             Platform = "Sega Mega Drive";
 
-           // _CRelatLink = @"..\..\Games\Roms\Sega Mega Drive";
+            // _CRelatLink = @"..\..\Games\Roms\Sega Mega Drive";
 
             AppPath = @"i:\Frontend\LaunchBox\";
             //PlatformFolder = @"..\..\Games\Roms\Sega Mega Drive";
@@ -231,24 +233,18 @@ namespace SappPasRoot.Graph
             _Cols = new Dictionary<string, int>();
             _Cols.Add("Arrow", 20);
             // Name of the Media
-            PropertyInfo propMedia = typeof(MvFolder).GetProperty("MediaType");
-            _Cols.Add(propMedia.Name, Analyse.Rows(x => x.MediaType, propMedia, folders, new Label().Font).Width);
+            //PropertyInfo propMedia = typeof(MvFolder).GetProperty("MediaType");
+            _Cols.Add("MediaType", Analyse.Rows(x => x.MediaType, folders, new Label().Font).Width);
 
-            // OldPath
-            PropertyInfo propOldRelat = typeof(MvFolder).GetProperty("FolderPath");
-            Size sORelat = Analyse.Rows(x => x.FolderPath, propOldRelat, folders, UCPaths.GetUCPRelatFont);
-
-            PropertyInfo propOldHard = typeof(MvFolder).GetProperty("HFolderPath");
-            Size sOHard = Analyse.Rows(x => x.HFolderPath, propOldHard, folders, UCPaths.GetUCPHardFont);
+            // OldPath            
+            Size sORelat = Analyse.Rows(x => x.FolderPath, folders, bRelatFont);
+            Size sOHard = Analyse.Rows(x => x.HFolderPath, folders, bHardFont);
 
             _Cols.Add("UCP1", sOHard.Width > sORelat.Width ? sOHard.Width : sORelat.Width);
 
             // NewPath
-            PropertyInfo propNRelat = typeof(MvFolder).GetProperty("NewFolderPath");
-            Size sNRelat = Analyse.Rows(x => x.NewFolderPath, propNRelat, folders, UCPaths.GetUCPRelatFont);
-
-            PropertyInfo propNHard = typeof(MvFolder).GetProperty("HNewFolderPath");
-            Size sNHard = Analyse.Rows(x => x.HNewFolderPath, propNHard, folders, UCPaths.GetUCPHardFont);
+            Size sNRelat = Analyse.Rows(x => x.NewFolderPath, folders, bRelatFont);
+            Size sNHard = Analyse.Rows(x => x.HNewFolderPath, folders, bHardFont);
 
 
             _Cols.Add("UCP2", sNHard.Width > sNRelat.Width ? sNHard.Width : sNRelat.Width);
@@ -262,25 +258,26 @@ namespace SappPasRoot.Graph
         private async Task GenerateInfoPath(MvFolder[] folders)
         {
             boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
-            BandHeight = 60;
+      
 
             flpPaths.Controls.Clear();
 
             lBandeaux.Clear();
-            Bandeau game = StyleBandeaux("Game");
+            PlatformBandeau game = StyleBandeaux("Game");
             game.UCPath1.RelatPath = Game.FolderPath;
             game.UCPath1.FullPath = Game.HFolderPath;
             game.UCPath2.RelatPath = Game.NewFolderPath;
             game.UCPath2.FullPath = Game.HNewFolderPath;
 
             flpPaths.Controls.Add(game);
+            flpPaths.Refresh();
             lBandeaux.Add(game);
 
 
 
             foreach (var folder in folders)
             {
-                Bandeau bdTmp = StyleBandeaux(folder.MediaType);
+                PlatformBandeau bdTmp = StyleBandeaux(folder.MediaType);
                 bdTmp.UCPath1.RelatPath = folder.FolderPath;
                 bdTmp.UCPath1.FullPath = folder.HFolderPath;
                 bdTmp.UCPath2.RelatPath = folder.NewFolderPath;
@@ -337,20 +334,28 @@ namespace SappPasRoot.Graph
             panelTop.Width = flpPaths.Width;
         }
 
-        private Bandeau StyleBandeaux(string MediaType)
+        private PlatformBandeau StyleBandeaux(string MediaType)
         {
-            Bandeau bdTmp = new Bandeau();
+            int rightSpace =10;
+
+            PlatformBandeau bdTmp = new PlatformBandeau();
             bdTmp.Name = $"Bandeau - {MediaType}";
             bdTmp.CategValue = MediaType;
 
             bdTmp.ElementsBgd = Color.White;
-            bdTmp.ElementsHeight = BandHeight;
+            bdTmp.ElementsHeight = BandHeight = 60;
             bdTmp.Height = BandHeight;
             bdTmp.BackColor = Color.FromArgb(0);
 
-            bdTmp.CategWidth = _Cols["MediaType"];
-            bdTmp.UCPath1.Width = _Cols["UCP1"];
-            bdTmp.UCPath2.Width = _Cols["UCP2"];
+            bdTmp.CategWidth = _Cols["MediaType"] + rightSpace; ;
+
+            bdTmp.UCPath1.TopFont = bHardFont;
+            bdTmp.UCPath1.BottomFont = bRelatFont;
+            bdTmp.UCPath1.Width = _Cols["UCP1"] + rightSpace; ;
+
+            bdTmp.UCPath2.TopFont = bHardFont;
+            bdTmp.UCPath2.BottomFont = bRelatFont;
+            bdTmp.UCPath2.Width = _Cols["UCP2"] + rightSpace; ;
 
             return bdTmp;
         }

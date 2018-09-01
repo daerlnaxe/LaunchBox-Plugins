@@ -63,3 +63,4 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPas
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.Graph.List_Platform.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.Graph.CPlatformPaths.fr.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.Graph.List_Platform.fr.resources
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.csprojAssemblyReference.cache

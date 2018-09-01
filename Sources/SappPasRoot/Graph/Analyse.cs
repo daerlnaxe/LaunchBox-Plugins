@@ -13,19 +13,19 @@ namespace SappPasRoot.Graph
     static class Analyse
     {
 
-        internal static Size Rows(Func<MvFolder, string> fc,PropertyInfo prop, MvFolder[] folders, Font font)
+        internal static Size Rows<T>(Func<T, string> fc, /*PropertyInfo prop,*/ T[] elements, Font font)
         {
             int maxSize = 0;
             string lplong = null;
 
-            foreach (var folder in folders)
+            foreach (var element in elements)
             {
-                string val = fc(folder);
+                string val = fc(element);
                 //ok Console.WriteLine(folder.GetType().GetProperty(prop.Name).GetValue(folder, null) );
                // string val = prop.GetValue(folder).ToString();
                 //string val = "";
                 
-                Console.WriteLine(prop.Name + " : " + val);
+                //Console.WriteLine(prop.Name + " : " + val);
 
                 int tmp = val.Length;
                 //      int tmp = TextRenderer.MeasureText(prop.GetValue(folder).ToString(), ex.Font).Width + 5;
@@ -36,7 +36,7 @@ namespace SappPasRoot.Graph
 
                 }
             }
-            var mesure = TextRenderer.MeasureText(lplong+10, font);
+            var mesure = TextRenderer.MeasureText(lplong, font);
             return mesure;
         }
     }

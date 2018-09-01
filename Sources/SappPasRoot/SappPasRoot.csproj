@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Core\LBGame.cs" />
     <Compile Include="Core\MvGame.cs" />
+    <Compile Include="Core\PathsCollec.cs" />
     <Compile Include="Core\Params.cs">
       <SubType>Form</SubType>
     </Compile>
