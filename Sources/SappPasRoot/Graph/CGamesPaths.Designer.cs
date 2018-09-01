@@ -47,7 +47,7 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelTop = new System.Windows.Forms.Panel();
-            this.flpPaths = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpGames = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.titChooseFolder = new System.Windows.Forms.Label();
             this.tbMainPath = new System.Windows.Forms.TextBox();
@@ -147,7 +147,7 @@
             // panelTop
             // 
             this.panelTop.AutoSize = true;
-            this.panelTop.Controls.Add(this.flpPaths);
+            this.panelTop.Controls.Add(this.flpGames);
             this.panelTop.Controls.Add(this.listView1);
             this.panelTop.Controls.Add(this.tableLayoutPanel1);
             this.panelTop.Controls.Add(this.tlpInfos);
@@ -156,18 +156,19 @@
             this.panelTop.Size = new System.Drawing.Size(990, 544);
             this.panelTop.TabIndex = 6;
             // 
-            // flpPaths
+            // flpGames
             // 
-            this.flpPaths.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.flpGames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.flpPaths.AutoScroll = true;
-            this.flpPaths.BackColor = System.Drawing.Color.DarkGreen;
-            this.flpPaths.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.flpPaths.Location = new System.Drawing.Point(3, 160);
-            this.flpPaths.MinimumSize = new System.Drawing.Size(760, 200);
-            this.flpPaths.Name = "flpPaths";
-            this.flpPaths.Size = new System.Drawing.Size(984, 384);
-            this.flpPaths.TabIndex = 1;
+            this.flpGames.AutoScroll = true;
+            this.flpGames.BackColor = System.Drawing.Color.DarkGreen;
+            this.flpGames.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flpGames.Location = new System.Drawing.Point(3, 160);
+            this.flpGames.MinimumSize = new System.Drawing.Size(760, 200);
+            this.flpGames.Name = "flpGames";
+            this.flpGames.Size = new System.Drawing.Size(984, 384);
+            this.flpGames.TabIndex = 1;
+            this.flpGames.MouseHover += new System.EventHandler(this.flpGames_MouseHover);
             // 
             // tableLayoutPanel1
             // 
@@ -396,7 +397,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.Panel panelTop;
-        private System.Windows.Forms.FlowLayoutPanel flpPaths;
+        private System.Windows.Forms.FlowLayoutPanel flpGames;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label titChooseFolder;
         protected internal System.Windows.Forms.TextBox tbMainPath;

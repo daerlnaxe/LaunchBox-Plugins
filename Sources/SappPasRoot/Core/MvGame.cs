@@ -11,7 +11,7 @@ namespace SappPasRoot.Core
     public class MvGame
     {
         // ?
-        public string Id { get; }
+        public string Id { get; set; }
         public int? LaunchBoxDbId { get; set; }
 
         public string Title { get; set; }
@@ -53,8 +53,12 @@ namespace SappPasRoot.Core
         public MvGame(IGame srcGame, string launchBoxRoot)
         {
             Title = srcGame.Title;
+
             Id = srcGame.Id;
+
+
             LaunchBoxDbId = srcGame.LaunchBoxDbId;
+            Console.WriteLine(srcGame.Id);
 
             #region Présent dans platform.xml
             ApplicationPath = new PathsCollec("ApplicationPath", srcGame.ApplicationPath, launchBoxRoot);
@@ -62,6 +66,7 @@ namespace SappPasRoot.Core
             MusicPath = new PathsCollec("MusicPath", srcGame.ManualPath, launchBoxRoot);
             VideoPath = new PathsCollec("VideoPath", srcGame.VideoPath, launchBoxRoot);
             #endregion
+
 
             #region images
             ScreenshotImagePath = new PathsCollec("ScreenshotImagePath", srcGame.ScreenshotImagePath, launchBoxRoot);
@@ -95,6 +100,50 @@ namespace SappPasRoot.Core
             return retMvG;
         }
 
+        /// <remarks>bug possible si mise à jour des paths nécessaires</remarks>
+        public IEnumerable<PathsCollec> EnumGetPaths
+        {
+            get
+            {
+                yield return ApplicationPath;
+                yield return ManualPath;
+                yield return MusicPath;
+                yield return VideoPath;
+
+                yield return ClearLogoImagePath;
+                yield return ScreenshotImagePath;
+                yield return FrontImagePath;
+                yield return MarqueeImagePath;
+                yield return BackImagePath;
+                yield return Box3DImagePath;
+                yield return BackgroundImagePath;
+                yield return Cart3DImagePath;
+                yield return CartFrontImagePath;
+                yield return CartBackImagePath;
+            }
+
+        }
+
+        /// <summary>
+        /// Renvoie la collection des paths
+        /// </summary>
+
+        public PathsCollec[] GetPaths
+        {
+            get
+            {
+                PathsCollec[] zePaths = new PathsCollec[EnumGetPaths.Count()];
+                int i = 0;
+                foreach (var path in EnumGetPaths)
+                {
+                    zePaths[i] = path;
+                    i++;
+                }
+
+                return zePaths;
+            }
+
+        }
 
 
     }

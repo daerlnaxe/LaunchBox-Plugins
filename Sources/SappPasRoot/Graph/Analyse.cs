@@ -21,6 +21,7 @@ namespace SappPasRoot.Graph
             foreach (var element in elements)
             {
                 string val = fc(element);
+                if (val == null) return new Size(0,0);
                 //ok Console.WriteLine(folder.GetType().GetProperty(prop.Name).GetValue(folder, null) );
                // string val = prop.GetValue(folder).ToString();
                 //string val = "";

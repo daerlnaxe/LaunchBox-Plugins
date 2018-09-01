@@ -9,10 +9,11 @@ using Unbroken.LaunchBox.Plugins.Data;
 
 namespace SappPasRoot.Core
 {
-    class LBGame : IGame
+    public class LBGame : IGame
     {
         //Id utilisée sur les images etc
-        public string Id { get; }
+        public string Id { get; set; }
+        public string TestID { get { return Id; } }
         public string Title { get; set; }
 
         public string SortTitle { get; set; }
@@ -118,71 +119,71 @@ namespace SappPasRoot.Core
         /// </summary>
         public string ConfigurationCommandLine { get; set; }
 
-        public Image RatingImage {get;}
-              
+        public Image RatingImage { get; }
+
         // Sortes de récapitulatif
-        public string DetailsWithPlatform {get;}
-        public string DetailsWithoutPlatform {get;}
+        public string DetailsWithPlatform { get; }
+        public string DetailsWithoutPlatform { get; }
 
 
         /// <summary>
         /// ??????
         /// </summary>
-        public string CommandLine {get;set; }
+        public string CommandLine { get; set; }
 
-        public DateTime DateAdded {get;set; }
-        public DateTime DateModified {get;set; }
-        public string EmulatorId {get;set; }
+        public DateTime DateAdded { get; set; }
+        public DateTime DateModified { get; set; }
+        public string EmulatorId { get; set; }
 
         #region statistiques
-        public DateTime? LastPlayedDate {get;set; }
+        public DateTime? LastPlayedDate { get; set; }
         #endregion
 
 
 
-        public string Rating {get;set; }
-        public DateTime? ReleaseDate {get;set; }
-        public int? ReleaseYear {get;set; }
+        public string Rating { get; set; }
+        public DateTime? ReleaseDate { get; set; }
+        public int? ReleaseYear { get; set; }
 
         #region scumm
-        public bool ScummVmAspectCorrection {get;set; }
-        public bool ScummVmFullscreen {get;set; }
-        public string ScummVmGameDataFolderPath {get;set; }
-        public string ScummVmGameType {get;set; }
+        public bool ScummVmAspectCorrection { get; set; }
+        public bool ScummVmFullscreen { get; set; }
+        public string ScummVmGameDataFolderPath { get; set; }
+        public string ScummVmGameType { get; set; }
         #endregion
 
         /// <summary>
         /// ???
         /// </summary>
-        public string Source {get;set; }
-        public int StarRating {get;set; }
+        public string Source { get; set; }
+        public int StarRating { get; set; }
 
-        public float CommunityOrLocalStarRating {get;}
+        public float CommunityOrLocalStarRating { get; }
 
-        public float StarRatingFloat {get;set; }
-        public float CommunityStarRating {get;set; }
-        public int CommunityStarRatingTotalVotes {get;set; }
-        public string Status {get;set; }
+        public float StarRatingFloat { get; set; }
+        public float CommunityStarRating { get; set; }
+        public int CommunityStarRatingTotalVotes { get; set; }
+        public string Status { get; set; }
 
-        public int? WikipediaId {get;set; }
-        public string WikipediaUrl {get;set; }
+        public int? WikipediaId { get; set; }
+        public string WikipediaUrl { get; set; }
 
         /// <summary>
         /// Version du jeu (us-eu etc... )
         /// </summary>
-        public string Version {get;set; }
-                       
-        public string PlayMode {get;set; }
-                
-        public int PlayCount {get;set; }
-        
-        public BlockingCollection<string> Genres {get;}
+        public string Version { get; set; }
+
+        public string PlayMode { get; set; }
+
+        public int PlayCount { get; set; }
+
+        public BlockingCollection<string> Genres { get; }
 
 
-        public string[] PlayModes {get;}
+        public string[] PlayModes { get; }
 
 
-        public string[] SeriesValues {get;}
+        public string[] SeriesValues { get; }
 
 
         #region fonctions
