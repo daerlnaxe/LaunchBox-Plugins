@@ -63,7 +63,7 @@ namespace SappPasRoot.Core
             #region Présent dans platform.xml
             ApplicationPath = new PathsCollec("ApplicationPath", srcGame.ApplicationPath, launchBoxRoot);
             ManualPath = new PathsCollec("ManualPath", srcGame.ManualPath, launchBoxRoot);
-            MusicPath = new PathsCollec("MusicPath", srcGame.ManualPath, launchBoxRoot);
+            MusicPath = new PathsCollec("MusicPath", srcGame.MusicPath, launchBoxRoot);
             VideoPath = new PathsCollec("VideoPath", srcGame.VideoPath, launchBoxRoot);
             #endregion
 
@@ -110,6 +110,8 @@ namespace SappPasRoot.Core
                 yield return MusicPath;
                 yield return VideoPath;
 
+                //images non traitées pourle moment
+                /*
                 yield return ClearLogoImagePath;
                 yield return ScreenshotImagePath;
                 yield return FrontImagePath;
@@ -119,7 +121,7 @@ namespace SappPasRoot.Core
                 yield return BackgroundImagePath;
                 yield return Cart3DImagePath;
                 yield return CartFrontImagePath;
-                yield return CartBackImagePath;
+                yield return CartBackImagePath;*/
             }
 
         }

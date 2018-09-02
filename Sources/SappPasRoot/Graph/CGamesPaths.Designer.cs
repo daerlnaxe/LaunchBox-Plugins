@@ -53,6 +53,8 @@
             this.tbMainPath = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btBrowse = new System.Windows.Forms.Button();
+            this.btSimul = new System.Windows.Forms.Button();
+            this.btApply = new System.Windows.Forms.Button();
             this.tlpInfos = new System.Windows.Forms.TableLayoutPanel();
             this.labPName = new System.Windows.Forms.Label();
             this.titPlatform = new System.Windows.Forms.Label();
@@ -62,8 +64,6 @@
             this.tboxROldPath = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btSimul = new System.Windows.Forms.Button();
-            this.btApply = new System.Windows.Forms.Button();
             this.panelTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -73,7 +73,8 @@
             // 
             // boxLog
             // 
-            this.boxLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.boxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.boxLog.Location = new System.Drawing.Point(12, 510);
             this.boxLog.Name = "boxLog";
@@ -241,6 +242,28 @@
             this.btBrowse.Text = "Browse ...";
             this.btBrowse.UseVisualStyleBackColor = true;
             // 
+            // btSimul
+            // 
+            this.btSimul.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btSimul.Location = new System.Drawing.Point(84, 3);
+            this.btSimul.Name = "btSimul";
+            this.btSimul.Size = new System.Drawing.Size(75, 23);
+            this.btSimul.TabIndex = 13;
+            this.btSimul.Text = "Simulate...";
+            this.btSimul.UseVisualStyleBackColor = true;
+            this.btSimul.Click += new System.EventHandler(this.btSimul_Click);
+            // 
+            // btApply
+            // 
+            this.btApply.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btApply.Location = new System.Drawing.Point(165, 3);
+            this.btApply.Name = "btApply";
+            this.btApply.Size = new System.Drawing.Size(75, 23);
+            this.btApply.TabIndex = 14;
+            this.btApply.Text = "Apply...";
+            this.btApply.UseVisualStyleBackColor = true;
+            this.btApply.Visible = false;
+            // 
             // tlpInfos
             // 
             this.tlpInfos.AutoSize = true;
@@ -362,29 +385,6 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
-            // btSimul
-            // 
-            this.btSimul.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btSimul.Location = new System.Drawing.Point(84, 3);
-            this.btSimul.Name = "btSimul";
-            this.btSimul.Size = new System.Drawing.Size(75, 23);
-            this.btSimul.TabIndex = 13;
-            this.btSimul.Text = "Simulate...";
-            this.btSimul.UseVisualStyleBackColor = true;
-            this.btSimul.Visible = false;
-            this.btSimul.Click += new System.EventHandler(this.btSimul_Click);
-            // 
-            // btApply
-            // 
-            this.btApply.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btApply.Location = new System.Drawing.Point(165, 3);
-            this.btApply.Name = "btApply";
-            this.btApply.Size = new System.Drawing.Size(75, 23);
-            this.btApply.TabIndex = 14;
-            this.btApply.Text = "Apply...";
-            this.btApply.UseVisualStyleBackColor = true;
-            this.btApply.Visible = false;
             // 
             // CGamesPaths
             // 

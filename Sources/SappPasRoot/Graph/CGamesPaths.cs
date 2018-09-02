@@ -88,11 +88,11 @@ namespace SappPasRoot.Graph
 
             IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
                                                           .OrderBy(x => x.Title).ToArray();
-            
-               
+
+
             //LBGame = IGame
-            
-           // FakeGenerator();
+
+            // FakeGenerator();
         }
 
 
@@ -252,7 +252,7 @@ namespace SappPasRoot.Graph
             return bdTmp;
         }
 
-        
+
         /*
         private PlatformBandeau StylePaths(string MediaType, Dictionary<string,int> columns)
         {
@@ -488,17 +488,119 @@ namespace SappPasRoot.Graph
             panelTop.Width = flpGames.Width;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btSimul_Click(object sender, EventArgs e)
         {
-            foreach(var ob in _PlatformObject.GetAllPlatformFolders())
+            Dictionary<string, string> dicSystemPaths = new Dictionary<string, string>();
+
+
+
+            foreach (var ob in _PlatformObject.GetAllPlatformFolders())
             {
                 Console.WriteLine($"{ob.MediaType}: {ob.FolderPath}");
-
+                boxLog.Text = boxLog.Text.Insert(0, $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine);
+                dicSystemPaths.Add(ob.MediaType, ob.FolderPath);
             }
+            boxLog.Clear();
             foreach (var game in _AmVGames)
             {
+                boxLog.Text += $@"{game.Title}: " + Environment.NewLine;
 
+                foreach (var pathO in game.EnumGetPaths)
+                {
+                    if (string.IsNullOrEmpty(pathO.Original_RLink))
+                    {
+                        boxLog.Text += $@"type: {pathO.Type}: null" + Environment.NewLine;
+                        continue;
+                    }
+
+                    boxLog.Text += Environment.NewLine + $@"type: {pathO.Type}: " + Environment.NewLine;
+
+                    int pos = pathO.Original_RLink.LastIndexOf('\\');
+                    string fichier = pathO.Original_RLink.Substring(pos + 1); //+1 pour lever le \
+
+
+                    boxLog.Text += $@"&Donc {pathO.Original_RLink}" + Environment.NewLine;
+                    boxLog.Text += $@"{ pos }" + Environment.NewLine;
+
+                    string fileDest = "";
+                    string rootPath = "";
+
+                    switch (pathO.Type)
+                    {
+                        case "ApplicationPath":
+                            //rootPath = dicSystemPaths["ApplicationPath"];
+                            break;
+
+                        case "VideoPath":
+                            rootPath = dicSystemPaths["Video"];
+                            break;
+
+                        case "MusicPath":
+                            rootPath = dicSystemPaths["Music"];
+                            boxLog.Text += $@"MusicPath détecté " + Environment.NewLine;
+
+                            break;
+
+                        case "ManualPath":
+
+                            rootPath = dicSystemPaths["Manual"];
+                            boxLog.Text += $@"ManualPath détecté " + Environment.NewLine;
+
+                            break;
+                        #region
+                        /*
+                        case "CartBackImagePath":
+                            rootPath = dicSystemPaths["Cart - Back"];
+                            boxLog.Text.Insert(0, $"CartBackImagePath: {rootPath}" + Environment.NewLine);
+                            break;
+
+                        case "CartFrontImagePath":
+                            rootPath = dicSystemPaths["Cart - Front"];
+                            boxLog.Text.Insert(0, $"CartFrontImagePath: {rootPath}" + Environment.NewLine);
+                            break;
+
+                        case "Cart3DImagePath":
+                            break;
+                        case "BackgroundImagePath":
+                            break;
+                        case "Box3DImagePath":
+                            break;
+                        case "BackImagePath":
+                            break;
+
+
+                        case "MarqueeImagePath":
+                        case "FrontImagePath":
+                            rootPath = dicSystemPaths["Box - Front"];
+                            break;
+
+                        case "ScreenshotImagePath":
+                            rootPath = dicSystemPaths["Screenshot - Gameplay"];
+                            break;
+                        case "ClearLogoImagePath":
+                            rootPath = dicSystemPaths["Clear Logo"];
+                            break;*/
+
+                        #endregion
+                        default:
+                            boxLog.Text += $@"Non traité: {pathO.Type}: " + Environment.NewLine;
+                            continue;
+
+                    }
+
+                    fileDest = Path.Combine(rootPath, fichier);
+                    boxLog.Text += $@"{ fichier } => {fileDest}" + Environment.NewLine;
+
+                    pathO.Destination_RLink = fileDest;
+                }
             }
+
+            GenerateTitles(_AmVGames);
         }
     }
 }
