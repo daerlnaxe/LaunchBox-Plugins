@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "e",
             "e\""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "e",
             "r"}, -1);
             this.boxLog = new System.Windows.Forms.RichTextBox();
@@ -62,6 +62,8 @@
             this.tboxROldPath = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btSimul = new System.Windows.Forms.Button();
+            this.btApply = new System.Windows.Forms.Button();
             this.panelTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -106,8 +108,8 @@
             this.columnHeader6,
             this.columnHeader7});
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(700, 20);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(172, 86);
@@ -163,11 +165,13 @@
             this.flpGames.AutoScroll = true;
             this.flpGames.BackColor = System.Drawing.Color.DarkGreen;
             this.flpGames.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flpGames.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpGames.Location = new System.Drawing.Point(3, 160);
             this.flpGames.MinimumSize = new System.Drawing.Size(760, 200);
             this.flpGames.Name = "flpGames";
             this.flpGames.Size = new System.Drawing.Size(984, 384);
             this.flpGames.TabIndex = 1;
+            this.flpGames.WrapContents = false;
             this.flpGames.MouseHover += new System.EventHandler(this.flpGames_MouseHover);
             // 
             // tableLayoutPanel1
@@ -210,18 +214,20 @@
             this.tbMainPath.MaximumSize = new System.Drawing.Size(400, 4);
             this.tbMainPath.MinimumSize = new System.Drawing.Size(4, 20);
             this.tbMainPath.Name = "tbMainPath";
-            this.tbMainPath.Size = new System.Drawing.Size(351, 20);
+            this.tbMainPath.Size = new System.Drawing.Size(270, 20);
             this.tbMainPath.TabIndex = 1;
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.btBrowse);
+            this.flowLayoutPanel1.Controls.Add(this.btSimul);
+            this.flowLayoutPanel1.Controls.Add(this.btApply);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(533, 3);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(452, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.tableLayoutPanel1.SetRowSpan(this.flowLayoutPanel1, 2);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(81, 27);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(243, 27);
             this.flowLayoutPanel1.TabIndex = 26;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -357,6 +363,29 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // btSimul
+            // 
+            this.btSimul.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btSimul.Location = new System.Drawing.Point(84, 3);
+            this.btSimul.Name = "btSimul";
+            this.btSimul.Size = new System.Drawing.Size(75, 23);
+            this.btSimul.TabIndex = 13;
+            this.btSimul.Text = "Simulate...";
+            this.btSimul.UseVisualStyleBackColor = true;
+            this.btSimul.Visible = false;
+            this.btSimul.Click += new System.EventHandler(this.btSimul_Click);
+            // 
+            // btApply
+            // 
+            this.btApply.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btApply.Location = new System.Drawing.Point(165, 3);
+            this.btApply.Name = "btApply";
+            this.btApply.Size = new System.Drawing.Size(75, 23);
+            this.btApply.TabIndex = 14;
+            this.btApply.Text = "Apply...";
+            this.btApply.UseVisualStyleBackColor = true;
+            this.btApply.Visible = false;
+            // 
             // CGamesPaths
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -412,5 +441,7 @@
         protected internal System.Windows.Forms.TextBox tboxROldPath;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Button btSimul;
+        private System.Windows.Forms.Button btApply;
     }
 }

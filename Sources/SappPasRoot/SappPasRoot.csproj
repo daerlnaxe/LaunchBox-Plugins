@@ -70,6 +70,7 @@
       <DependentUpon>CGamesPaths.cs</DependentUpon>
     </Compile>
     <Compile Include="Graph\GraphFunc.cs" />
+    <Compile Include="Interface1.cs" />
     <Compile Include="Languages\Lang.fr.Designer.cs">
       <DependentUpon>Lang.fr.resx</DependentUpon>
       <AutoGen>True</AutoGen>

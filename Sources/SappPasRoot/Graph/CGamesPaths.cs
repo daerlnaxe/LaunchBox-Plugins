@@ -29,7 +29,7 @@ namespace SappPasRoot.Graph
         /// <summary>
         /// Liste originale desjeux
         /// </summary>
-        private LBGame[] IPGames;
+        private IGame[] IPGames;
         private MvGame[] _AmVGames;
 
         /// <summary>
@@ -46,13 +46,13 @@ namespace SappPasRoot.Graph
         /// <summary>
         /// Bandeau déroulé
         /// </summary>
-        GameBandeau _BandActif;
+        GameBandeauV _BandActif;
 
         // Largeur du flowlayout principal
         private int ContWidth;
         // hauteur du bandeau et des éléments
         private int BandHeight;
-        private Font bRelatFont = new Font(FontFamily.GenericSansSerif, 10F, FontStyle.Bold);
+        private Font bRelatFont = new Font(FontFamily.GenericSansSerif, 9F, FontStyle.Bold);
         private Font bHardFont = new Font(FontFamily.GenericSansSerif, 7F);
 
 
@@ -86,14 +86,17 @@ namespace SappPasRoot.Graph
             _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
 
 
-            IPGames = (LBGame[])_PlatformObject.GetAllGames(true, true)//(false, false)
-                                    .OrderBy(x => x.Title).ToArray();
-
-            FakeGenerator();
+            IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
+                                                          .OrderBy(x => x.Title).ToArray();
+            
+               
+            //LBGame = IGame
+            
+           // FakeGenerator();
         }
 
 
-        public void DebugTest(LBGame[] fakelist)
+        public void DebugTest(IGame[] fakelist)
         {
             DebugMode = true;
             AppPath = @"I:\Frontend\LaunchBox\";
@@ -114,7 +117,6 @@ namespace SappPasRoot.Graph
             {
                 Properties.Settings.Default.LastKPath = _PlatformFolderHL;
             }
-
 
             // Conversion to MvGame
             _AmVGames = MvGame.Convert(IPGames, AppPath);
@@ -172,11 +174,13 @@ namespace SappPasRoot.Graph
 
                 Console.WriteLine(mvGame.Title);
 
-                GameBandeau bdTmp = StyleTitles(mvGame.Id);
+                GameBandeauV bdTmp = StyleTitles(mvGame.Id);
                 bdTmp.Objet = mvGame;
                 bdTmp.Title += $" {mvGame.Title}";
 
                 flpGames.Controls.Add(bdTmp);
+                //bdTmp.Dock = DockStyle.Top;
+
                 flpGames.Refresh();
                 //lBandeaux.Add(bdTmp);
             }
@@ -209,20 +213,18 @@ namespace SappPasRoot.Graph
                 /* Label pfbGame = new Label();
                  pfbGame.Text = path.Type;*/
 
-                PlatformBandeau pfbGame = StylePaths(pathO.Type, columns);
+                //PlatformBandeau pfbGame = StylePaths(pathO.Type, columns);
+                DualBandV dbV = StylePaths(pathO.Type, columns);
+                //dbV.lbTitle.Text = pathO.Type;
                 //pfbGame.CategValue = pathO.Type;
-                pfbGame.UCPath1.RelatPath = pathO.Original_RLink;
-                pfbGame.UCPath1.FullPath = pathO.Original_HLink;
+                dbV.ucPaths21.RelatPath = pathO.Original_RLink;
+                dbV.ucPaths21.FullPath = pathO.Original_HLink;
 
-                pfbGame.UCPath2.RelatPath = pathO.Destination_RLink;
-                pfbGame.UCPath2.FullPath = pathO.Destination_HLink;
-                flp.Controls.Add(pfbGame);
+                dbV.ucPaths22.RelatPath = pathO.Destination_RLink;
+                dbV.ucPaths22.FullPath = pathO.Destination_HLink;
+                flp.Controls.Add(dbV);
             }
-
-
-
             // games.Add(bdTmp);
-
         }
 
         /// <summary>
@@ -230,19 +232,28 @@ namespace SappPasRoot.Graph
         /// </summary>
         /// <param name="titre"></param>
         /// <returns></returns>
-        private GameBandeau StyleTitles(string titre)
+        private GameBandeauV StyleTitles(string titre)
         {
             int rightSpace = 10;
 
-            GameBandeau bdTmp = new GameBandeau();
+            GameBandeauV bdTmp = new GameBandeauV();
             bdTmp.Name = titre;
 
-            bdTmp.Height = BandHeight = 54;
-            bdTmp.DeroulBand += new GameBandeau.DeroulHandler(FillBand);
+            bdTmp.DeroulBand += new GameBandeauV.DeroulHandler(DeroulBand);
+            bdTmp.EnroulBand += EnroulBand;
+
+            //    bdTmp.Height = bdTmp
+            BandHeight = bdTmp.Height + 2;
+            bdTmp.AutoSize = false;
+            //  = BandHeight = 54;
+            bdTmp.Width = bdTmp.flp1.Width;
+            // bdTmp.Height = 80;
 
             return bdTmp;
         }
 
+        
+        /*
         private PlatformBandeau StylePaths(string MediaType, Dictionary<string,int> columns)
         {
             int rightSpace = 10;
@@ -268,7 +279,34 @@ namespace SappPasRoot.Graph
 
             return bdTmp;
         }
+        */
 
+
+        private DualBandV StylePaths(string MediaType, Dictionary<string, int> columns)
+        {
+            int rightSpace = 10;
+
+            DualBandV bdTmp = new DualBandV();
+            bdTmp.Name = $"Bandeau - {MediaType}";
+            bdTmp.Title = MediaType;
+
+            //bdTmp.ElementsBgd = Color.White;
+            //bdTmp.ElementsHeight = BandHeight = 60;
+            bdTmp.Height = BandHeight * 2;
+            bdTmp.BackColor = Color.FromArgb(0);
+
+            // bdTmp.CategWidth = columns["MediaType"] + rightSpace; ;
+
+            bdTmp.ucPaths21.TopFont = bHardFont;
+            bdTmp.ucPaths21.BottomFont = bRelatFont;
+            bdTmp.ucPaths21.Width = columns["UCP1"] + rightSpace; ;
+
+            bdTmp.ucPaths22.TopFont = bHardFont;
+            bdTmp.ucPaths22.BottomFont = bRelatFont;
+            bdTmp.ucPaths22.Width = columns["UCP2"] + rightSpace; ;
+
+            return bdTmp;
+        }
 
 
 
@@ -282,10 +320,10 @@ namespace SappPasRoot.Graph
 
             //_Cols.Sum(x => x.Value);
             // Height size of each item
-            int minheightB = (BandHeight + 6) * 6;
+            int minheightB = (BandHeight + 6) * 4;
             int minH = Screen.PrimaryScreen.Bounds.Height < minheightB ? Screen.PrimaryScreen.Bounds.Height : minheightB;
 
-            flpGames.Size = flpGames.MinimumSize = new Size(ContWidth + 6, minH);
+            flpGames.Size = flpGames.MinimumSize = new Size(ContWidth + 6, flpGames.Height);
 
             //this.flpPaths.MaximumSize = new Size(ContWidth + 6, maxH);
             //flpPaths.MinimumSize = new Size(ContWidth +6, flpPaths.Height);
@@ -297,6 +335,52 @@ namespace SappPasRoot.Graph
             GraphFunc.ResizeTextBox(sender);
         }
 
+        private void flpGames_MouseHover(object sender, EventArgs e)
+        {
+            /* if (_BandActif != null) _BandActif.Collapse_Fl();
+             _BandActif = null;
+             StyleMainFLP();
+             SetMainWindow();*/
+        }
+
+        private void EnroulBand(GameBandeauV sender)
+        {
+            statusStrip1.Text = ("EnroulBand");
+            Console.WriteLine("EnroulBand");
+            StyleMainFLP();
+        }
+
+
+        /// <summary>
+        /// Rempli chaque flowlayout d'un jeu avec les informations relatives aux paths
+        /// </summary>
+        /// <param name="sender"></param>
+        private void DeroulBand(GameBandeauV sender)
+        {
+            if (_BandActif != null && _BandActif != sender) _BandActif.Collapse_Fl();
+
+            boxLog.Text = boxLog.Text.Insert(0, $"Bandactif: {sender.Name}" + Environment.NewLine); ;
+            toolStripStatusLabel1.Text = $"Bandeau unrolled";
+
+            _BandActif = sender;
+            if (sender.flp1.Controls.Count == 0)
+            {
+                MvGame game = (MvGame)sender.Objet;
+
+                var paths = game.GetPaths;
+
+                var columns = AnalyseProps(paths);
+
+                columns.Add("Arrow", 20);
+                GeneratePaths(game, sender.flp1, columns);
+                boxLog.Text = boxLog.Text.Insert(0, $"Generate graphical elements for '{game.Title}'" + Environment.NewLine); ;
+            }
+
+            flpGames.Width = sender.flp1.Width + 50;
+            StyleMainFLP();
+
+            SetMainWindow();
+        }
 
         #endregion
         private void FillInformation()
@@ -358,32 +442,6 @@ namespace SappPasRoot.Graph
 
 
         /// <summary>
-        /// Rempli chaque flowlayout d'un jeu avec les informations relatives aux paths
-        /// </summary>
-        /// <param name="sender"></param>
-        private void FillBand(GameBandeau sender)
-        {
-            if (_BandActif != null) _BandActif.Collapse_Fl();
-
-            boxLog.Text = boxLog.Text.Insert(0, $"Bandactif: {sender.Name}" + Environment.NewLine); ;
-            toolStripStatusLabel1.Text = $"Bandeau unrolled";
-            
-           _BandActif = sender;
-            if (sender.flp1.Controls.Count ==0)
-            {
-                MvGame game = (MvGame)sender.Objet;
-
-                var paths = game.GetPaths;
-
-                var columns = AnalyseProps(paths);
-
-                columns.Add("Arrow", 20);
-                GeneratePaths(game, sender.flp1, columns);
-                boxLog.Text = boxLog.Text.Insert(0, $"Generate graphical elements for '{game.Title}'" + Environment.NewLine); ;
-            }
-        }
-
-        /// <summary>
         /// Makes fake list code for debugtest
         /// </summary>
         private void FakeGenerator()
@@ -430,10 +488,17 @@ namespace SappPasRoot.Graph
             panelTop.Width = flpGames.Width;
         }
 
-        private void flpGames_MouseHover(object sender, EventArgs e)
+        private void btSimul_Click(object sender, EventArgs e)
         {
-            if (_BandActif != null) _BandActif.Collapse_Fl();
-            _BandActif = null;
+            foreach(var ob in _PlatformObject.GetAllPlatformFolders())
+            {
+                Console.WriteLine($"{ob.MediaType}: {ob.FolderPath}");
+
+            }
+            foreach (var game in _AmVGames)
+            {
+
+            }
         }
     }
 }

@@ -17,11 +17,12 @@ namespace SappPasRoot.Graph
         {
             int maxSize = 0;
             string lplong = null;
-
+            
             foreach (var element in elements)
             {
                 string val = fc(element);
-                if (val == null) return new Size(0,0);
+                if(val==null)continue;
+
                 //ok Console.WriteLine(folder.GetType().GetProperty(prop.Name).GetValue(folder, null) );
                // string val = prop.GetValue(folder).ToString();
                 //string val = "";

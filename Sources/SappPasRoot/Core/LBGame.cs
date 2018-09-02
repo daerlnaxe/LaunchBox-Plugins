@@ -9,7 +9,7 @@ using Unbroken.LaunchBox.Plugins.Data;
 
 namespace SappPasRoot.Core
 {
-    public class LBGame : IGame
+    public class LBGame: IGame
     {
         //Id utilisée sur les images etc
         public string Id { get; set; }
@@ -312,5 +312,7 @@ namespace SappPasRoot.Core
             throw new NotImplementedException();
         }
         #endregion
+
+
     }
 }
