@@ -30,8 +30,8 @@ namespace SappPasRoot.Graph
         private string AppPath;
 
         // Liste des dossiers
-        private IPlatformFolder[] IPFolders { get; set; }
-        private MvFolder[] aMVFolders { get; set; }
+        private IPlatformFolder[] _IPFolders { get; set; }
+        private MvFolder[] _AMVFolders { get; set; }
         private MvFolder Game { get; set; }
 
         private IPlatform _PlatformObject;
@@ -85,7 +85,7 @@ namespace SappPasRoot.Graph
             boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
 
             // Récupération de tous les dossiers + tri
-            IPFolders = _PlatformObject.GetAllPlatformFolders()
+            _IPFolders = _PlatformObject.GetAllPlatformFolders()
                                                     .OrderBy(x => x.MediaType).ToArray();
             //var foldersOrdered = ArrPlatFolder.OrderBy(x => x.MediaType).ToArray();
 
@@ -151,7 +151,7 @@ namespace SappPasRoot.Graph
                 raoul[i + 2] = fbf;
             }
 
-            IPFolders = raoul;
+            _IPFolders = raoul;
         }
 
         private async void Change_Path_Load(object sender, EventArgs e)
@@ -183,11 +183,11 @@ namespace SappPasRoot.Graph
 
             // Conversion to MvFolder
             //Dictionary<string, IPlatformFolder> dicFolder = new Dictionary<string, IPlatformFolder>();
-            aMVFolders = MvFolder.Convert(IPFolders, AppPath);
+            _AMVFolders = MvFolder.Convert(_IPFolders, AppPath);
 
-            AnalyseProps(aMVFolders);
+            AnalyseProps(_AMVFolders);
             
-            await GenerateInfoPath(aMVFolders);
+            await GenerateInfoPath(_AMVFolders);
             
             /*
             // Reorder
@@ -434,9 +434,9 @@ namespace SappPasRoot.Graph
             Game.NewFolderPath = DxPath.ToRelative(AppPath, Game.HNewFolderPath);
 
 
-            for (int i = 0; i < aMVFolders.Length; i++)
+            for (int i = 0; i < _AMVFolders.Length; i++)
             {
-                var amvF = aMVFolders[i];
+                var amvF = _AMVFolders[i];
 
                 // Choix de filtrer que videos / games / manuals / music et ... ?
                 string hardPath;
@@ -466,14 +466,14 @@ namespace SappPasRoot.Graph
 
                 string relatPath = DxPath.ToRelative(AppPath, hardPath);
 
-                aMVFolders[i].NewFolderPath = relatPath;
-                aMVFolders[i].HNewFolderPath = hardPath;
+                _AMVFolders[i].NewFolderPath = relatPath;
+                _AMVFolders[i].HNewFolderPath = hardPath;
 
 
             }
             //
-            AnalyseProps(aMVFolders);
-            await GenerateInfoPath(aMVFolders);
+            AnalyseProps(_AMVFolders);
+            await GenerateInfoPath(_AMVFolders);
             StyleMainFLP();
             SetMainWindow();
             boxLog.Text = boxLog.Text.Insert(0, @"Simuation finish ..." + Environment.NewLine);
@@ -481,6 +481,7 @@ namespace SappPasRoot.Graph
         }
 
         #endregion
+
         #region Application des changements 
 
         /// <summary>
@@ -513,6 +514,7 @@ namespace SappPasRoot.Graph
 
             PlatformFolder = Game.FolderPath;
             FillInformation();
+            GenerateInfoPath(_AMVFolders);
             btApply.Visible = false;
         }
 
@@ -522,15 +524,16 @@ namespace SappPasRoot.Graph
         /// <remarks>n'utilise pas la partie graphique</remarks>
         private void DematroiChka()
         {
-            foreach (var ipFolder in IPFolders)
+            foreach (var ipFolder in _IPFolders)
             {
-                foreach (var mvFolder in aMVFolders)
+                foreach (var mvFolder in _AMVFolders)
                 {
                     if (String.Equals(ipFolder.MediaType, mvFolder.MediaType))
                     {
 
                         mvFolder.FolderPath = mvFolder.NewFolderPath;
                         mvFolder.HFolderPath = mvFolder.HNewFolderPath;
+                        mvFolder.NewFolderPath = mvFolder.HNewFolderPath = "Waiting...";
 
                         // Changement in/dans Launchbox
                         ipFolder.FolderPath = mvFolder.FolderPath;

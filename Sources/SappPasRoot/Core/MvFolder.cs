@@ -38,14 +38,15 @@ namespace SappPasRoot.Core
             FolderPath = src.FolderPath;
             HFolderPath = Path.GetFullPath(Path.Combine(LaunchBoxRoot, FolderPath));
 
-            NewFolderPath = src.FolderPath;
-            HNewFolderPath = HFolderPath;
+            NewFolderPath = "Waiting ...";
+            HNewFolderPath = "Waiting ...";
         }
 
         public MvFolder(string CurrentFolder, string LaunchBoxRoot)
         {
-            NewFolderPath = FolderPath = CurrentFolder;
-            HNewFolderPath = HFolderPath = Path.GetFullPath(Path.Combine(LaunchBoxRoot, CurrentFolder));
+            FolderPath = CurrentFolder;
+            HFolderPath = Path.GetFullPath(Path.Combine(LaunchBoxRoot, CurrentFolder));
+            NewFolderPath = HNewFolderPath = "Waiting ...";
         }
 
         /* public MvFolder(MvFolder src)

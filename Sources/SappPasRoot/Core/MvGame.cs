@@ -10,6 +10,8 @@ namespace SappPasRoot.Core
 {
     public class MvGame
     {
+        public bool Valide;
+
         // ?
         public string Id { get; set; }
         public int? LaunchBoxDbId { get; set; }

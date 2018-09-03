@@ -28,24 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
-            "e",
-            "e\""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
-            "e",
-            "r"}, -1);
             this.boxLog = new System.Windows.Forms.RichTextBox();
-            this.colID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colAppPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.colTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelTop = new System.Windows.Forms.Panel();
             this.flpGames = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -64,11 +47,15 @@
             this.tboxROldPath = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.rbForced = new System.Windows.Forms.RadioButton();
+            this.rbKeepSub = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panelTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.tlpInfos.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // boxLog
@@ -80,78 +67,13 @@
             this.boxLog.TabIndex = 1;
             this.boxLog.Text = "";
             // 
-            // colID
-            // 
-            this.colID.Text = "Game.Id";
-            this.colID.Width = 207;
-            // 
-            // colAppPath
-            // 
-            this.colAppPath.Text = "LaunchBox.Bd.Id";
-            // 
-            // listView1
-            // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.AutoArrange = false;
-            this.listView1.BackColor = System.Drawing.SystemColors.Info;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colID,
-            this.colTitle,
-            this.colAppPath,
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7});
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14});
-            this.listView1.Location = new System.Drawing.Point(700, 20);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(183, 86);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // colTitle
-            // 
-            this.colTitle.Text = "Title";
-            this.colTitle.Width = 248;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "ThemeVideopath";
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "RootFolder";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "ConfigurationPath";
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "ConfigurationCommandLine";
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "PlatformClearLogoImagePath";
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "DosBoxConfiguraation path";
-            // 
             // panelTop
             // 
             this.panelTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panelTop.AutoSize = true;
+            this.panelTop.Controls.Add(this.groupBox1);
             this.panelTop.Controls.Add(this.flpGames);
-            this.panelTop.Controls.Add(this.listView1);
             this.panelTop.Controls.Add(this.tableLayoutPanel1);
             this.panelTop.Controls.Add(this.tlpInfos);
             this.panelTop.Location = new System.Drawing.Point(22, 12);
@@ -205,6 +127,7 @@
             this.titChooseFolder.Size = new System.Drawing.Size(167, 25);
             this.titChooseFolder.TabIndex = 6;
             this.titChooseFolder.Text = "Choose a New Folder:";
+            this.titChooseFolder.Visible = false;
             // 
             // tbMainPath
             // 
@@ -215,6 +138,7 @@
             this.tbMainPath.Name = "tbMainPath";
             this.tbMainPath.Size = new System.Drawing.Size(275, 20);
             this.tbMainPath.TabIndex = 1;
+            this.tbMainPath.Visible = false;
             // 
             // flowLayoutPanel1
             // 
@@ -239,6 +163,7 @@
             this.btBrowse.TabIndex = 0;
             this.btBrowse.Text = "Browse ...";
             this.btBrowse.UseVisualStyleBackColor = true;
+            this.btBrowse.Visible = false;
             // 
             // btSimul
             // 
@@ -261,6 +186,7 @@
             this.btApply.Text = "Apply...";
             this.btApply.UseVisualStyleBackColor = true;
             this.btApply.Visible = false;
+            this.btApply.Click += new System.EventHandler(this.btApply_Click);
             // 
             // tlpInfos
             // 
@@ -374,7 +300,7 @@
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 646);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1107, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1041, 22);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -384,11 +310,46 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // rbForced
+            // 
+            this.rbForced.AutoSize = true;
+            this.rbForced.Checked = true;
+            this.rbForced.Location = new System.Drawing.Point(6, 26);
+            this.rbForced.Name = "rbForced";
+            this.rbForced.Size = new System.Drawing.Size(87, 17);
+            this.rbForced.TabIndex = 28;
+            this.rbForced.TabStop = true;
+            this.rbForced.Text = "Forced mode";
+            this.rbForced.UseVisualStyleBackColor = true;
+            // 
+            // rbKeepSub
+            // 
+            this.rbKeepSub.AutoSize = true;
+            this.rbKeepSub.Location = new System.Drawing.Point(6, 49);
+            this.rbKeepSub.Name = "rbKeepSub";
+            this.rbKeepSub.Size = new System.Drawing.Size(129, 17);
+            this.rbKeepSub.TabIndex = 29;
+            this.rbKeepSub.TabStop = true;
+            this.rbKeepSub.Text = "Keep subFolder Mode";
+            this.rbKeepSub.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.rbForced);
+            this.groupBox1.Controls.Add(this.rbKeepSub);
+            this.groupBox1.Location = new System.Drawing.Point(784, 20);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 90);
+            this.groupBox1.TabIndex = 30;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Modes";
+            // 
             // CGamesPaths
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1107, 668);
+            this.ClientSize = new System.Drawing.Size(1041, 668);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.boxLog);
             this.Controls.Add(this.panelTop);
@@ -405,6 +366,8 @@
             this.tlpInfos.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -412,17 +375,6 @@
 
         #endregion
         private System.Windows.Forms.RichTextBox boxLog;
-        private System.Windows.Forms.ColumnHeader colID;
-        private System.Windows.Forms.ColumnHeader colAppPath;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader colTitle;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.Panel panelTop;
         private System.Windows.Forms.FlowLayoutPanel flpGames;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -441,5 +393,8 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.Button btSimul;
         private System.Windows.Forms.Button btApply;
+        private System.Windows.Forms.RadioButton rbKeepSub;
+        private System.Windows.Forms.RadioButton rbForced;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

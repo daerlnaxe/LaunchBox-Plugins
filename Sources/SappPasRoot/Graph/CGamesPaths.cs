@@ -1,5 +1,6 @@
 ﻿using CCLaunchBox;
 using SappPasRoot.Core;
+using SappPasRoot.Languages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,33 +18,29 @@ namespace SappPasRoot.Graph
 {
     public partial class CGamesPaths : Form
     {
-        public string PlatformName { get; set; }
 
         /// <summary>
         ///  Dossier de l'application - Utile au debugmode qui peut forcer du coup
         /// </summary>
         private string AppPath;
+        private bool DebugMode;
+
+        // Platform
+        public string PlatformName { get; set; }
         private string _PlatformFolderRL;
         private string _PlatformFolderHL;
-
-        /// <summary>
-        /// Liste originale desjeux
-        /// </summary>
-        private IGame[] IPGames;
-        private MvGame[] _AmVGames;
-
         /// <summary>
         /// Copie de la plateforme
         /// </summary>
         private IPlatform _PlatformObject;
-        //private List<PlatformBandeau> lBandeaux = new List<PlatformBandeau>();
+        Dictionary<string, string> dicSystemPaths = new Dictionary<string, string>();
 
         /// <summary>
-        /// Pseudo colonnes
+        /// Liste originale desjeux
         /// </summary>
-       // private Dictionary<string, int> _Cols { get; set; }
-
-        private bool DebugMode;
+        private IGame[] _IPGames;
+        private MvGame[] _AmVGames;
+        //private List<PlatformBandeau> lBandeaux = new List<PlatformBandeau>();
 
         #region Graphismes        
         // Bandeau déroulé
@@ -66,12 +63,17 @@ namespace SappPasRoot.Graph
         public CGamesPaths()
         {
             InitializeComponent();
-            listView1.Items.Clear();
+            //listView1.Items.Clear();
         }
 
         private void CGamesPaths_Load(object sender, EventArgs e)
         {
             //GrabMyShovel();
+        }
+
+        private void CGamesPaths_Shown(object sender, EventArgs e)
+        {
+            GrabMyShovel();
         }
 
         internal void Initialization(IPlatform platform)
@@ -81,6 +83,8 @@ namespace SappPasRoot.Graph
             boxLog.Text = boxLog.Text.Insert(0, $@"Initialization" + Environment.NewLine);
 
             _PlatformObject = platform;
+            PlatformName = _PlatformObject.Name;
+
             boxLog.Text = boxLog.Text.Insert(0, $@"Platform '{_PlatformObject.Name}' selected" + Environment.NewLine);
 
 
@@ -91,24 +95,60 @@ namespace SappPasRoot.Graph
             _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
 
 
-            IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
+            _IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
                                                           .OrderBy(x => x.Title).ToArray();
 
-
+            foreach (var ob in _PlatformObject.GetAllPlatformFolders())
+            {
+                Console.WriteLine($"{ob.MediaType}: {ob.FolderPath}");
+                boxLog.Text = boxLog.Text.Insert(0, $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine);
+                dicSystemPaths.Add(ob.MediaType, ob.FolderPath);
+            }
             //LBGame = IGame
 
             // FakeGenerator();
         }
 
-
+        #region Debug
         public void DebugTest(IGame[] fakelist)
         {
             DebugMode = true;
             AppPath = @"I:\Frontend\LaunchBox\";
-            IPGames = fakelist;
-            _PlatformFolderRL = @".\Roms\Sega Mega Drive";
+            _IPGames = fakelist;
+            PlatformName = "Sega Mega Drive";
+            _PlatformFolderRL = @"..\..\fauxgames\Games\Sega Mega Drive";
             _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
+
+            // dicSystemPaths.Add("ApplicationPath");
+            dicSystemPaths.Add("Manual", @"..\..\fauxgames\Manuals\Sega Mega Drive");
+            dicSystemPaths.Add("Music", @"..\..\fauxgames\Music\Sega Mega Drive");
+            dicSystemPaths.Add("Video", @"..\..\fauxgames\Manuals\Sega Mega Drive");
         }
+
+        /// <summary>
+        /// Makes fake list code for debugtest
+        /// </summary>
+        private void FakeGenerator()
+        {
+            boxLog.Text += Environment.NewLine;
+            boxLog.Text += $"LBGame[] KingOfSpain = new LBGame[{_IPGames.Length}];" + Environment.NewLine;
+
+            for (int i = 0; i < _IPGames.Length; i++)
+            {
+                var rameuh = _IPGames[i];
+                var pseuRoot = @"I:\Frontend\LaunchBox\";
+
+                var gamename = $"game_{i}";
+
+                boxLog.Text += $"LBGame {gamename} = new LBGame();" + Environment.NewLine;
+                boxLog.Text += $"{gamename}.Title= \"{rameuh.Title}\";" + Environment.NewLine;
+                boxLog.Text += $"{gamename}.Id = \"{rameuh.Id}\";" + Environment.NewLine;
+                boxLog.Text += $"{ gamename}.ApplicationPath = @\"{rameuh.ApplicationPath}\";" + Environment.NewLine;
+
+                boxLog.Text += $"KingOfSpain[{i}] = {gamename};" + Environment.NewLine + Environment.NewLine;
+            }
+        }
+        #endregion
 
         /// <summary>
         /// 
@@ -124,16 +164,42 @@ namespace SappPasRoot.Graph
             }
 
             // Conversion to MvGame
-            _AmVGames = MvGame.Convert(IPGames, AppPath);
+            _AmVGames = MvGame.Convert(_IPGames, AppPath);
 
             //AnalyseProps(aMvGames);
             // Taille généralisée de la portion des chemins
-            PathsWidth =AnalyseVPrinciple(_AmVGames);
+            PathsWidth = AnalyseVPrinciple(_AmVGames);
 
             GenerateTitles(_AmVGames);
 
         }
 
+        private void FillInformation()
+        {
+            boxLog.Text = boxLog.Text.Insert(0, @"Filling of information fields" + Environment.NewLine);
+            boxLog.Text = boxLog.Text.Insert(0, @"Transformation RelatLink To HardLink " + Environment.NewLine); ;
+
+            //boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
+
+            // conversion en dur du lien vers le dossier actuel           
+            /*_CRelatLink = PlatformFolder.Replace($@"\{Platform}", "");
+            _CRelatLink = _CRelatLink.Substring(0, _CRelatLink.LastIndexOf('\\'));
+            _CHardLink = Path.GetFullPath(Path.Combine(AppPath, _CRelatLink));
+
+            _NewRoot = _CHardLink;
+
+            this.tboxROldPath.Text = _CRelatLink;
+            this.tboxHOldPath.Text = tbMainPath.Text = _CHardLink;*/
+
+            this.labPName.Text = PlatformName;
+
+            // conversion en dur du lien vers le dossier actuel           
+            string mahou = _PlatformFolderRL.Replace($@"\{PlatformName}", "");
+            mahou = mahou.Substring(0, mahou.LastIndexOf('\\'));
+            // mahou = Path.GetFullPath(Path.Combine(AppPath, mahou));
+            this.tboxROldPath.Text = mahou;
+            this.tboxHOldPath.Text = Path.GetFullPath(Path.Combine(AppPath, mahou));
+        }
 
         #region Title
         /// <summary>
@@ -157,6 +223,10 @@ namespace SappPasRoot.Graph
                 bdTmp.Title += $" {mvGame.Title}";
                 bdTmp.Resize_Me();
 
+                mvGame.Valide = CheckGame(mvGame);
+
+                bdTmp.ShowVerif(mvGame.Valide);
+
                 flpGames.Controls.Add(bdTmp);
                 //bdTmp.Dock = DockStyle.Top;
 
@@ -167,7 +237,7 @@ namespace SappPasRoot.Graph
             StyleMainFLP(ContRolledWidth);
             SetMainWindow();
         }
-               
+
         /// <summary>
         /// Style des titres
         /// </summary>
@@ -194,6 +264,22 @@ namespace SappPasRoot.Graph
             // bdTmp.Height = 80;
 
             return bdTmp;
+        }
+
+        /// <summary>
+        /// regarde si le dossier correspond
+        /// </summary>
+        /// <param name="mvGame"></param>
+        /// <returns></returns>
+        private bool CheckGame(MvGame mvGame)
+        {
+            bool valide = true;
+            foreach (var pathO in mvGame.EnumGetPaths)
+            {
+                if (String.IsNullOrEmpty(pathO.Original_RLink)) continue;
+                valide &= pathO.Original_RLink.Contains(tboxROldPath.Text);
+            }
+            return valide;
         }
         #endregion
 
@@ -293,7 +379,7 @@ namespace SappPasRoot.Graph
             DualBandV bdTmp = new DualBandV();
             bdTmp.Name = $"Bandeau - {MediaType}";
             bdTmp.Title = MediaType;
-            bdTmp.Padding = new Padding(0,1,0,1);
+            bdTmp.Padding = new Padding(0, 1, 0, 1);
             bdTmp.BackColor = Color.AliceBlue;
 
             bdTmp.ElementsBgd = Color.White;
@@ -346,7 +432,7 @@ namespace SappPasRoot.Graph
                 sender.Width = ContUnrolledWidth;
             }
 
-           // sender.Resize_Me();
+            // sender.Resize_Me();
             // flpGames.Width = sender.flp1.Width + 50;
             StyleMainFLP(ContUnrolledWidth);
 
@@ -372,7 +458,7 @@ namespace SappPasRoot.Graph
         {
             boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of layout background " + Environment.NewLine); ;
 
-         //   flpGames.BackColor = Color.FromArgb(141, 177, 227);
+            //   flpGames.BackColor = Color.FromArgb(141, 177, 227);
             //ContWidth = flpGames.Controls[0].Width; // lBandeaux[0].Width;
             int largFLP = widthsaispas + 6;
             if (flpGames.VerticalScroll.Enabled) largFLP += 22;
@@ -389,7 +475,7 @@ namespace SappPasRoot.Graph
 
         private void SetMainWindow()
         {
-            
+
             boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of window " + Environment.NewLine); ;
             int largr = flpGames.Width + 40;
             int hautr = flpGames.Height + boxLog.Height + tlpInfos.Height + 100;
@@ -412,95 +498,37 @@ namespace SappPasRoot.Graph
 
         #endregion
 
-        private void FillInformation()
-        {
-            boxLog.Text = boxLog.Text.Insert(0, @"Filling of information fields" + Environment.NewLine);
-            boxLog.Text = boxLog.Text.Insert(0, @"Transformation RelatLink To HardLink " + Environment.NewLine); ;
+        ///////// <summary>
+        ///////// Analyse les propriétés de tout le tableau pour calculer la taille des colonnes
+        ///////// </summary>
+        ///////// <param name="pathCollec"></param>
+        //////private Dictionary<string, int> AnalyseProps(PathsCollec[] pathCollec)
+        //////{
+        //////    boxLog.Text = boxLog.Text.Insert(0, @"Analysis of columns width" + Environment.NewLine); ;
 
-            //boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
+        //////    Dictionary<string, int> columns = new Dictionary<string, int>();
 
-            // conversion en dur du lien vers le dossier actuel           
-            /*_CRelatLink = PlatformFolder.Replace($@"\{Platform}", "");
-            _CRelatLink = _CRelatLink.Substring(0, _CRelatLink.LastIndexOf('\\'));
-            _CHardLink = Path.GetFullPath(Path.Combine(AppPath, _CRelatLink));
+        //////    // Name of the Media
+        //////    //PropertyInfo propMedia = typeof(MvFolder).GetProperty("MediaType");
+        //////    columns.Add("MediaType", Analyse.Rows(x => x.Type, pathCollec, new Label().Font).Width);
 
-            _NewRoot = _CHardLink;
+        //////    // OldPath            
+        //////    Size sORelat = Analyse.Rows(x => x.Original_RLink, pathCollec, bRelatFont);
+        //////    Size sOHard = Analyse.Rows(x => x.Original_HLink, pathCollec, bHardFont);
 
-            this.tboxROldPath.Text = _CRelatLink;
-            this.tboxHOldPath.Text = tbMainPath.Text = _CHardLink;*/
+        //////    columns.Add("UCP1", sOHard.Width > sORelat.Width ? sOHard.Width : sORelat.Width);
 
-            this.labPName.Text = PlatformName;
-            this.tboxROldPath.Text = _PlatformFolderRL;
-            this.tboxHOldPath.Text = _PlatformFolderHL;
-        }
-
-        /// <summary>
-        /// Analyse les propriétés de tout le tableau pour calculer la taille des colonnes
-        /// </summary>
-        /// <param name="pathCollec"></param>
-        private Dictionary<string, int> AnalyseProps(PathsCollec[] pathCollec)
-        {
-            boxLog.Text = boxLog.Text.Insert(0, @"Analysis of columns width" + Environment.NewLine); ;
-
-            Dictionary<string, int> columns = new Dictionary<string, int>();
-
-            // Name of the Media
-            //PropertyInfo propMedia = typeof(MvFolder).GetProperty("MediaType");
-            columns.Add("MediaType", Analyse.Rows(x => x.Type, pathCollec, new Label().Font).Width);
-
-            // OldPath            
-            Size sORelat = Analyse.Rows(x => x.Original_RLink, pathCollec, bRelatFont);
-            Size sOHard = Analyse.Rows(x => x.Original_HLink, pathCollec, bHardFont);
-
-            columns.Add("UCP1", sOHard.Width > sORelat.Width ? sOHard.Width : sORelat.Width);
-
-            // NewPath
-            Size sNRelat = Analyse.Rows(x => x.Destination_RLink, pathCollec, bRelatFont);
-            Size sNHard = Analyse.Rows(x => x.Destination_HLink, pathCollec, bHardFont);
+        //////    // NewPath
+        //////    Size sNRelat = Analyse.Rows(x => x.Destination_RLink, pathCollec, bRelatFont);
+        //////    Size sNHard = Analyse.Rows(x => x.Destination_HLink, pathCollec, bHardFont);
 
 
-            columns.Add("UCP2", sNHard.Width > sNRelat.Width ? sNHard.Width : sNRelat.Width);
+        //////    columns.Add("UCP2", sNHard.Width > sNRelat.Width ? sNHard.Width : sNRelat.Width);
 
-            return columns;
-        }
+        //////    return columns;
+        //////}
 
-        private void LaunchBoxMainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.Close();
-        }
-
-
-        /// <summary>
-        /// Makes fake list code for debugtest
-        /// </summary>
-        private void FakeGenerator()
-        {
-            boxLog.Text += Environment.NewLine;
-            boxLog.Text += $"LBGame[] KingOfSpain = new LBGame[{IPGames.Length}];" + Environment.NewLine;
-
-            for (int i = 0; i < IPGames.Length; i++)
-            {
-                var rameuh = IPGames[i];
-                var pseuRoot = @"I:\Frontend\LaunchBox\";
-
-                var gamename = $"game_{i}";
-
-                boxLog.Text += $"LBGame {gamename} = new LBGame();" + Environment.NewLine;
-                boxLog.Text += $"{gamename}.Title= \"{rameuh.Title}\";" + Environment.NewLine;
-                boxLog.Text += $"{gamename}.Id = \"{rameuh.Id}\";" + Environment.NewLine;
-                boxLog.Text += $"{ gamename}.ApplicationPath = @\"{rameuh.ApplicationPath}\";" + Environment.NewLine;
-
-                boxLog.Text += $"KingOfSpain[{i}] = {gamename};" + Environment.NewLine + Environment.NewLine;
-            }
-        }
-
-        private void CGamesPaths_Shown(object sender, EventArgs e)
-        {
-            GrabMyShovel();
-        }
-
-
-
+        #region simulation ++++++++++++++++++++++++++
         /// <summary>
         /// 
         /// </summary>
@@ -508,16 +536,6 @@ namespace SappPasRoot.Graph
         /// <param name="e"></param>
         private void btSimul_Click(object sender, EventArgs e)
         {
-            Dictionary<string, string> dicSystemPaths = new Dictionary<string, string>();
-
-
-
-            foreach (var ob in _PlatformObject.GetAllPlatformFolders())
-            {
-                Console.WriteLine($"{ob.MediaType}: {ob.FolderPath}");
-                boxLog.Text = boxLog.Text.Insert(0, $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine);
-                dicSystemPaths.Add(ob.MediaType, ob.FolderPath);
-            }
             boxLog.Clear();
             foreach (var game in _AmVGames)
             {
@@ -533,36 +551,45 @@ namespace SappPasRoot.Graph
 
                     boxLog.Text += Environment.NewLine + $@"type: {pathO.Type}: " + Environment.NewLine;
 
-                    int pos = pathO.Original_RLink.LastIndexOf('\\');
-                    string fichier = pathO.Original_RLink.Substring(pos + 1); //+1 pour lever le \
 
+                    // modes
+                    string fichier = "";
+                    if (rbForced.Checked)
+                    {
+                        int pos = pathO.Original_RLink.LastIndexOf('\\');
+                        fichier = pathO.Original_RLink.Substring(pos + 1); //+1 pour lever le \
+                    }
+                    else if (rbKeepSub.Checked)
+                    {
+                        int pos = pathO.Original_RLink.IndexOf($@"\{PlatformName}\");
+                        fichier = pathO.Original_RLink.Substring(pos + PlatformName.Length + 2);
+                    }
+                    //
 
                     boxLog.Text += $@"&Donc {pathO.Original_RLink}" + Environment.NewLine;
 
+                    //
                     string fileDest = "";
                     string rootPath = "";
 
                     switch (pathO.Type)
                     {
                         case "ApplicationPath":
-                            rootPath = _PlatformObject.Folder;
+                            rootPath = _PlatformFolderRL;
                             break;
 
-                        case "VideoPath":
-                            rootPath = dicSystemPaths["Video"];
+                        case "ManualPath":
+                            rootPath = dicSystemPaths["Manual"];
+                            boxLog.Text += $@"ManualPath détecté " + Environment.NewLine;
                             break;
 
                         case "MusicPath":
                             rootPath = dicSystemPaths["Music"];
                             boxLog.Text += $@"MusicPath détecté " + Environment.NewLine;
-
                             break;
 
-                        case "ManualPath":
-
-                            rootPath = dicSystemPaths["Manual"];
-                            boxLog.Text += $@"ManualPath détecté " + Environment.NewLine;
-
+                        case "VideoPath":
+                            rootPath = dicSystemPaths["Video"];
                             break;
                         #region
                         /*
@@ -609,10 +636,110 @@ namespace SappPasRoot.Graph
                     boxLog.Text += $@"{ fichier } => {fileDest}" + Environment.NewLine;
 
                     pathO.Destination_RLink = fileDest;
+                    pathO.Destination_HLink = Path.GetFullPath(Path.Combine(AppPath, fileDest));
                 }
             }
 
             GenerateTitles(_AmVGames);
+            btSimul.Visible = false;
+            btApply.Visible = true;
         }
+        #endregion
+
+        private void LaunchBoxMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Close();
+        }
+
+        #region Application des changements 
+
+        /// <summary>
+        /// Modification des datas - Datas modification
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btApply_Click(object sender, EventArgs e)
+        {
+            ApplyChanges();
+        }
+
+        private void ApplyChanges()
+        {
+            boxLog.Text = boxLog.Text.Insert(0, @"Process start ..." + Environment.NewLine);
+
+            foreach (MvGame game in _AmVGames)
+            {
+                DematroiChka(game);
+
+            }
+
+
+
+            /*
+            Game.FolderPath = Game.NewFolderPath;
+            Game.HFolderPath = Game.HNewFolderPath;
+            */
+            if (!DebugMode)
+            {
+
+                PluginHelper.DataManager.Save();
+                MessageBox.Show(Lang.Save_Ok, Lang.Save_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+                        
+            //FillInformation();
+            btApply.Visible = false;
+            btSimul.Visible = true;
+        }
+
+        /// <summary>
+        /// Envoie les paramètres aux originaux
+        /// </summary>
+        /// <remarks>n'utilise pas la partie graphique</remarks>
+        private void DematroiChka(MvGame game)
+        {
+            // Cherchez dans tous les IGames
+            IGame originalGame = null;
+            foreach (IGame igame in _IPGames)
+            {
+                if (igame.Id.Equals(game.Id))
+                {
+                    originalGame = igame;
+                    break;
+                }
+            }
+
+            if (originalGame == null) return;
+
+
+            // Passer tous les folders des mvGames dans IPGames
+            foreach (var collecOPaths in game.EnumGetPaths)
+            {
+                switch (collecOPaths.Type)
+                {
+                    case "ApplicationPath":
+                        originalGame.ApplicationPath = collecOPaths.Destination_RLink;
+                        break;
+
+                    case "ManualPath":
+                        originalGame.ManualPath = collecOPaths.Destination_RLink;
+                        break;
+
+                    case "MusicPath":
+                        originalGame.MusicPath = collecOPaths.Destination_RLink;
+                        break;
+
+                    case "VideoPath":
+                        originalGame.VideoPath = collecOPaths.Destination_RLink;
+                        break;
+
+                }
+
+                collecOPaths.Original_RLink = collecOPaths.Destination_RLink;
+                collecOPaths.Original_HLink = collecOPaths.Destination_HLink;
+                collecOPaths.Destination_HLink = collecOPaths.Destination_RLink = "Waiting...";
+            }
+        }
+
+        #endregion
     }
 }
