@@ -43,20 +43,25 @@ namespace SappPasRoot.Graph
         /// </summary>
        // private Dictionary<string, int> _Cols { get; set; }
 
-        /// <summary>
-        /// Bandeau déroulé
-        /// </summary>
+        private bool DebugMode;
+
+        #region Graphismes        
+        // Bandeau déroulé
         GameBandeauV _BandActif;
 
-        // Largeur du flowlayout principal
-        private int ContWidth;
-        // hauteur du bandeau et des éléments
+        // Largeurs
+        private int ContRolledWidth = 800;
+        private int ContUnrolledWidth = 0;
+        private int PathsWidth;
+
+        // hauteurs
         private int BandHeight;
+
+        // Polices
         private Font bRelatFont = new Font(FontFamily.GenericSansSerif, 9F, FontStyle.Bold);
         private Font bHardFont = new Font(FontFamily.GenericSansSerif, 7F);
+        #endregion
 
-
-        private bool DebugMode;
 
         public CGamesPaths()
         {
@@ -122,52 +127,25 @@ namespace SappPasRoot.Graph
             _AmVGames = MvGame.Convert(IPGames, AppPath);
 
             //AnalyseProps(aMvGames);
-
-            BackgroundWorker bGroundwker = new BackgroundWorker();
-            bGroundwker.DoWork += new DoWorkEventHandler(bw_Work1);
-            bGroundwker.ProgressChanged += new ProgressChangedEventHandler(bgw1_ProgressChanged);
-            //bGroundwker.RunWorkerAsync(aMvGames);
+            // Taille généralisée de la portion des chemins
+            PathsWidth =AnalyseVPrinciple(_AmVGames);
 
             GenerateTitles(_AmVGames);
 
-
-            StyleMainFLP();
-            SetMainWindow();
         }
 
-        private void bgw1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            //   throw new NotImplementedException();
-        }
 
-        /// <summary>
-        /// Travail en background à faire
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void bw_Work1(object sender, DoWorkEventArgs e)
-        {
-            MvGame[] aMvGames = (MvGame[])e.Argument;
-            GenerateTitles(aMvGames);
-        }
-
-        #region Graphismes
-
+        #region Title
         /// <summary>
         /// Création des bandeaux de titre
         /// </summary>
         /// <param name="aMvGames"></param>
         private void GenerateTitles(MvGame[] aMvGames)
         {
-            try
-            {
-                boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
-                flpGames.Controls.Clear();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
+            boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
+            flpGames.Controls.Clear();
+
+
             foreach (var mvGame in aMvGames)
             {
                 toolStripStatusLabel1.Text = $"Création of bandeau: {mvGame.Title}";
@@ -177,6 +155,7 @@ namespace SappPasRoot.Graph
                 GameBandeauV bdTmp = StyleTitles(mvGame.Id);
                 bdTmp.Objet = mvGame;
                 bdTmp.Title += $" {mvGame.Title}";
+                bdTmp.Resize_Me();
 
                 flpGames.Controls.Add(bdTmp);
                 //bdTmp.Dock = DockStyle.Top;
@@ -184,49 +163,11 @@ namespace SappPasRoot.Graph
                 flpGames.Refresh();
                 //lBandeaux.Add(bdTmp);
             }
+
+            StyleMainFLP(ContRolledWidth);
+            SetMainWindow();
         }
-
-
-        /// <summary>
-        /// Genère les bandeaux de paths
-        /// </summary>
-        /// <param name="folders"></param>
-        /// <returns></returns>
-        private async Task GeneratePaths(MvGame game, FlowLayoutPanel flp, Dictionary<string, int> columns)
-        {
-            boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
-
-            /*flp.Clear();
-            
-            PlatformBandeau game = StyleBandeaux("Game");
-            game.UCPath1.RelatPath = Game.FolderPath;
-            game.UCPath1.FullPath = Game.HFolderPath;
-            game.UCPath2.RelatPath = Game.NewFolderPath;
-            game.UCPath2.FullPath = Game.HNewFolderPath;
-
-            flpGames.Controls.Add(game);
-            flpGames.Refresh();
-            lBandeaux.Add(game);
-            */
-            foreach (var pathO in game.GetPaths)
-            {
-                /* Label pfbGame = new Label();
-                 pfbGame.Text = path.Type;*/
-
-                //PlatformBandeau pfbGame = StylePaths(pathO.Type, columns);
-                DualBandV dbV = StylePaths(pathO.Type, columns);
-                //dbV.lbTitle.Text = pathO.Type;
-                //pfbGame.CategValue = pathO.Type;
-                dbV.ucPaths21.RelatPath = pathO.Original_RLink;
-                dbV.ucPaths21.FullPath = pathO.Original_HLink;
-
-                dbV.ucPaths22.RelatPath = pathO.Destination_RLink;
-                dbV.ucPaths22.FullPath = pathO.Destination_HLink;
-                flp.Controls.Add(dbV);
-            }
-            // games.Add(bdTmp);
-        }
-
+               
         /// <summary>
         /// Style des titres
         /// </summary>
@@ -242,16 +183,75 @@ namespace SappPasRoot.Graph
             bdTmp.DeroulBand += new GameBandeauV.DeroulHandler(DeroulBand);
             bdTmp.EnroulBand += EnroulBand;
 
+            bdTmp.BackColor = Color.Crimson;
+
             //    bdTmp.Height = bdTmp
             BandHeight = bdTmp.Height + 2;
             bdTmp.AutoSize = false;
             //  = BandHeight = 54;
-            bdTmp.Width = bdTmp.flp1.Width;
+            bdTmp.Width = ContRolledWidth;
+
             // bdTmp.Height = 80;
 
             return bdTmp;
         }
+        #endregion
 
+        #region Graphismes Paths
+        /// <summary>
+        /// Genère les bandeaux de paths
+        /// </summary>
+        /// <param name="folders"></param>
+        /// <returns></returns>
+        private async Task GeneratePaths(GameBandeauV gameBand, MvGame game)
+        {
+            boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
+
+            //int largeurBandeau = AnalyseVPrinciple(game.GetPaths);
+
+
+            //largeurBandeau = 850;
+
+            foreach (var pathO in game.GetPaths)
+            {
+                if (string.IsNullOrEmpty(pathO.Original_RLink)) continue;
+
+                DualBandV dbV = StylePaths(pathO.Type, PathsWidth);
+                gameBand.flp1.Controls.Add(dbV);
+
+                dbV.ucPaths21.RelatPath = pathO.Original_RLink;
+                dbV.ucPaths21.FullPath = pathO.Original_HLink;
+
+                dbV.ucPaths22.RelatPath = pathO.Destination_RLink;
+                dbV.ucPaths22.FullPath = pathO.Destination_HLink;
+
+            }
+            gameBand.Resize_Me();
+            // games.Add(bdTmp);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pathCollec"></param>
+        private int AnalyseVPrinciple(MvGame[] mvGames)
+        {
+            boxLog.Text = boxLog.Text.Insert(0, @"AnalyseVPrinciple" + Environment.NewLine); ;
+
+            int retour = 0;
+            foreach (MvGame mvG in mvGames)
+            {
+                int lOrgRelat = Analyse.Rows(x => x.Original_RLink, mvG.GetPaths, bRelatFont).Width;
+                int lOrgHard = Analyse.Rows(x => x.Original_HLink, mvG.GetPaths, bHardFont).Width;
+                int lDestRelat = Analyse.Rows(x => x.Destination_RLink, mvG.GetPaths, bRelatFont).Width;
+                int lDestHard = Analyse.Rows(x => x.Destination_HLink, mvG.GetPaths, bHardFont).Width;
+                int tmp = Math.Max(lOrgRelat, Math.Max(lOrgHard, Math.Max(lDestRelat, lDestHard)));
+                retour = tmp > retour ? tmp : retour;
+            }
+            //            int lType = Analyse.Rows(x => x.Type, pathCollec, new Label().Font).Width + 50;     // taille de l'image de retour
+
+            return retour;
+        }
 
         /*
         private PlatformBandeau StylePaths(string MediaType, Dictionary<string,int> columns)
@@ -280,76 +280,41 @@ namespace SappPasRoot.Graph
             return bdTmp;
         }
         */
-
-
-        private DualBandV StylePaths(string MediaType, Dictionary<string, int> columns)
+        /// <summary>
+        /// Style des chemins
+        /// </summary>
+        /// <param name="MediaType"></param>
+        /// <param name="lCols"></param>
+        /// <returns></returns>
+        private DualBandV StylePaths(string MediaType, int lCols)
         {
             int rightSpace = 10;
 
             DualBandV bdTmp = new DualBandV();
             bdTmp.Name = $"Bandeau - {MediaType}";
             bdTmp.Title = MediaType;
+            bdTmp.Padding = new Padding(0,1,0,1);
+            bdTmp.BackColor = Color.AliceBlue;
 
-            //bdTmp.ElementsBgd = Color.White;
+            bdTmp.ElementsBgd = Color.White;
             //bdTmp.ElementsHeight = BandHeight = 60;
-            bdTmp.Height = BandHeight * 2;
-            bdTmp.BackColor = Color.FromArgb(0);
+            // bdTmp.Height = BandHeight * 1;
+            //bdTmp.BackColor = Color.FromArgb(50);
 
             // bdTmp.CategWidth = columns["MediaType"] + rightSpace; ;
 
             bdTmp.ucPaths21.TopFont = bHardFont;
             bdTmp.ucPaths21.BottomFont = bRelatFont;
-            bdTmp.ucPaths21.Width = columns["UCP1"] + rightSpace; ;
 
             bdTmp.ucPaths22.TopFont = bHardFont;
             bdTmp.ucPaths22.BottomFont = bRelatFont;
-            bdTmp.ucPaths22.Width = columns["UCP2"] + rightSpace; ;
+
+            // int witdhMax = columns["UCP1"] > columns["UCP2"] ? columns["UCP1"] : columns["UCP2"];
+            bdTmp.ucPaths21.Width = lCols + rightSpace; ;
+            bdTmp.ucPaths22.Width = lCols + rightSpace; ;
 
             return bdTmp;
         }
-
-
-
-        private void StyleMainFLP()
-        {
-            boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of layout background " + Environment.NewLine); ;
-
-            flpGames.BackColor = Color.FromArgb(141, 177, 227);
-            ContWidth = flpGames.Controls[0].Width; // lBandeaux[0].Width;
-            if (flpGames.VerticalScroll.Enabled) ContWidth += 22;
-
-            //_Cols.Sum(x => x.Value);
-            // Height size of each item
-            int minheightB = (BandHeight + 6) * 4;
-            int minH = Screen.PrimaryScreen.Bounds.Height < minheightB ? Screen.PrimaryScreen.Bounds.Height : minheightB;
-
-            flpGames.Size = flpGames.MinimumSize = new Size(ContWidth + 6, flpGames.Height);
-
-            //this.flpPaths.MaximumSize = new Size(ContWidth + 6, maxH);
-            //flpPaths.MinimumSize = new Size(ContWidth +6, flpPaths.Height);
-        }
-
-
-        private void ResizeTextBox(object sender, EventArgs e)
-        {
-            GraphFunc.ResizeTextBox(sender);
-        }
-
-        private void flpGames_MouseHover(object sender, EventArgs e)
-        {
-            /* if (_BandActif != null) _BandActif.Collapse_Fl();
-             _BandActif = null;
-             StyleMainFLP();
-             SetMainWindow();*/
-        }
-
-        private void EnroulBand(GameBandeauV sender)
-        {
-            statusStrip1.Text = ("EnroulBand");
-            Console.WriteLine("EnroulBand");
-            StyleMainFLP();
-        }
-
 
         /// <summary>
         /// Rempli chaque flowlayout d'un jeu avec les informations relatives aux paths
@@ -365,24 +330,88 @@ namespace SappPasRoot.Graph
             _BandActif = sender;
             if (sender.flp1.Controls.Count == 0)
             {
+
                 MvGame game = (MvGame)sender.Objet;
 
-                var paths = game.GetPaths;
-
-                var columns = AnalyseProps(paths);
-
-                columns.Add("Arrow", 20);
-                GeneratePaths(game, sender.flp1, columns);
+                GeneratePaths(sender, game);
                 boxLog.Text = boxLog.Text.Insert(0, $"Generate graphical elements for '{game.Title}'" + Environment.NewLine); ;
             }
 
-            flpGames.Width = sender.flp1.Width + 50;
-            StyleMainFLP();
+            if (sender.Width > ContUnrolledWidth)
+            {
+                ContUnrolledWidth = sender.Width;
+            }
+            else
+            {
+                sender.Width = ContUnrolledWidth;
+            }
+
+           // sender.Resize_Me();
+            // flpGames.Width = sender.flp1.Width + 50;
+            StyleMainFLP(ContUnrolledWidth);
 
             SetMainWindow();
         }
 
+        private void EnroulBand(GameBandeauV sender)
+        {
+            statusStrip1.Text = ("EnroulBand");
+            Console.WriteLine("EnroulBand");
+
+            //    StyleMainFLP(ContRolledWidth);
+        }
+
         #endregion
+
+        #region Graph general
+        /// <summary>
+        /// Style du conteneur principal
+        /// </summary>
+        /// <param name="width"></param>
+        private void StyleMainFLP(int widthsaispas)
+        {
+            boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of layout background " + Environment.NewLine); ;
+
+         //   flpGames.BackColor = Color.FromArgb(141, 177, 227);
+            //ContWidth = flpGames.Controls[0].Width; // lBandeaux[0].Width;
+            int largFLP = widthsaispas + 6;
+            if (flpGames.VerticalScroll.Enabled) largFLP += 22;
+
+            //_Cols.Sum(x => x.Value);
+            // Height size of each item
+            int minheightB = (BandHeight + 6) * 4;
+            //int minH = Screen.PrimaryScreen.Bounds.Height < minheightB ? Screen.PrimaryScreen.Bounds.Height : minheightB;
+
+            flpGames.Size = flpGames.MinimumSize = new Size(largFLP, flpGames.Height);
+
+        }
+
+
+        private void SetMainWindow()
+        {
+            
+            boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of window " + Environment.NewLine); ;
+            int largr = flpGames.Width + 40;
+            int hautr = flpGames.Height + boxLog.Height + tlpInfos.Height + 100;
+
+            // Mainwindow size + Block according to primary screen
+            largr = Screen.PrimaryScreen.Bounds.Width > largr ? largr : Screen.PrimaryScreen.Bounds.Width;
+            hautr = Screen.PrimaryScreen.Bounds.Height > hautr ? hautr : Screen.PrimaryScreen.Bounds.Height;
+
+            Size = new Size(largr, hautr);
+
+            boxLog.Width = flpGames.Width;
+            panelTop.Width = flpGames.Width;
+        }
+
+
+        private void ResizeTextBox(object sender, EventArgs e)
+        {
+            GraphFunc.ResizeTextBox(sender);
+        }
+
+        #endregion
+
         private void FillInformation()
         {
             boxLog.Text = boxLog.Text.Insert(0, @"Filling of information fields" + Environment.NewLine);
@@ -472,22 +501,6 @@ namespace SappPasRoot.Graph
 
 
 
-        private void SetMainWindow()
-        {
-            boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of window " + Environment.NewLine); ;
-            int largr = flpGames.Width + 40;
-            int hautr = flpGames.Height + boxLog.Height + tlpInfos.Height + 100;
-
-            // Mainwindow size + Block according to primary screen
-            largr = Screen.PrimaryScreen.Bounds.Width > largr ? largr : Screen.PrimaryScreen.Bounds.Width;
-            hautr = Screen.PrimaryScreen.Bounds.Height > hautr ? hautr : Screen.PrimaryScreen.Bounds.Height;
-
-            Size = new Size(largr, hautr);
-
-            boxLog.Width = flpGames.Width;
-            panelTop.Width = flpGames.Width;
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -525,7 +538,6 @@ namespace SappPasRoot.Graph
 
 
                     boxLog.Text += $@"&Donc {pathO.Original_RLink}" + Environment.NewLine;
-                    boxLog.Text += $@"{ pos }" + Environment.NewLine;
 
                     string fileDest = "";
                     string rootPath = "";
@@ -533,7 +545,7 @@ namespace SappPasRoot.Graph
                     switch (pathO.Type)
                     {
                         case "ApplicationPath":
-                            //rootPath = dicSystemPaths["ApplicationPath"];
+                            rootPath = _PlatformObject.Folder;
                             break;
 
                         case "VideoPath":

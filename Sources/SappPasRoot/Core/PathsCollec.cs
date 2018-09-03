@@ -23,8 +23,8 @@ namespace SappPasRoot.Core
             Original_RLink = orelatlink;
             Original_HLink = Path.GetFullPath(Path.Combine(refPath, orelatlink));
 
-            Destination_RLink = orelatlink;
-            Destination_HLink = Original_HLink;
+            Destination_RLink = "Waiting...";
+            Destination_HLink = "Waiting...";
         }
     }
 }

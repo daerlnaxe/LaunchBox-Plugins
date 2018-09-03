@@ -167,7 +167,6 @@ namespace SappPasRoot.Graph
         /// </summary>
         private async void GrabMyShovel()
         {
-
             FillInformation();
 
             // Assignation du dernier chemin visité
@@ -187,17 +186,14 @@ namespace SappPasRoot.Graph
             aMVFolders = MvFolder.Convert(IPFolders, AppPath);
 
             AnalyseProps(aMVFolders);
-
-
+            
             await GenerateInfoPath(aMVFolders);
-
-
+            
             /*
             // Reorder
             dicFolder.OrderBy( x => x.Key);
             */
-
-
+            
             StyleMainFLP();
             SetMainWindow();
             boxLog.Text = boxLog.Text.Insert(0, @"Ready." + Environment.NewLine);
@@ -259,7 +255,6 @@ namespace SappPasRoot.Graph
         {
             boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
       
-
             flpPaths.Controls.Clear();
 
             lBandeaux.Clear();
@@ -272,8 +267,6 @@ namespace SappPasRoot.Graph
             flpPaths.Controls.Add(game);
             flpPaths.Refresh();
             lBandeaux.Add(game);
-
-
 
             foreach (var folder in folders)
             {
@@ -359,8 +352,7 @@ namespace SappPasRoot.Graph
 
             return bdTmp;
         }
-
-
+        
         private void ResizeTextBox(object sender, EventArgs e)
         {
             GraphFunc.ResizeTextBox(sender);

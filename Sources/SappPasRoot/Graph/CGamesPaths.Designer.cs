@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
             "e",
             "e\""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
             "e",
             "r"}, -1);
             this.boxLog = new System.Windows.Forms.RichTextBox();
@@ -73,12 +73,10 @@
             // 
             // boxLog
             // 
-            this.boxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxLog.Location = new System.Drawing.Point(12, 510);
+            this.boxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.boxLog.Location = new System.Drawing.Point(22, 554);
             this.boxLog.Name = "boxLog";
-            this.boxLog.Size = new System.Drawing.Size(518, 83);
+            this.boxLog.Size = new System.Drawing.Size(984, 89);
             this.boxLog.TabIndex = 1;
             this.boxLog.Text = "";
             // 
@@ -109,11 +107,11 @@
             this.columnHeader6,
             this.columnHeader7});
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
+            listViewItem13,
+            listViewItem14});
             this.listView1.Location = new System.Drawing.Point(700, 20);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(172, 86);
+            this.listView1.Size = new System.Drawing.Size(183, 86);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -149,6 +147,8 @@
             // 
             // panelTop
             // 
+            this.panelTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.panelTop.AutoSize = true;
             this.panelTop.Controls.Add(this.flpGames);
             this.panelTop.Controls.Add(this.listView1);
@@ -156,7 +156,7 @@
             this.panelTop.Controls.Add(this.tlpInfos);
             this.panelTop.Location = new System.Drawing.Point(22, 12);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(990, 544);
+            this.panelTop.Size = new System.Drawing.Size(1001, 536);
             this.panelTop.TabIndex = 6;
             // 
             // flpGames
@@ -164,16 +164,14 @@
             this.flpGames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flpGames.AutoScroll = true;
-            this.flpGames.BackColor = System.Drawing.Color.DarkGreen;
-            this.flpGames.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flpGames.BackColor = System.Drawing.SystemColors.Control;
             this.flpGames.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpGames.Location = new System.Drawing.Point(3, 160);
             this.flpGames.MinimumSize = new System.Drawing.Size(760, 200);
             this.flpGames.Name = "flpGames";
-            this.flpGames.Size = new System.Drawing.Size(984, 384);
+            this.flpGames.Size = new System.Drawing.Size(984, 376);
             this.flpGames.TabIndex = 1;
             this.flpGames.WrapContents = false;
-            this.flpGames.MouseHover += new System.EventHandler(this.flpGames_MouseHover);
             // 
             // tableLayoutPanel1
             // 
@@ -193,7 +191,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 33);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(985, 33);
             this.tableLayoutPanel1.TabIndex = 27;
             // 
             // titChooseFolder
@@ -215,7 +213,7 @@
             this.tbMainPath.MaximumSize = new System.Drawing.Size(400, 4);
             this.tbMainPath.MinimumSize = new System.Drawing.Size(4, 20);
             this.tbMainPath.Name = "tbMainPath";
-            this.tbMainPath.Size = new System.Drawing.Size(270, 20);
+            this.tbMainPath.Size = new System.Drawing.Size(275, 20);
             this.tbMainPath.TabIndex = 1;
             // 
             // flowLayoutPanel1
@@ -225,7 +223,7 @@
             this.flowLayoutPanel1.Controls.Add(this.btSimul);
             this.flowLayoutPanel1.Controls.Add(this.btApply);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(452, 3);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(457, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.tableLayoutPanel1.SetRowSpan(this.flowLayoutPanel1, 2);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(243, 27);
@@ -374,7 +372,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 583);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 646);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1107, 22);
             this.statusStrip1.TabIndex = 7;
@@ -390,7 +388,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1107, 605);
+            this.ClientSize = new System.Drawing.Size(1107, 668);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.boxLog);
             this.Controls.Add(this.panelTop);
