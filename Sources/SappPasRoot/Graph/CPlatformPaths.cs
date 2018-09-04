@@ -16,6 +16,7 @@ using Unbroken.LaunchBox.Plugins;
 using Unbroken.LaunchBox.Plugins.Data;
 using DxPaths.Windows;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace SappPasRoot.Graph
 {
@@ -32,7 +33,7 @@ namespace SappPasRoot.Graph
         // Liste des dossiers
         private IPlatformFolder[] _IPFolders { get; set; }
         private MvFolder[] _AMVFolders { get; set; }
-        private MvFolder Game { get; set; }
+        // private MvFolder Game { get; set; }
 
         private IPlatform _PlatformObject;
 
@@ -173,14 +174,13 @@ namespace SappPasRoot.Graph
             }
 
 
-            //Obsolète ? 
-            Game = new MvFolder(PlatformFolder, AppPath);
-            Game.Platform = Platform;
-            Game.MediaType = "Game";
+            //  MvFolder game = new MvFolder(PlatformFolder, AppPath);
+            // game.Platform = Platform;
+            // game.MediaType = "Game";
 
             // Conversion to MvFolder
             //Dictionary<string, IPlatformFolder> dicFolder = new Dictionary<string, IPlatformFolder>();
-            _AMVFolders = MvFolder.Convert(_IPFolders, AppPath);
+            _AMVFolders = MvFolder.Convert(_IPFolders, PlatformFolder, AppPath);
 
             AnalyseProps(_AMVFolders);
 
@@ -263,7 +263,7 @@ namespace SappPasRoot.Graph
             flpPaths.Controls.Clear();
 
             lBandeaux.Clear();
-            PlatformBandeau game = StyleBandeaux("Game");
+            /*PlatformBandeau game = StyleBandeaux("Game");
             game.UCPath1.RelatPath = Game.FolderPath;
             game.UCPath1.FullPath = Game.HFolderPath;
             game.UCPath2.RelatPath = Game.NewFolderPath;
@@ -271,7 +271,7 @@ namespace SappPasRoot.Graph
 
             flpPaths.Controls.Add(game);
             flpPaths.Refresh();
-            lBandeaux.Add(game);
+            lBandeaux.Add(game);*/
 
             foreach (var folder in folders)
             {
@@ -422,10 +422,12 @@ namespace SappPasRoot.Graph
 
         private void btSimul_Click(object sender, EventArgs e)
         {
+            boxLog.Text += @"Simuation start ..." + Environment.NewLine;
             if (tlpFolders.Visible) tlpFolders.Visible = MoreShowed = false;
             AlterPath();
             btApply.Visible = true;
             btSimul.Visible = false;
+            boxLog.Text += @"Simuation finished" + Environment.NewLine;
         }
 
         /// <summary>
@@ -433,23 +435,25 @@ namespace SappPasRoot.Graph
         /// </summary>
         private async void AlterPath()
         {
-            boxLog.Text += @"Simuation start ..." + Environment.NewLine;
-
-            Game.HNewFolderPath = Path.Combine(_NewRoot, tbGames.Text, Platform);
-            Game.NewFolderPath = DxPath.ToRelative(AppPath, Game.HNewFolderPath);
+            Debug.WriteLine("[PlatformPaths] AlterPath");
+            Debug.Indent();
+            //////Game.HNewFolderPath = Path.Combine(_NewRoot, tbGames.Text, Platform);
+            //////Game.NewFolderPath = DxPath.ToRelative(AppPath, Game.HNewFolderPath);
 
 
             for (int i = 0; i < _AMVFolders.Length; i++)
             {
                 var amvF = _AMVFolders[i];
 
+                Debug.WriteLine($"[AlterPath] {amvF.MediaType}");
+
                 // Choix de filtrer que videos / games / manuals / music et ... ?
                 string hardPath;
                 switch (amvF.MediaType)
                 {
-                    //case "Game":
-                    //    hardPath = Path.Combine(_NewRoot, tbGames.Text, Platform);
-                    //    break;
+                    case "Game":
+                        hardPath = Path.Combine(_NewRoot, tbGames.Text, Platform);
+                        break;
 
                     case "Manual":
                         hardPath = Path.Combine(_NewRoot, tbManual.Text, Platform);
@@ -476,6 +480,9 @@ namespace SappPasRoot.Graph
 
 
             }
+
+            Debug.Unindent();
+
             //
             AnalyseProps(_AMVFolders);
             await GenerateInfoPath(_AMVFolders);
@@ -511,23 +518,19 @@ namespace SappPasRoot.Graph
             Properties.Settings.Default.MusicFolder = this.tbMusic.Text;
             Properties.Settings.Default.VideoFolder = this.tbVideo.Text;
             Properties.Settings.Default.Save();
-
-            // Modification of App
-            Game.FolderPath = Game.NewFolderPath;
-            Game.HFolderPath = Game.HNewFolderPath;
-            Game.NewFolderPath = Game.HNewFolderPath = Lang.Waiting;
-
-
+                                 
             DematrioChka();
 
             if (!DebugMode)
             {
-                _PlatformObject.Folder = Game.FolderPath;
+                _PlatformObject.Folder = _AMVFolders[0].FolderPath;
 
                 PluginHelper.DataManager.Save();
             }
 
-            PlatformFolder = Game.FolderPath;
+
+            PlatformFolder = _AMVFolders[0].FolderPath;
+
             FillInformation();
             GenerateInfoPath(_AMVFolders);
 
@@ -547,9 +550,7 @@ namespace SappPasRoot.Graph
                 btSimul.Visible = true;
             }
             //MessageBox.Show(Lang.Save_Ok, Lang.Save_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-
+                       
         }
 
         /// <summary>
@@ -558,10 +559,24 @@ namespace SappPasRoot.Graph
         /// <remarks>n'utilise pas la partie graphique</remarks>
         private void DematrioChka()
         {
+            Debug.WriteLine("[PlatformPaths] [Dematriochka]");
+            Debug.Indent();
+
+            // Modification of App
+            var game = _AMVFolders[0];
+
+            // Traitement manuel car ce dossier n'est pas contenu dans les ipfolder
+            Debug.WriteLine("[Dematriochka] Traitement de Game");
+            game.FolderPath = game.NewFolderPath;
+            game.HFolderPath = game.HNewFolderPath;
+            game.NewFolderPath = game.HNewFolderPath = Lang.Waiting;
+
             foreach (var ipFolder in _IPFolders)
             {
                 foreach (var mvFolder in _AMVFolders)
                 {
+                    Debug.WriteLine($"[PlatformPaths][Dematriochka] Traitement de {mvFolder.MediaType}");
+
                     if (String.Equals(ipFolder.MediaType, mvFolder.MediaType))
                     {
 
@@ -576,6 +591,7 @@ namespace SappPasRoot.Graph
 
                 }
             }
+            Debug.Unindent();
         }
 
         #endregion

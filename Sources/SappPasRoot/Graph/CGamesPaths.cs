@@ -584,30 +584,38 @@ namespace SappPasRoot.Graph
         /// <param name="e"></param>
         private void btSimul_Click(object sender, EventArgs e)
         {
-
+            boxLog.Text += "Simulation"+Environment.NewLine;
             AlterPath();
             GenerateTitles(_AmVGames);
             btSimul.Visible = false;
             btApply.Visible = true;
+            boxLog.Text += "End of Simulation"+Environment.NewLine;
         }
 
         private void AlterPath()
         {
-            boxLog.Text += Environment.NewLine;
+            Debug.WriteLine("");
             foreach (var game in _AmVGames)
             {
-                boxLog.Text += $@"{game.Title}: " + Environment.NewLine;
+                Debug.WriteLine($@"{game.Title}: ");
+
+                // say mode
+                if (rbForced.Checked) Debug.WriteLine("Forced mode");
+                else if(rbKeepSub.Checked) Debug.WriteLine("KeepSub mode");
+
+                Debug.Indent();
 
                 foreach (var pathO in game.EnumGetPaths)
                 {
+                    Debug.Write($@"type: {pathO.Type}: ");
+
                     if (string.IsNullOrEmpty(pathO.Original_RLink))
                     {
-                        boxLog.Text += $@"type: {pathO.Type}: null" + Environment.NewLine;
+                        Debug.WriteLine("null");
                         continue;
                     }
 
-                    boxLog.Text += Environment.NewLine + $@"type: {pathO.Type}: " + Environment.NewLine;
-
+                    Debug.WriteLine($@"{pathO.Original_RLink}");
 
                     // modes
                     string fichier = "";
@@ -621,10 +629,7 @@ namespace SappPasRoot.Graph
                         int pos = pathO.Original_RLink.IndexOf($@"\{PlatformName}\");
                         fichier = pathO.Original_RLink.Substring(pos + PlatformName.Length + 2);
                     }
-                    //
-
-                    boxLog.Text += $@"&Donc {pathO.Original_RLink}" + Environment.NewLine;
-
+                    
                     //
                     string fileDest = "";
                     string rootPath = "";
@@ -632,17 +637,16 @@ namespace SappPasRoot.Graph
                     switch (pathO.Type)
                     {
                         case "ApplicationPath":
-                            rootPath = _PlatformFolderRL;
+                            //  rootPath = _PlatformFolderRL;
+                            rootPath = dicSystemPaths["Application"];
                             break;
 
                         case "ManualPath":
                             rootPath = dicSystemPaths["Manual"];
-                            boxLog.Text += $@"ManualPath détecté " + Environment.NewLine;
                             break;
 
                         case "MusicPath":
                             rootPath = dicSystemPaths["Music"];
-                            boxLog.Text += $@"MusicPath détecté " + Environment.NewLine;
                             break;
 
                         case "VideoPath":
@@ -684,13 +688,14 @@ namespace SappPasRoot.Graph
 
                         #endregion
                         default:
-                            boxLog.Text += $@"Non traité: {pathO.Type}: " + Environment.NewLine;
+                            Debug.WriteLine("!!! Untreated");
                             continue;
 
                     }
+                    Debug.Unindent();
 
                     fileDest = Path.Combine(rootPath, fichier);
-                    boxLog.Text += $@"{ fichier } => {fileDest}" + Environment.NewLine;
+                    Debug.WriteLine($@"{ fichier } => {fileDest}");
 
                     pathO.Destination_RLink = fileDest;
                     pathO.Destination_HLink = Path.GetFullPath(Path.Combine(AppPath, fileDest));

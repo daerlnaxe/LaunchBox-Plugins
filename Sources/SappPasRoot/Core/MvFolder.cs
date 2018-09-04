@@ -12,7 +12,7 @@ namespace SappPasRoot.Core
     {
         public string Platform { get; set; }
         public string MediaType { get; set; }
-        
+
         /// <summary>
         /// LaunchBox relative link - original
         /// </summary>
@@ -58,12 +58,23 @@ namespace SappPasRoot.Core
              NewPath = "src.FolderPath";// bug put to src.NewPath after test
          }*/
 
-        public static MvFolder[] Convert(IPlatformFolder[] ArrPlatFolder, string LaunchBoxRoot)
+        /// <summary>
+        /// Converti un array de classes implémentants IPlatformFolder
+        /// </summary>
+        /// <param name="ArrPlatFolder"></param>
+        /// <param name="PlatformFolder">Permet de récupérer le dossier de l'application</param>
+        /// <param name="LaunchBoxRoot">La racine du programme</param>
+        /// <returns></returns>
+        public static MvFolder[] Convert(IPlatformFolder[] ArrPlatFolder, string PlatformFolder, string LaunchBoxRoot)
         {
-            MvFolder[] retMVF = new MvFolder[ArrPlatFolder.Length];
-            for (int i = 0; i < ArrPlatFolder.Length; i++)
+            MvFolder[] retMVF = new MvFolder[ArrPlatFolder.Length + 1];     // On ajoute 1 pour introduire le dossier de jeu
+            retMVF[0] = new MvFolder(PlatformFolder, LaunchBoxRoot);
+            retMVF[0].MediaType = "Game";
+            retMVF[0].Platform = ArrPlatFolder[0].Platform;
+
+            for (int i = 1; i < retMVF.Length; i++)
             {
-                retMVF[i] = new MvFolder(ArrPlatFolder[i], LaunchBoxRoot);
+                retMVF[i] = new MvFolder(ArrPlatFolder[i-1], LaunchBoxRoot);      
             }
 
             return retMVF;
