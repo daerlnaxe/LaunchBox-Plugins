@@ -219,7 +219,7 @@ namespace SappPasRoot.Graph
 
                 GameBandeauV bdTmp = StyleTitles(mvGame.Id);
                 bdTmp.Objet = mvGame;
-                bdTmp.Title += $" {mvGame.Title}";
+                bdTmp.Title = $" {mvGame.Title}";
                 bdTmp.Resize_Me();
 
                 mvGame.Valide = CheckGame(mvGame);
