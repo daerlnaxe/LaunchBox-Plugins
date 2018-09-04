@@ -68,12 +68,11 @@ namespace SappPasRoot.Graph
 
         private void CGamesPaths_Load(object sender, EventArgs e)
         {
-            //GrabMyShovel();
+            GrabMyShovel();
         }
 
         private void CGamesPaths_Shown(object sender, EventArgs e)
         {
-            GrabMyShovel();
         }
 
         internal void Initialization(IPlatform platform)
@@ -153,7 +152,7 @@ namespace SappPasRoot.Graph
         /// <summary>
         /// 
         /// </summary>
-        private void GrabMyShovel()
+        private async void GrabMyShovel()
         {
             FillInformation();
 
@@ -170,7 +169,7 @@ namespace SappPasRoot.Graph
             // Taille généralisée de la portion des chemins
             PathsWidth = AnalyseVPrinciple(_AmVGames);
 
-            GenerateTitles(_AmVGames);
+            await GenerateTitles(_AmVGames);
 
         }
 
@@ -206,7 +205,7 @@ namespace SappPasRoot.Graph
         /// Création des bandeaux de titre
         /// </summary>
         /// <param name="aMvGames"></param>
-        private void GenerateTitles(MvGame[] aMvGames)
+        private async Task GenerateTitles(MvGame[] aMvGames)
         {
             boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
             flpGames.Controls.Clear();
