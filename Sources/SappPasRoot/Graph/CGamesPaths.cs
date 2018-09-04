@@ -738,7 +738,7 @@ namespace SappPasRoot.Graph
 
         private void CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox cb = (CheckBox)sender;
+            RadioButton cb = (RadioButton)sender;
             if (cb.Checked)
             {
                 btApply.Visible = false;
