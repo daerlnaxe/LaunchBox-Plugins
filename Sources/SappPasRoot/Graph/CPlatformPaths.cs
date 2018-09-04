@@ -66,7 +66,7 @@ namespace SappPasRoot.Graph
         /// </summary>
         internal void Initialization()
         {
-            PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
+            //  PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
             boxLog.Text = "Initialisation";
             //
             AppPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -186,14 +186,14 @@ namespace SappPasRoot.Graph
             _AMVFolders = MvFolder.Convert(_IPFolders, AppPath);
 
             AnalyseProps(_AMVFolders);
-            
+
             await GenerateInfoPath(_AMVFolders);
-            
+
             /*
             // Reorder
             dicFolder.OrderBy( x => x.Key);
             */
-            
+
             StyleMainFLP();
             SetMainWindow();
             boxLog.Text = boxLog.Text.Insert(0, @"Ready." + Environment.NewLine);
@@ -230,17 +230,17 @@ namespace SappPasRoot.Graph
             _Cols.Add("Arrow", 20);
             // Name of the Media
             //PropertyInfo propMedia = typeof(MvFolder).GetProperty("MediaType");
-            _Cols.Add("MediaType", Analyse.Rows(x => x.MediaType, folders, new Label().Font).Width);
+            _Cols.Add("MediaType", Analyse.One_Col(x => x.MediaType, folders, new Label().Font).Width);
 
             // OldPath            
-            Size sORelat = Analyse.Rows(x => x.FolderPath, folders, bRelatFont);
-            Size sOHard = Analyse.Rows(x => x.HFolderPath, folders, bHardFont);
+            Size sORelat = Analyse.One_Col(x => x.FolderPath, folders, bRelatFont);
+            Size sOHard = Analyse.One_Col(x => x.HFolderPath, folders, bHardFont);
 
             _Cols.Add("UCP1", sOHard.Width > sORelat.Width ? sOHard.Width : sORelat.Width);
 
             // NewPath
-            Size sNRelat = Analyse.Rows(x => x.NewFolderPath, folders, bRelatFont);
-            Size sNHard = Analyse.Rows(x => x.HNewFolderPath, folders, bHardFont);
+            Size sNRelat = Analyse.One_Col(x => x.NewFolderPath, folders, bRelatFont);
+            Size sNHard = Analyse.One_Col(x => x.HNewFolderPath, folders, bHardFont);
 
 
             _Cols.Add("UCP2", sNHard.Width > sNRelat.Width ? sNHard.Width : sNRelat.Width);
@@ -254,7 +254,7 @@ namespace SappPasRoot.Graph
         private async Task GenerateInfoPath(MvFolder[] folders)
         {
             boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
-      
+
             flpPaths.Controls.Clear();
 
             lBandeaux.Clear();
@@ -329,7 +329,7 @@ namespace SappPasRoot.Graph
 
         private PlatformBandeau StyleBandeaux(string MediaType)
         {
-            int rightSpace =10;
+            int rightSpace = 10;
 
             PlatformBandeau bdTmp = new PlatformBandeau();
             bdTmp.Name = $"Bandeau - {MediaType}";
@@ -352,7 +352,7 @@ namespace SappPasRoot.Graph
 
             return bdTmp;
         }
-        
+
         private void ResizeTextBox(object sender, EventArgs e)
         {
             GraphFunc.ResizeTextBox(sender);
@@ -501,7 +501,7 @@ namespace SappPasRoot.Graph
             Game.FolderPath = Game.NewFolderPath;
             Game.HFolderPath = Game.HNewFolderPath;
 
-            DematroiChka();
+            DematrioChka();
 
             if (!DebugMode)
             {
@@ -510,19 +510,36 @@ namespace SappPasRoot.Graph
                 PluginHelper.DataManager.Save();
             }
 
-            MessageBox.Show(Lang.Save_Ok, Lang.Save_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             PlatformFolder = Game.FolderPath;
             FillInformation();
             GenerateInfoPath(_AMVFolders);
-            btApply.Visible = false;
+
+            var res = MessageBox.Show($"{Lang.Save_Ok}\n{Lang.Games_Paths_Question}", Lang.Save_Title, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (res == DialogResult.Yes)
+            {
+                CGamesPaths tcpj = new CGamesPaths();
+                tcpj.Initialization(_PlatformObject);
+                this.Hide();
+                tcpj.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                //FillInformation();
+                btApply.Visible = false;
+                btSimul.Visible = true;
+            }
+            //MessageBox.Show(Lang.Save_Ok, Lang.Save_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+
         }
 
         /// <summary>
         /// Envoie les paramètres aux IPFolder originels
         /// </summary>
         /// <remarks>n'utilise pas la partie graphique</remarks>
-        private void DematroiChka()
+        private void DematrioChka()
         {
             foreach (var ipFolder in _IPFolders)
             {
@@ -533,7 +550,7 @@ namespace SappPasRoot.Graph
 
                         mvFolder.FolderPath = mvFolder.NewFolderPath;
                         mvFolder.HFolderPath = mvFolder.HNewFolderPath;
-                        mvFolder.NewFolderPath = mvFolder.HNewFolderPath = "Waiting...";
+                        mvFolder.NewFolderPath = mvFolder.HNewFolderPath = Lang.Waiting;
 
                         // Changement in/dans Launchbox
                         ipFolder.FolderPath = mvFolder.FolderPath;

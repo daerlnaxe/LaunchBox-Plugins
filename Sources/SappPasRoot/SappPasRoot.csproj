@@ -70,12 +70,12 @@
       <DependentUpon>CGamesPaths.cs</DependentUpon>
     </Compile>
     <Compile Include="Graph\GraphFunc.cs" />
-    <Compile Include="Interface1.cs" />
     <Compile Include="Languages\Lang.fr.Designer.cs">
       <DependentUpon>Lang.fr.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Graph\CPlatformPaths.cs">
       <SubType>Form</SubType>
@@ -102,6 +102,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Graph\CGamesPaths.fr.resx">
+      <DependentUpon>CGamesPaths.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graph\CPlatformPaths.fr.resx">
       <DependentUpon>CPlatformPaths.cs</DependentUpon>
     </EmbeddedResource>

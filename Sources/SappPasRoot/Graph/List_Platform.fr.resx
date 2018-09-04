@@ -117,7 +117,53 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 13</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Choisir une Plateforme:</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="colPlatformName.Text" xml:space="preserve">
+    <value>Plateforme</value>
+  </data>
+  <data name="colPath.Text" xml:space="preserve">
+    <value>Chemin</value>
+  </data>
+  <data name="button1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cPlatPaths.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="cPlatPaths.Text" xml:space="preserve">
+    <value>Dossiers de la plateforme</value>
+  </data>
+  <data name="cPlatPaths.ToolTipText" xml:space="preserve">
+    <value>Changer les dossiers pour cette plateforme</value>
+  </data>
+  <data name="cGamesPaths.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="cGamesPaths.Text" xml:space="preserve">
+    <value>Dossier des jeux</value>
+  </data>
+  <data name="cGamesPaths.ToolTipText" xml:space="preserve">
+    <value>Change les dossiers de tous les jeux de cette plateforme</value>
+  </data>
+  <data name="cxMenuListP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 48</value>
+  </data>
+  <data name="cxMenuListP.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>SappPasRoot - Plateformes disponibles</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

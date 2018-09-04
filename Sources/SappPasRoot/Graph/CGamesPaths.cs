@@ -78,7 +78,7 @@ namespace SappPasRoot.Graph
 
         internal void Initialization(IPlatform platform)
         {
-            PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
+           // PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
 
             boxLog.Text = boxLog.Text.Insert(0, $@"Initialization" + Environment.NewLine);
 
@@ -327,10 +327,10 @@ namespace SappPasRoot.Graph
             int retour = 0;
             foreach (MvGame mvG in mvGames)
             {
-                int lOrgRelat = Analyse.Rows(x => x.Original_RLink, mvG.GetPaths, bRelatFont).Width;
-                int lOrgHard = Analyse.Rows(x => x.Original_HLink, mvG.GetPaths, bHardFont).Width;
-                int lDestRelat = Analyse.Rows(x => x.Destination_RLink, mvG.GetPaths, bRelatFont).Width;
-                int lDestHard = Analyse.Rows(x => x.Destination_HLink, mvG.GetPaths, bHardFont).Width;
+                int lOrgRelat = Analyse.One_Col(x => x.Original_RLink, mvG.GetPaths, bRelatFont).Width;
+                int lOrgHard = Analyse.One_Col(x => x.Original_HLink, mvG.GetPaths, bHardFont).Width;
+                int lDestRelat = Analyse.One_Col(x => x.Destination_RLink, mvG.GetPaths, bRelatFont).Width;
+                int lDestHard = Analyse.One_Col(x => x.Destination_HLink, mvG.GetPaths, bHardFont).Width;
                 int tmp = Math.Max(lOrgRelat, Math.Max(lOrgHard, Math.Max(lDestRelat, lDestHard)));
                 retour = tmp > retour ? tmp : retour;
             }
@@ -669,24 +669,18 @@ namespace SappPasRoot.Graph
 
             foreach (MvGame game in _AmVGames)
             {
-                DematroiChka(game);
-
+                DematrioChka(game);
             }
 
-
-
-            /*
-            Game.FolderPath = Game.NewFolderPath;
-            Game.HFolderPath = Game.HNewFolderPath;
-            */
             if (!DebugMode)
             {
 
                 PluginHelper.DataManager.Save();
                 MessageBox.Show(Lang.Save_Ok, Lang.Save_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-                        
+
             //FillInformation();
+            GenerateTitles(_AmVGames);
             btApply.Visible = false;
             btSimul.Visible = true;
         }
@@ -695,7 +689,7 @@ namespace SappPasRoot.Graph
         /// Envoie les paramètres aux originaux
         /// </summary>
         /// <remarks>n'utilise pas la partie graphique</remarks>
-        private void DematroiChka(MvGame game)
+        private void DematrioChka(MvGame game)
         {
             // Cherchez dans tous les IGames
             IGame originalGame = null;
@@ -736,7 +730,7 @@ namespace SappPasRoot.Graph
 
                 collecOPaths.Original_RLink = collecOPaths.Destination_RLink;
                 collecOPaths.Original_HLink = collecOPaths.Destination_HLink;
-                collecOPaths.Destination_HLink = collecOPaths.Destination_RLink = "Waiting...";
+                collecOPaths.Destination_HLink = collecOPaths.Destination_RLink = Lang.Waiting;
             }
         }
 

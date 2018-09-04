@@ -117,36 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="boxLog.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="titGames.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 20</value>
+  <data name="rbForced.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 17</value>
   </data>
-  <data name="titGames.Text" xml:space="preserve">
-    <value>Dossier Jeu:</value>
+  <data name="rbForced.Text" xml:space="preserve">
+    <value>Mode Forcé</value>
   </data>
-  <data name="titManuals.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 20</value>
+  <data name="rbForced.ToolTip" xml:space="preserve">
+    <value>Mode par défaut, utilisé pour mettre chaque fichier type dans sa racine.</value>
   </data>
-  <data name="titManuals.Text" xml:space="preserve">
-    <value>Dossier Notice:</value>
+  <data name="rbKeepSub.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 17</value>
   </data>
-  <data name="titImages.Size" type="System.Drawing.Size, System.Drawing">
-    <value>111, 20</value>
+  <data name="rbKeepSub.Text" xml:space="preserve">
+    <value>Mode garder sous dossier</value>
   </data>
-  <data name="titImages.Text" xml:space="preserve">
-    <value>Dossier Images:</value>
+  <data name="rbKeepSub.ToolTip" xml:space="preserve">
+    <value>Conserve les sous dossiers pour le dossier racine de destination (Ne l'utilisez uniquement si vous aveze une structure telle que '..\typefileroot\platform\subfolder')</value>
   </data>
-  <data name="titVideos.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
-  </data>
-  <data name="titVideos.Text" xml:space="preserve">
-    <value>Dossier Video:</value>
-  </data>
-  <data name="titMusic.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 20</value>
-  </data>
-  <data name="titMusic.Text" xml:space="preserve">
-    <value>Dossier Musique:</value>
+  <data name="flpGames.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="titChooseFolder.Size" type="System.Drawing.Size, System.Drawing">
     <value>211, 25</value>
@@ -154,32 +148,50 @@
   <data name="titChooseFolder.Text" xml:space="preserve">
     <value>Choisir un nouveau dossier:</value>
   </data>
+  <data name="titChooseFolder.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="tbMainPath.Location" type="System.Drawing.Point, System.Drawing">
     <value>220, 8</value>
   </data>
   <data name="tbMainPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 20</value>
+    <value>253, 20</value>
+  </data>
+  <data name="tbMainPath.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btBrowse.Text" xml:space="preserve">
     <value>Naviguer ...</value>
   </data>
+  <data name="btBrowse.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btSimul.Text" xml:space="preserve">
     <value>Simuler...</value>
+  </data>
+  <data name="btSimul.ToolTip" xml:space="preserve">
+    <value>Montre les changements avant de les appliquer</value>
   </data>
   <data name="btApply.Text" xml:space="preserve">
     <value>Appliquer...</value>
   </data>
+  <data name="btApply.ToolTip" xml:space="preserve">
+    <value>Appliquer les changements</value>
+  </data>
   <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>433, 3</value>
+    <value>479, 3</value>
   </data>
-  <data name="lbMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 15</value>
+  <data name="flowLayoutPanel1.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="lbMore.Text" xml:space="preserve">
-    <value>Plus ...</value>
+  <data name="tableLayoutPanel1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="labPName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>153, 0</value>
+    <value>263, 0</value>
+  </data>
+  <data name="labPName.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="titPlatform.Size" type="System.Drawing.Size, System.Drawing">
     <value>81, 19</value>
@@ -187,31 +199,55 @@
   <data name="titPlatform.Text" xml:space="preserve">
     <value>Plateforme:</value>
   </data>
+  <data name="titPlatform.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="titCPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 19</value>
+    <value>209, 19</value>
   </data>
   <data name="titCPath.Text" xml:space="preserve">
-    <value>Dossier actuel:</value>
+    <value>Chemin actuel de la Plateforme</value>
+  </data>
+  <data name="titCPath.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tboxHOldPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 35</value>
+    <value>266, 35</value>
   </data>
-  <data name="tboxHOldPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 13</value>
+  <data name="tboxHOldPath.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="titCRPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 19</value>
+    <value>254, 19</value>
   </data>
   <data name="titCRPath.Text" xml:space="preserve">
-    <value>Dossier relatif actuel:</value>
+    <value>Chemin relatif actuel de la Plateforme:</value>
+  </data>
+  <data name="titCRPath.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tboxROldPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 65</value>
+    <value>266, 65</value>
   </data>
-  <data name="tboxROldPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 13</value>
+  <data name="tboxROldPath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tlpInfos.Size" type="System.Drawing.Size, System.Drawing">
+    <value>383, 90</value>
+  </data>
+  <data name="tlpInfos.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panelTop.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="statusStrip1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>SappPasRoot - Modifier les chemins            One Path to rule them all, One path to find them; One path to bring them all ...</value>
+    <value>SappPasRoot - Changer dossier jeux</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

@@ -135,13 +135,22 @@
     <value>Choose the root for the platform:</value>
     <comment>Folder Browser Description</comment>
   </data>
+  <data name="Games_Paths_Question" xml:space="preserve">
+    <value>Would you want to change paths for existing games ?</value>
+  </data>
   <data name="NK_Dir" xml:space="preserve">
     <value>This folder does not exist</value>
+  </data>
+  <data name="Plugin_Title" xml:space="preserve">
+    <value>Macro way to change paths</value>
   </data>
   <data name="Save_Ok" xml:space="preserve">
     <value>Changes Saved !</value>
   </data>
   <data name="Save_Title" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>Waiting...</value>
   </data>
 </root>

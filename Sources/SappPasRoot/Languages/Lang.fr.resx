@@ -135,8 +135,14 @@
     <value>Choisir la racine pour cette plateforme:</value>
     <comment>Folder Browser Description</comment>
   </data>
+  <data name="Games_Paths_Question" xml:space="preserve">
+    <value>Voulez vous changer les chemins pour les jeux existants ?</value>
+  </data>
   <data name="NK_Dir" xml:space="preserve">
     <value>Ce dossier n'existe pas</value>
+  </data>
+  <data name="Plugin_Title" xml:space="preserve">
+    <value>Macro méthode pour changer les dossiers</value>
   </data>
   <data name="Save_Ok" xml:space="preserve">
     <value>Changements  Sauvegardés !</value>
@@ -145,5 +151,8 @@
   <data name="Save_Title" xml:space="preserve">
     <value>Information</value>
     <comment>Change_Path</comment>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>En attente...</value>
   </data>
 </root>

@@ -15,7 +15,7 @@ namespace SappPasRoot
         /// <summary>
         /// Titre du plugin
         /// </summary>
-        public string Caption => "Change paths for a platform...";
+        public string Caption => Languages.Lang.Plugin_Title;
 
         /// <summary>
         /// Montrer en mode bigbox

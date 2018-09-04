@@ -13,7 +13,7 @@ namespace SappPasRoot.Graph
     static class Analyse
     {
 
-        internal static Size Rows<T>(Func<T, string> fc, /*PropertyInfo prop,*/ T[] elements, Font font)
+        internal static Size One_Col<T>(Func<T, string> fc, /*PropertyInfo prop,*/ T[] elements, Font font)
         {
             int maxSize = 0;
             string lplong = null;

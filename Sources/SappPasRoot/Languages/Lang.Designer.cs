@@ -106,11 +106,29 @@ namespace SappPasRoot.Languages {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Would you want to change paths for existing games ?.
+        /// </summary>
+        internal static string Games_Paths_Question {
+            get {
+                return ResourceManager.GetString("Games_Paths_Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à This folder does not exist.
         /// </summary>
         internal static string NK_Dir {
             get {
                 return ResourceManager.GetString("NK_Dir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Macro way to change paths.
+        /// </summary>
+        internal static string Plugin_Title {
+            get {
+                return ResourceManager.GetString("Plugin_Title", resourceCulture);
             }
         }
         
@@ -129,6 +147,15 @@ namespace SappPasRoot.Languages {
         internal static string Save_Title {
             get {
                 return ResourceManager.GetString("Save_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Waiting....
+        /// </summary>
+        internal static string Waiting {
+            get {
+                return ResourceManager.GetString("Waiting", resourceCulture);
             }
         }
     }
