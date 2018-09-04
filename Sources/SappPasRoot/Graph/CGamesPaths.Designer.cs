@@ -65,7 +65,6 @@
             // 
             resources.ApplyResources(this.boxLog, "boxLog");
             this.boxLog.Name = "boxLog";
-            this.toolTip1.SetToolTip(this.boxLog, resources.GetString("boxLog.ToolTip"));
             // 
             // panelTop
             // 
@@ -75,7 +74,6 @@
             this.panelTop.Controls.Add(this.tableLayoutPanel1);
             this.panelTop.Controls.Add(this.tlpInfos);
             this.panelTop.Name = "panelTop";
-            this.toolTip1.SetToolTip(this.panelTop, resources.GetString("panelTop.ToolTip"));
             // 
             // groupBox1
             // 
@@ -94,6 +92,7 @@
             this.rbForced.TabStop = true;
             this.toolTip1.SetToolTip(this.rbForced, resources.GetString("rbForced.ToolTip"));
             this.rbForced.UseVisualStyleBackColor = true;
+            this.rbForced.CheckedChanged += new System.EventHandler(this.CheckedChanged);
             // 
             // rbKeepSub
             // 
@@ -108,7 +107,6 @@
             resources.ApplyResources(this.flpGames, "flpGames");
             this.flpGames.BackColor = System.Drawing.SystemColors.Control;
             this.flpGames.Name = "flpGames";
-            this.toolTip1.SetToolTip(this.flpGames, resources.GetString("flpGames.ToolTip"));
             // 
             // tableLayoutPanel1
             // 
@@ -117,19 +115,16 @@
             this.tableLayoutPanel1.Controls.Add(this.tbMainPath, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 2, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.toolTip1.SetToolTip(this.tableLayoutPanel1, resources.GetString("tableLayoutPanel1.ToolTip"));
             // 
             // titChooseFolder
             // 
             resources.ApplyResources(this.titChooseFolder, "titChooseFolder");
             this.titChooseFolder.Name = "titChooseFolder";
-            this.toolTip1.SetToolTip(this.titChooseFolder, resources.GetString("titChooseFolder.ToolTip"));
             // 
             // tbMainPath
             // 
             resources.ApplyResources(this.tbMainPath, "tbMainPath");
             this.tbMainPath.Name = "tbMainPath";
-            this.toolTip1.SetToolTip(this.tbMainPath, resources.GetString("tbMainPath.ToolTip"));
             // 
             // flowLayoutPanel1
             // 
@@ -139,13 +134,11 @@
             this.flowLayoutPanel1.Controls.Add(this.btApply);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.tableLayoutPanel1.SetRowSpan(this.flowLayoutPanel1, 2);
-            this.toolTip1.SetToolTip(this.flowLayoutPanel1, resources.GetString("flowLayoutPanel1.ToolTip"));
             // 
             // btBrowse
             // 
             resources.ApplyResources(this.btBrowse, "btBrowse");
             this.btBrowse.Name = "btBrowse";
-            this.toolTip1.SetToolTip(this.btBrowse, resources.GetString("btBrowse.ToolTip"));
             this.btBrowse.UseVisualStyleBackColor = true;
             // 
             // btSimul
@@ -174,62 +167,54 @@
             this.tlpInfos.Controls.Add(this.titCRPath, 0, 2);
             this.tlpInfos.Controls.Add(this.tboxROldPath, 1, 2);
             this.tlpInfos.Name = "tlpInfos";
-            this.toolTip1.SetToolTip(this.tlpInfos, resources.GetString("tlpInfos.ToolTip"));
             // 
             // labPName
             // 
             resources.ApplyResources(this.labPName, "labPName");
             this.labPName.Name = "labPName";
-            this.toolTip1.SetToolTip(this.labPName, resources.GetString("labPName.ToolTip"));
             // 
             // titPlatform
             // 
             resources.ApplyResources(this.titPlatform, "titPlatform");
             this.titPlatform.Name = "titPlatform";
-            this.toolTip1.SetToolTip(this.titPlatform, resources.GetString("titPlatform.ToolTip"));
             // 
             // titCPath
             // 
             resources.ApplyResources(this.titCPath, "titCPath");
             this.titCPath.Name = "titCPath";
-            this.toolTip1.SetToolTip(this.titCPath, resources.GetString("titCPath.ToolTip"));
             // 
             // tboxHOldPath
             // 
-            resources.ApplyResources(this.tboxHOldPath, "tboxHOldPath");
             this.tboxHOldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.tboxHOldPath, "tboxHOldPath");
             this.tboxHOldPath.Name = "tboxHOldPath";
             this.tboxHOldPath.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.tboxHOldPath, resources.GetString("tboxHOldPath.ToolTip"));
             this.tboxHOldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
             // 
             // titCRPath
             // 
             resources.ApplyResources(this.titCRPath, "titCRPath");
             this.titCRPath.Name = "titCRPath";
-            this.toolTip1.SetToolTip(this.titCRPath, resources.GetString("titCRPath.ToolTip"));
             // 
             // tboxROldPath
             // 
-            resources.ApplyResources(this.tboxROldPath, "tboxROldPath");
             this.tboxROldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.tboxROldPath, "tboxROldPath");
             this.tboxROldPath.Name = "tboxROldPath";
             this.tboxROldPath.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.tboxROldPath, resources.GetString("tboxROldPath.ToolTip"));
             this.tboxROldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
             // 
             // statusStrip1
             // 
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
+            resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.Name = "statusStrip1";
-            this.toolTip1.SetToolTip(this.statusStrip1, resources.GetString("statusStrip1.ToolTip"));
             // 
             // toolStripStatusLabel1
             // 
-            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
             // CGamesPaths
             // 
@@ -239,7 +224,6 @@
             this.Controls.Add(this.boxLog);
             this.Controls.Add(this.panelTop);
             this.Name = "CGamesPaths";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.CGamesPaths_Load);
             this.Shown += new System.EventHandler(this.CGamesPaths_Shown);
             this.panelTop.ResumeLayout(false);

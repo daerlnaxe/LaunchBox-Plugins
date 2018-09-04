@@ -735,5 +735,15 @@ namespace SappPasRoot.Graph
         }
 
         #endregion
+
+        private void CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            if (cb.Checked)
+            {
+                btApply.Visible = false;
+                btSimul.Visible = true;
+            }
+        }
     }
 }
