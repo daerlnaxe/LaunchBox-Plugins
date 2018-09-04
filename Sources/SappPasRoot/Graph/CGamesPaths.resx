@@ -156,6 +156,9 @@
   <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>133, 17</value>
+  </metadata>
   <data name="rbForced.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -171,9 +174,6 @@
   <data name="rbForced.Text" xml:space="preserve">
     <value>Forced mode</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>133, 17</value>
-  </metadata>
   <data name="rbForced.ToolTip" xml:space="preserve">
     <value>Default mode, used to put all type files in their root.</value>
   </data>
@@ -204,6 +204,9 @@
   <data name="rbKeepSub.Text" xml:space="preserve">
     <value>Keep subFolder Mode</value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>133, 17</value>
+  </metadata>
   <data name="rbKeepSub.ToolTip" xml:space="preserve">
     <value>Keep the subfolder structure for the destination root folder(use it only if you have a structure like '..\typefileroot\platform\subfolder')</value>
   </data>

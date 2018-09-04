@@ -101,6 +101,7 @@
             this.rbKeepSub.TabStop = true;
             this.toolTip1.SetToolTip(this.rbKeepSub, resources.GetString("rbKeepSub.ToolTip"));
             this.rbKeepSub.UseVisualStyleBackColor = true;
+            this.rbKeepSub.CheckedChanged += new System.EventHandler(this.CheckedChanged);
             // 
             // flpGames
             // 
