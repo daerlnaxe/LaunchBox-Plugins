@@ -70,7 +70,7 @@ namespace SappPasRoot.Graph
             boxLog.Text = "Initialisation";
             //
             AppPath = AppDomain.CurrentDomain.BaseDirectory;
-            boxLog.Text = boxLog.Text.Insert(0, $@"LaunchBox main path: {AppPath}" + Environment.NewLine); ;
+            boxLog.Text += $@"LaunchBox main path: {AppPath}" + Environment.NewLine;
 
             // récupération de la plateforme concernée
             _PlatformObject = PluginHelper.DataManager.GetPlatformByName(Platform);
@@ -82,7 +82,7 @@ namespace SappPasRoot.Graph
                 MessageBox.Show("Platform folder null, the plugin will use default value (prototype)");
                 PlatformFolder = $@".\{Params.FactoryGameFolder}\{_PlatformObject.Name}";
             }
-            boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
+            boxLog.Text += $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine;
 
             // Récupération de tous les dossiers + tri
             _IPFolders = _PlatformObject.GetAllPlatformFolders()
@@ -91,10 +91,7 @@ namespace SappPasRoot.Graph
 
         }
 
-        private void LaunchBoxMainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.Close();
-        }
+
 
         /// <summary>
         /// private à la compil
@@ -196,15 +193,15 @@ namespace SappPasRoot.Graph
 
             StyleMainFLP();
             SetMainWindow();
-            boxLog.Text = boxLog.Text.Insert(0, @"Ready." + Environment.NewLine);
+            boxLog.Text += @"Ready." + Environment.NewLine;
         }
 
         private void FillInformation()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Filling of information fields" + Environment.NewLine);
-            boxLog.Text = boxLog.Text.Insert(0, @"Transformation RelatLink To HardLink " + Environment.NewLine); ;
+            boxLog.Text += @"Filling of information fields" + Environment.NewLine;
+            boxLog.Text += @"Transformation RelatLink To HardLink " + Environment.NewLine;
 
-            boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
+            boxLog.Text += $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine;
 
             // conversion en dur du lien vers le dossier actuel           
             _CRelatLink = PlatformFolder.Replace($@"\{Platform}", "");
@@ -216,6 +213,14 @@ namespace SappPasRoot.Graph
             this.tboxROldPath.Text = _CRelatLink;
             this.tboxHOldPath.Text = tbMainPath.Text = _CHardLink;
             this.labPName.Text = Platform;
+
+            tbCCodes.Text = Properties.Settings.Default.CheatCodesFolder;
+            this.tbGames.Text = Properties.Settings.Default.AppFolder;
+            this.tbImages.Text = Properties.Settings.Default.ImagesFolder;
+            this.tbManual.Text = Properties.Settings.Default.ManualFolder;
+            this.tbMusic.Text = Properties.Settings.Default.MusicFolder;
+            this.tbVideo.Text = Properties.Settings.Default.VideoFolder;
+
         }
 
         /// <summary>
@@ -224,7 +229,7 @@ namespace SappPasRoot.Graph
         /// <param name="folders"></param>
         private void AnalyseProps(MvFolder[] folders)
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Analysis of columns width" + Environment.NewLine); ;
+            boxLog.Text += @"Analysis of columns width" + Environment.NewLine;
 
             _Cols = new Dictionary<string, int>();
             _Cols.Add("Arrow", 20);
@@ -253,7 +258,7 @@ namespace SappPasRoot.Graph
         /// <returns></returns>
         private async Task GenerateInfoPath(MvFolder[] folders)
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
+            boxLog.Text += @"Creation of data graphic forms" + Environment.NewLine;
 
             flpPaths.Controls.Clear();
 
@@ -287,7 +292,7 @@ namespace SappPasRoot.Graph
 
         private void StyleMainFLP()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of layout background " + Environment.NewLine); ;
+            boxLog.Text += @"Adaptation of layout background " + Environment.NewLine;
 
             flpPaths.BackColor = Color.FromArgb(141, 177, 227);
             ContWidth = lBandeaux[0].Width;
@@ -306,7 +311,7 @@ namespace SappPasRoot.Graph
 
         private void SetMainWindow()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of window " + Environment.NewLine); ;
+            boxLog.Text += @"Adaptation of window " + Environment.NewLine;
             int largr = flpPaths.Width + 40;
             int hautr = flpPaths.Height + boxLog.Height + tlpInfos.Height + 100;
             /* int minLargr = 100;
@@ -397,7 +402,7 @@ namespace SappPasRoot.Graph
 
         private void ManualVerif()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Folder verification" + Environment.NewLine); ;
+            boxLog.Text += @"Folder verification" + Environment.NewLine;
             if (!Directory.Exists(tbMainPath.Text))
             {
                 MessageBox.Show($"{Lang.NK_Dir}", Lang.Error_Word, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -428,7 +433,7 @@ namespace SappPasRoot.Graph
         /// </summary>
         private async void AlterPath()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Simuation start ..." + Environment.NewLine);
+            boxLog.Text += @"Simuation start ..." + Environment.NewLine;
 
             Game.HNewFolderPath = Path.Combine(_NewRoot, tbGames.Text, Platform);
             Game.NewFolderPath = DxPath.ToRelative(AppPath, Game.HNewFolderPath);
@@ -476,8 +481,8 @@ namespace SappPasRoot.Graph
             await GenerateInfoPath(_AMVFolders);
             StyleMainFLP();
             SetMainWindow();
-            boxLog.Text = boxLog.Text.Insert(0, @"Simuation finish ..." + Environment.NewLine);
-            boxLog.Text = boxLog.Text.Insert(0, @"Ready, click on proceed to save this modifications." + Environment.NewLine);
+            boxLog.Text += @"Simuation finish ..." + Environment.NewLine;
+            boxLog.Text += @"Ready, click on proceed to save this modifications." + Environment.NewLine;
         }
 
         #endregion
@@ -496,10 +501,22 @@ namespace SappPasRoot.Graph
 
         private void ApplyChanges()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Process start ..." + Environment.NewLine);
+            boxLog.Text += @"Process start ..." + Environment.NewLine;
 
+            // 
+            Properties.Settings.Default.CheatCodesFolder = tbCCodes.Text;
+            Properties.Settings.Default.AppFolder = this.tbGames.Text;
+            Properties.Settings.Default.ImagesFolder = this.tbImages.Text;
+            Properties.Settings.Default.ManualFolder = this.tbManual.Text;
+            Properties.Settings.Default.MusicFolder = this.tbMusic.Text;
+            Properties.Settings.Default.VideoFolder = this.tbVideo.Text;
+            Properties.Settings.Default.Save();
+
+            // Modification of App
             Game.FolderPath = Game.NewFolderPath;
             Game.HFolderPath = Game.HNewFolderPath;
+            Game.NewFolderPath = Game.HNewFolderPath = Lang.Waiting;
+
 
             DematrioChka();
 

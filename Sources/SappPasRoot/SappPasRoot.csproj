@@ -40,6 +40,7 @@
       <HintPath>..\..\..\..\CSharp\DxPaths\bin\Debug\DxPaths.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
@@ -58,9 +59,7 @@
     <Compile Include="Core\LBGame.cs" />
     <Compile Include="Core\MvGame.cs" />
     <Compile Include="Core\PathsCollec.cs" />
-    <Compile Include="Core\Params.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Core\Params.cs" />
     <Compile Include="Graph\Analyse.cs" />
     <Compile Include="Core\MvFolder.cs" />
     <Compile Include="Graph\CGamesPaths.cs">
@@ -75,7 +74,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Logger.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Graph\CPlatformPaths.cs">
       <SubType>Form</SubType>

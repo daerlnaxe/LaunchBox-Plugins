@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,11 @@ namespace SappPasRoot.Graph
         /// Copie de la plateforme
         /// </summary>
         private IPlatform _PlatformObject;
+
+        /// <summary>
+        /// Dico contenant les pahts de la plateforme
+        /// </summary>
+        /// <remarks>Used by CheckGame, Simul</remarks>
         Dictionary<string, string> dicSystemPaths = new Dictionary<string, string>();
 
         /// <summary>
@@ -77,14 +83,14 @@ namespace SappPasRoot.Graph
 
         internal void Initialization(IPlatform platform)
         {
-           // PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
+            // PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
 
-            boxLog.Text = boxLog.Text.Insert(0, $@"Initialization" + Environment.NewLine);
+            boxLog.Text += @"Initialization" + Environment.NewLine;
 
             _PlatformObject = platform;
             PlatformName = _PlatformObject.Name;
 
-            boxLog.Text = boxLog.Text.Insert(0, $@"Platform '{_PlatformObject.Name}' selected" + Environment.NewLine);
+            boxLog.Text += $@"Platform '{_PlatformObject.Name}' selected" + Environment.NewLine;
 
 
             // Application folder
@@ -94,16 +100,19 @@ namespace SappPasRoot.Graph
             _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
 
 
+            // Récupération des jeux avec tri        
             _IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
                                                           .OrderBy(x => x.Title).ToArray();
 
+            // Construction du dictionnaire des dossiers de la plateforme
+            Debug.WriteLine($"[Init - CGameP] [Application]: '{_PlatformFolderRL}'");
+            dicSystemPaths.Add("Application", _PlatformFolderRL);
             foreach (var ob in _PlatformObject.GetAllPlatformFolders())
             {
-                Console.WriteLine($"{ob.MediaType}: {ob.FolderPath}");
-                boxLog.Text = boxLog.Text.Insert(0, $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine);
+                Debug.WriteLine($"[Init - CGameP] [{ob.MediaType}]: '{ob.FolderPath}'");
+                //boxLog.Text += $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine;
                 dicSystemPaths.Add(ob.MediaType, ob.FolderPath);
             }
-            //LBGame = IGame
 
             // FakeGenerator();
         }
@@ -175,10 +184,10 @@ namespace SappPasRoot.Graph
 
         private void FillInformation()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Filling of information fields" + Environment.NewLine);
-            boxLog.Text = boxLog.Text.Insert(0, @"Transformation RelatLink To HardLink " + Environment.NewLine); ;
+            boxLog.Text += @"Filling of information fields" + Environment.NewLine;
+            boxLog.Text += @"Transformation RelatLink To HardLink " + Environment.NewLine;
 
-            //boxLog.Text = boxLog.Text.Insert(0, $@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
+            //boxLog.Text +=$@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
 
             // conversion en dur du lien vers le dossier actuel           
             /*_CRelatLink = PlatformFolder.Replace($@"\{Platform}", "");
@@ -207,7 +216,7 @@ namespace SappPasRoot.Graph
         /// <param name="aMvGames"></param>
         private async Task GenerateTitles(MvGame[] aMvGames)
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
+            boxLog.Text += @"Creation of data graphic forms" + Environment.NewLine;
             flpGames.Controls.Clear();
 
 
@@ -276,7 +285,34 @@ namespace SappPasRoot.Graph
             foreach (var pathO in mvGame.EnumGetPaths)
             {
                 if (String.IsNullOrEmpty(pathO.Original_RLink)) continue;
-                valide &= pathO.Original_RLink.Contains(tboxROldPath.Text);
+
+                Debug.WriteLine($"[CheckGame] {pathO.Type}: {pathO.Original_RLink}");
+                switch (pathO.Type)
+                {
+                    
+                    case "ApplicationPath":
+                        Debug.WriteLine($"[CheckGame] Dico[Application]: {dicSystemPaths["Application"]}");
+                        valide &= pathO.Original_RLink.Contains(dicSystemPaths["Application"]);
+                        break;
+                    
+                    case "ManualPath":
+                        Debug.WriteLine($"[CheckGame] Dico[Manual]: {dicSystemPaths["Manual"]}");
+                        valide &= pathO.Original_RLink.Contains(dicSystemPaths["Manual"]);
+                        break;
+
+                    case "MusicPath":
+                        Debug.WriteLine($"[CheckGame] Dico[Music]: {dicSystemPaths["Music"]}");
+                        valide &= pathO.Original_RLink.Contains(dicSystemPaths["Music"]);
+                        break;
+
+                    case "VideoPath":
+                        Debug.WriteLine($"[CheckGame] Dico[Video]: {dicSystemPaths["Video"]}");
+                        valide &= pathO.Original_RLink.Contains(dicSystemPaths["Video"]);
+                        break;
+                }
+
+
+                //                valide &= pathO.Original_RLink.Contains(tboxROldPath.Text);
             }
             return valide;
         }
@@ -290,7 +326,8 @@ namespace SappPasRoot.Graph
         /// <returns></returns>
         private async Task GeneratePaths(GameBandeauV gameBand, MvGame game)
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Creation of data graphic forms" + Environment.NewLine);
+            Debug.WriteLine($"[GeneratePaths] Creation of the banner for {game.Title}");
+            boxLog.Text += $"Creation of the banner for { game.Title}" + Environment.NewLine;
 
             //int largeurBandeau = AnalyseVPrinciple(game.GetPaths);
 
@@ -299,6 +336,7 @@ namespace SappPasRoot.Graph
 
             foreach (var pathO in game.GetPaths)
             {
+                Debug.WriteLine($"[GeneratePaths] Path {pathO.Type}: {pathO.Original_RLink}");
                 if (string.IsNullOrEmpty(pathO.Original_RLink)) continue;
 
                 DualBandV dbV = StylePaths(pathO.Type, PathsWidth);
@@ -321,7 +359,7 @@ namespace SappPasRoot.Graph
         /// <param name="pathCollec"></param>
         private int AnalyseVPrinciple(MvGame[] mvGames)
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"AnalyseVPrinciple" + Environment.NewLine); ;
+            boxLog.Text += @"AnalyseVPrinciple" + Environment.NewLine;
 
             int retour = 0;
             foreach (MvGame mvG in mvGames)
@@ -409,7 +447,7 @@ namespace SappPasRoot.Graph
         {
             if (_BandActif != null && _BandActif != sender) _BandActif.Collapse_Fl();
 
-            boxLog.Text = boxLog.Text.Insert(0, $"Bandactif: {sender.Name}" + Environment.NewLine); ;
+            boxLog.Text += $"Bandactif: {sender.Name}" + Environment.NewLine;
             toolStripStatusLabel1.Text = $"Bandeau unrolled";
 
             _BandActif = sender;
@@ -419,7 +457,7 @@ namespace SappPasRoot.Graph
                 MvGame game = (MvGame)sender.Objet;
 
                 GeneratePaths(sender, game);
-                boxLog.Text = boxLog.Text.Insert(0, $"Generate graphical elements for '{game.Title}'" + Environment.NewLine); ;
+                boxLog.Text += $"Generate graphical elements for '{game.Title}'" + Environment.NewLine;
             }
 
             if (sender.Width > ContUnrolledWidth)
@@ -455,7 +493,7 @@ namespace SappPasRoot.Graph
         /// <param name="width"></param>
         private void StyleMainFLP(int widthsaispas)
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of layout background " + Environment.NewLine); ;
+            boxLog.Text += @"Adaptation of layout background " + Environment.NewLine;
 
             //   flpGames.BackColor = Color.FromArgb(141, 177, 227);
             //ContWidth = flpGames.Controls[0].Width; // lBandeaux[0].Width;
@@ -475,7 +513,7 @@ namespace SappPasRoot.Graph
         private void SetMainWindow()
         {
 
-            boxLog.Text = boxLog.Text.Insert(0, @"Adaptation of window " + Environment.NewLine); ;
+            boxLog.Text += @"Adaptation of window " + Environment.NewLine;
             int largr = flpGames.Width + 40;
             int hautr = flpGames.Height + boxLog.Height + tlpInfos.Height + 100;
 
@@ -495,6 +533,17 @@ namespace SappPasRoot.Graph
             GraphFunc.ResizeTextBox(sender);
         }
 
+
+        private void CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton cb = (RadioButton)sender;
+            if (cb.Checked)
+            {
+                btApply.Visible = false;
+                btSimul.Visible = true;
+            }
+        }
+
         #endregion
 
         ///////// <summary>
@@ -503,7 +552,7 @@ namespace SappPasRoot.Graph
         ///////// <param name="pathCollec"></param>
         //////private Dictionary<string, int> AnalyseProps(PathsCollec[] pathCollec)
         //////{
-        //////    boxLog.Text = boxLog.Text.Insert(0, @"Analysis of columns width" + Environment.NewLine); ;
+        //////    boxLog.Text +=@"Analysis of columns width" + Environment.NewLine); ;
 
         //////    Dictionary<string, int> columns = new Dictionary<string, int>();
 
@@ -535,7 +584,16 @@ namespace SappPasRoot.Graph
         /// <param name="e"></param>
         private void btSimul_Click(object sender, EventArgs e)
         {
-            boxLog.Clear();
+
+            AlterPath();
+            GenerateTitles(_AmVGames);
+            btSimul.Visible = false;
+            btApply.Visible = true;
+        }
+
+        private void AlterPath()
+        {
+            boxLog.Text += Environment.NewLine;
             foreach (var game in _AmVGames)
             {
                 boxLog.Text += $@"{game.Title}: " + Environment.NewLine;
@@ -638,10 +696,6 @@ namespace SappPasRoot.Graph
                     pathO.Destination_HLink = Path.GetFullPath(Path.Combine(AppPath, fileDest));
                 }
             }
-
-            GenerateTitles(_AmVGames);
-            btSimul.Visible = false;
-            btApply.Visible = true;
         }
         #endregion
 
@@ -664,7 +718,7 @@ namespace SappPasRoot.Graph
 
         private void ApplyChanges()
         {
-            boxLog.Text = boxLog.Text.Insert(0, @"Process start ..." + Environment.NewLine);
+            boxLog.Text += @"Process start ..." + Environment.NewLine;
 
             foreach (MvGame game in _AmVGames)
             {
@@ -735,14 +789,5 @@ namespace SappPasRoot.Graph
 
         #endregion
 
-        private void CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton cb = (RadioButton)sender;
-            if (cb.Checked)
-            {
-                btApply.Visible = false;
-                btSimul.Visible = true;
-            }
-        }
     }
 }

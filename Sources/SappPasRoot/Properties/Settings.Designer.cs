@@ -43,5 +43,77 @@ namespace SappPasRoot.Properties {
                 this["LastKPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Games")]
+        public string AppFolder {
+            get {
+                return ((string)(this["AppFolder"]));
+            }
+            set {
+                this["AppFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Music")]
+        public string MusicFolder {
+            get {
+                return ((string)(this["MusicFolder"]));
+            }
+            set {
+                this["MusicFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Manuals")]
+        public string ManualFolder {
+            get {
+                return ((string)(this["ManualFolder"]));
+            }
+            set {
+                this["ManualFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Images")]
+        public string ImagesFolder {
+            get {
+                return ((string)(this["ImagesFolder"]));
+            }
+            set {
+                this["ImagesFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Videos")]
+        public string VideoFolder {
+            get {
+                return ((string)(this["VideoFolder"]));
+            }
+            set {
+                this["VideoFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("CheatCodes")]
+        public string CheatCodesFolder {
+            get {
+                return ((string)(this["CheatCodesFolder"]));
+            }
+            set {
+                this["CheatCodesFolder"] = value;
+            }
+        }
     }
 }

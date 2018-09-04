@@ -8,8 +8,9 @@ using SappPasRoot.Graph;
 
 namespace SappPasRoot.Core
 {
-    class Params : CPlatformPaths
+    class Params
     {
+        /*
         public string CCodesFolder;
         public string GamesFolder;
         public string ImagesFolder;
@@ -19,7 +20,7 @@ namespace SappPasRoot.Core
         public string HardPath;
         public static string FactoryHardPath;
         public string RelativePath;
-
+        */
 
         public static string FactoryCCodesFolder = "CCodes";
         public readonly static string FactoryGameFolder = "Games";
@@ -30,9 +31,7 @@ namespace SappPasRoot.Core
 
         public static string FactoryRelativePath = @".\";
 
-
-
-
+               
 
         public Params()
         {
