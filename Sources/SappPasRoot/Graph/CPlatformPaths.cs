@@ -575,7 +575,7 @@ namespace SappPasRoot.Graph
             {
                 foreach (var mvFolder in _AMVFolders)
                 {
-                    Debug.WriteLine($"[PlatformPaths][Dematriochka] Traitement de {mvFolder.MediaType}");
+                    Debug.WriteLine($"[PlatformPaths] [Dematriochka] Traitement de {mvFolder.MediaType}");
 
                     if (String.Equals(ipFolder.MediaType, mvFolder.MediaType))
                     {

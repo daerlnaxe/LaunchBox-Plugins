@@ -100,10 +100,6 @@ namespace SappPasRoot.Graph
             _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
 
 
-            // Récupération des jeux avec tri        
-            _IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
-                                                          .OrderBy(x => x.Title).ToArray();
-
             // Construction du dictionnaire des dossiers de la plateforme
             Debug.WriteLine($"[Init - CGameP] [Application]: '{_PlatformFolderRL}'");
             dicSystemPaths.Add("Application", _PlatformFolderRL);
@@ -113,6 +109,10 @@ namespace SappPasRoot.Graph
                 //boxLog.Text += $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine;
                 dicSystemPaths.Add(ob.MediaType, ob.FolderPath);
             }
+
+            // Récupération des jeux avec tri        
+            _IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
+                                                          .OrderBy(x => x.Title).ToArray();
 
             // FakeGenerator();
         }
@@ -289,12 +289,12 @@ namespace SappPasRoot.Graph
                 Debug.WriteLine($"[CheckGame] {pathO.Type}: {pathO.Original_RLink}");
                 switch (pathO.Type)
                 {
-                    
+
                     case "ApplicationPath":
                         Debug.WriteLine($"[CheckGame] Dico[Application]: {dicSystemPaths["Application"]}");
                         valide &= pathO.Original_RLink.Contains(dicSystemPaths["Application"]);
                         break;
-                    
+
                     case "ManualPath":
                         Debug.WriteLine($"[CheckGame] Dico[Manual]: {dicSystemPaths["Manual"]}");
                         valide &= pathO.Original_RLink.Contains(dicSystemPaths["Manual"]);
@@ -584,12 +584,12 @@ namespace SappPasRoot.Graph
         /// <param name="e"></param>
         private void btSimul_Click(object sender, EventArgs e)
         {
-            boxLog.Text += "Simulation"+Environment.NewLine;
+            boxLog.Text += "Simulation" + Environment.NewLine;
             AlterPath();
             GenerateTitles(_AmVGames);
             btSimul.Visible = false;
             btApply.Visible = true;
-            boxLog.Text += "End of Simulation"+Environment.NewLine;
+            boxLog.Text += "End of Simulation" + Environment.NewLine;
         }
 
         private void AlterPath()
@@ -601,7 +601,7 @@ namespace SappPasRoot.Graph
 
                 // say mode
                 if (rbForced.Checked) Debug.WriteLine("Forced mode");
-                else if(rbKeepSub.Checked) Debug.WriteLine("KeepSub mode");
+                else if (rbKeepSub.Checked) Debug.WriteLine("KeepSub mode");
 
                 Debug.Indent();
 
@@ -629,7 +629,7 @@ namespace SappPasRoot.Graph
                         int pos = pathO.Original_RLink.IndexOf($@"\{PlatformName}\");
                         fichier = pathO.Original_RLink.Substring(pos + PlatformName.Length + 2);
                     }
-                    
+
                     //
                     string fileDest = "";
                     string rootPath = "";
@@ -723,12 +723,22 @@ namespace SappPasRoot.Graph
 
         private void ApplyChanges()
         {
-            boxLog.Text += @"Process start ..." + Environment.NewLine;
+            boxLog.Text += @"[ApplyChanges] Process start ..." + Environment.NewLine;
+            Debug.WriteLine($"[GamePaths] [ApplyChanges]");
+            Debug.Indent();
 
             foreach (MvGame game in _AmVGames)
             {
+                //
+                if (game.Valide)
+                {
+                    Debug.WriteLine($"[GamePaths] [ApplyChanges] {game.Title}: is already valid => pass");
+                    continue;
+                }
+
                 DematrioChka(game);
             }
+            Debug.Unindent();
 
             if (!DebugMode)
             {
@@ -736,7 +746,7 @@ namespace SappPasRoot.Graph
                 PluginHelper.DataManager.Save();
                 MessageBox.Show(Lang.Save_Ok, Lang.Save_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
+            
             //FillInformation();
             GenerateTitles(_AmVGames);
             btApply.Visible = false;
@@ -749,6 +759,9 @@ namespace SappPasRoot.Graph
         /// <remarks>n'utilise pas la partie graphique</remarks>
         private void DematrioChka(MvGame game)
         {
+            Debug.WriteLine($"[GamePaths] [DematrioChka] {game.Title}");
+            Debug.Indent();
+
             // Cherchez dans tous les IGames
             IGame originalGame = null;
             foreach (IGame igame in _IPGames)
@@ -790,9 +803,14 @@ namespace SappPasRoot.Graph
                 collecOPaths.Original_HLink = collecOPaths.Destination_HLink;
                 collecOPaths.Destination_HLink = collecOPaths.Destination_RLink = Lang.Waiting;
             }
+            Debug.Unindent();
         }
 
         #endregion
 
+        private void btScan_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

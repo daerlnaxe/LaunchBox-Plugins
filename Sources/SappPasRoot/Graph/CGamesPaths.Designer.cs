@@ -53,12 +53,18 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupScan = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btScan = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panelTop.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.tlpInfos.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.groupScan.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // boxLog
@@ -69,10 +75,8 @@
             // panelTop
             // 
             resources.ApplyResources(this.panelTop, "panelTop");
-            this.panelTop.Controls.Add(this.groupBox1);
             this.panelTop.Controls.Add(this.flpGames);
             this.panelTop.Controls.Add(this.tableLayoutPanel1);
-            this.panelTop.Controls.Add(this.tlpInfos);
             this.panelTop.Name = "panelTop";
             // 
             // groupBox1
@@ -217,10 +221,41 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
+            // groupScan
+            // 
+            this.groupScan.Controls.Add(this.btScan);
+            this.groupScan.Controls.Add(this.checkBox1);
+            resources.ApplyResources(this.groupScan, "groupScan");
+            this.groupScan.Name = "groupScan";
+            this.groupScan.TabStop = false;
+            // 
+            // checkBox1
+            // 
+            resources.ApplyResources(this.checkBox1, "checkBox1");
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // btScan
+            // 
+            resources.ApplyResources(this.btScan, "btScan");
+            this.btScan.Name = "btScan";
+            this.btScan.UseVisualStyleBackColor = true;
+            this.btScan.Click += new System.EventHandler(this.btScan_Click);
+            // 
+            // groupBox2
+            // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.tlpInfos);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.TabStop = false;
+            // 
             // CGamesPaths
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupScan);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.boxLog);
             this.Controls.Add(this.panelTop);
@@ -228,7 +263,6 @@
             this.Load += new System.EventHandler(this.CGamesPaths_Load);
             this.Shown += new System.EventHandler(this.CGamesPaths_Shown);
             this.panelTop.ResumeLayout(false);
-            this.panelTop.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -238,6 +272,10 @@
             this.tlpInfos.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupScan.ResumeLayout(false);
+            this.groupScan.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,5 +305,9 @@
         private System.Windows.Forms.RadioButton rbForced;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.GroupBox groupScan;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button btScan;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
