@@ -24,28 +24,10 @@ namespace SappPasRoot.Graph
         public List_Platform()
         {
             InitializeComponent();
+            this.Text += $" {Assembly.GetAssembly(typeof(Main)).GetName().Version.ToString()}";
 
-            TextWriterTraceListener textWriter = new TextWriterTraceListener(@".\Logs\SappPasRoot.log");
-            //Ajout bit à bit de deux options de sortie
-            textWriter.TraceOutputOptions = TraceOptions.Callstack | TraceOptions.ProcessId | TraceOptions.Timestamp;
-            ;
-            Debug.Listeners.Add(textWriter);
-            Debug.AutoFlush = true;
+            ListPlatform();
 
-            Debug.WriteLine($"\n {new string('=', 10)} Initialization {new string('=', 10)}");
-
-            try
-            {
-                //PluginHelper. .LaunchBoxMainForm.FormClosing += new FormClosingEventHandler(Fermeture);
-
-                this.Text += $" {Assembly.GetAssembly(typeof(Main)).GetName().Version.ToString()}";
-
-                ListPlatform();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
         }
 
         private void Fermeture(object sender, FormClosingEventArgs e)

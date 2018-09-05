@@ -30,19 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CGamesPaths));
-            this.boxLog = new System.Windows.Forms.RichTextBox();
-            this.panelTop = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbForced = new System.Windows.Forms.RadioButton();
-            this.rbKeepSub = new System.Windows.Forms.RadioButton();
-            this.flpGames = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.titChooseFolder = new System.Windows.Forms.Label();
-            this.tbMainPath = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btBrowse = new System.Windows.Forms.Button();
-            this.btSimul = new System.Windows.Forms.Button();
-            this.btApply = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tlpInfos = new System.Windows.Forms.TableLayoutPanel();
             this.labPName = new System.Windows.Forms.Label();
             this.titPlatform = new System.Windows.Forms.Label();
@@ -50,34 +39,98 @@
             this.tboxHOldPath = new System.Windows.Forms.TextBox();
             this.titCRPath = new System.Windows.Forms.Label();
             this.tboxROldPath = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbForced = new System.Windows.Forms.RadioButton();
+            this.rbKeepSub = new System.Windows.Forms.RadioButton();
+            this.groupScan = new System.Windows.Forms.GroupBox();
+            this.btRescan = new System.Windows.Forms.Button();
+            this.cbHidden = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.titChooseFolder = new System.Windows.Forms.Label();
+            this.tbMainPath = new System.Windows.Forms.TextBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btBrowse = new System.Windows.Forms.Button();
+            this.btSimul = new System.Windows.Forms.Button();
+            this.btApply = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupScan = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.btScan = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.panelTop.SuspendLayout();
+            this.flpGames = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelTop = new System.Windows.Forms.TableLayoutPanel();
+            this.boxLog = new System.Windows.Forms.RichTextBox();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.tlpInfos.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupScan.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            this.tlpInfos.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.groupScan.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.panelTop.SuspendLayout();
             this.SuspendLayout();
             // 
-            // boxLog
+            // tableLayoutPanel2
             // 
-            resources.ApplyResources(this.boxLog, "boxLog");
-            this.boxLog.Name = "boxLog";
+            resources.ApplyResources(this.tableLayoutPanel2, "tableLayoutPanel2");
+            this.panelTop.SetColumnSpan(this.tableLayoutPanel2, 2);
+            this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.groupBox1, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.groupScan, 1, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             // 
-            // panelTop
+            // groupBox2
             // 
-            resources.ApplyResources(this.panelTop, "panelTop");
-            this.panelTop.Controls.Add(this.flpGames);
-            this.panelTop.Controls.Add(this.tableLayoutPanel1);
-            this.panelTop.Name = "panelTop";
+            resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.tlpInfos);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.TabStop = false;
+            // 
+            // tlpInfos
+            // 
+            resources.ApplyResources(this.tlpInfos, "tlpInfos");
+            this.tlpInfos.Controls.Add(this.labPName, 1, 0);
+            this.tlpInfos.Controls.Add(this.titPlatform, 0, 0);
+            this.tlpInfos.Controls.Add(this.titCPath, 0, 1);
+            this.tlpInfos.Controls.Add(this.tboxHOldPath, 1, 1);
+            this.tlpInfos.Controls.Add(this.titCRPath, 0, 2);
+            this.tlpInfos.Controls.Add(this.tboxROldPath, 1, 2);
+            this.tlpInfos.Name = "tlpInfos";
+            // 
+            // labPName
+            // 
+            resources.ApplyResources(this.labPName, "labPName");
+            this.labPName.Name = "labPName";
+            // 
+            // titPlatform
+            // 
+            resources.ApplyResources(this.titPlatform, "titPlatform");
+            this.titPlatform.Name = "titPlatform";
+            // 
+            // titCPath
+            // 
+            resources.ApplyResources(this.titCPath, "titCPath");
+            this.titCPath.Name = "titCPath";
+            // 
+            // tboxHOldPath
+            // 
+            this.tboxHOldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.tboxHOldPath, "tboxHOldPath");
+            this.tboxHOldPath.Name = "tboxHOldPath";
+            this.tboxHOldPath.ReadOnly = true;
+            this.tboxHOldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
+            // 
+            // titCRPath
+            // 
+            resources.ApplyResources(this.titCRPath, "titCRPath");
+            this.titCRPath.Name = "titCRPath";
+            // 
+            // tboxROldPath
+            // 
+            this.tboxROldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.tboxROldPath, "tboxROldPath");
+            this.tboxROldPath.Name = "tboxROldPath";
+            this.tboxROldPath.ReadOnly = true;
+            this.tboxROldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
             // 
             // groupBox1
             // 
@@ -107,11 +160,26 @@
             this.rbKeepSub.UseVisualStyleBackColor = true;
             this.rbKeepSub.CheckedChanged += new System.EventHandler(this.CheckedChanged);
             // 
-            // flpGames
+            // groupScan
             // 
-            resources.ApplyResources(this.flpGames, "flpGames");
-            this.flpGames.BackColor = System.Drawing.SystemColors.Control;
-            this.flpGames.Name = "flpGames";
+            resources.ApplyResources(this.groupScan, "groupScan");
+            this.groupScan.Controls.Add(this.btRescan);
+            this.groupScan.Controls.Add(this.cbHidden);
+            this.groupScan.Name = "groupScan";
+            this.groupScan.TabStop = false;
+            // 
+            // btRescan
+            // 
+            resources.ApplyResources(this.btRescan, "btRescan");
+            this.btRescan.Name = "btRescan";
+            this.btRescan.UseVisualStyleBackColor = true;
+            this.btRescan.Click += new System.EventHandler(this.btRescan_Click);
+            // 
+            // cbHidden
+            // 
+            resources.ApplyResources(this.cbHidden, "cbHidden");
+            this.cbHidden.Name = "cbHidden";
+            this.cbHidden.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
             // 
@@ -162,53 +230,6 @@
             this.btApply.UseVisualStyleBackColor = true;
             this.btApply.Click += new System.EventHandler(this.btApply_Click);
             // 
-            // tlpInfos
-            // 
-            resources.ApplyResources(this.tlpInfos, "tlpInfos");
-            this.tlpInfos.Controls.Add(this.labPName, 1, 0);
-            this.tlpInfos.Controls.Add(this.titPlatform, 0, 0);
-            this.tlpInfos.Controls.Add(this.titCPath, 0, 1);
-            this.tlpInfos.Controls.Add(this.tboxHOldPath, 1, 1);
-            this.tlpInfos.Controls.Add(this.titCRPath, 0, 2);
-            this.tlpInfos.Controls.Add(this.tboxROldPath, 1, 2);
-            this.tlpInfos.Name = "tlpInfos";
-            // 
-            // labPName
-            // 
-            resources.ApplyResources(this.labPName, "labPName");
-            this.labPName.Name = "labPName";
-            // 
-            // titPlatform
-            // 
-            resources.ApplyResources(this.titPlatform, "titPlatform");
-            this.titPlatform.Name = "titPlatform";
-            // 
-            // titCPath
-            // 
-            resources.ApplyResources(this.titCPath, "titCPath");
-            this.titCPath.Name = "titCPath";
-            // 
-            // tboxHOldPath
-            // 
-            this.tboxHOldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.tboxHOldPath, "tboxHOldPath");
-            this.tboxHOldPath.Name = "tboxHOldPath";
-            this.tboxHOldPath.ReadOnly = true;
-            this.tboxHOldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
-            // 
-            // titCRPath
-            // 
-            resources.ApplyResources(this.titCRPath, "titCRPath");
-            this.titCRPath.Name = "titCRPath";
-            // 
-            // tboxROldPath
-            // 
-            this.tboxROldPath.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.tboxROldPath, "tboxROldPath");
-            this.tboxROldPath.Name = "tboxROldPath";
-            this.tboxROldPath.ReadOnly = true;
-            this.tboxROldPath.TextChanged += new System.EventHandler(this.ResizeTextBox);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -221,70 +242,58 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
-            // groupScan
+            // flpGames
             // 
-            this.groupScan.Controls.Add(this.btScan);
-            this.groupScan.Controls.Add(this.checkBox1);
-            resources.ApplyResources(this.groupScan, "groupScan");
-            this.groupScan.Name = "groupScan";
-            this.groupScan.TabStop = false;
+            resources.ApplyResources(this.flpGames, "flpGames");
+            this.flpGames.BackColor = System.Drawing.SystemColors.Control;
+            this.flpGames.Name = "flpGames";
             // 
-            // checkBox1
+            // panelTop
             // 
-            resources.ApplyResources(this.checkBox1, "checkBox1");
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.panelTop, "panelTop");
+            this.panelTop.Controls.Add(this.boxLog, 0, 3);
+            this.panelTop.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.panelTop.Controls.Add(this.tableLayoutPanel1, 0, 1);
+            this.panelTop.Controls.Add(this.flpGames, 0, 2);
+            this.panelTop.Name = "panelTop";
             // 
-            // btScan
+            // boxLog
             // 
-            resources.ApplyResources(this.btScan, "btScan");
-            this.btScan.Name = "btScan";
-            this.btScan.UseVisualStyleBackColor = true;
-            this.btScan.Click += new System.EventHandler(this.btScan_Click);
-            // 
-            // groupBox2
-            // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Controls.Add(this.tlpInfos);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
+            this.panelTop.SetColumnSpan(this.boxLog, 2);
+            resources.ApplyResources(this.boxLog, "boxLog");
+            this.boxLog.Name = "boxLog";
             // 
             // CGamesPaths
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.groupScan);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.boxLog);
             this.Controls.Add(this.panelTop);
+            this.Controls.Add(this.statusStrip1);
             this.Name = "CGamesPaths";
             this.Load += new System.EventHandler(this.CGamesPaths_Load);
             this.Shown += new System.EventHandler(this.CGamesPaths_Shown);
-            this.panelTop.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.tlpInfos.ResumeLayout(false);
+            this.tlpInfos.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupScan.ResumeLayout(false);
+            this.groupScan.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.tlpInfos.ResumeLayout(false);
-            this.tlpInfos.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.groupScan.ResumeLayout(false);
-            this.groupScan.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.panelTop.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox boxLog;
-        private System.Windows.Forms.Panel panelTop;
-        private System.Windows.Forms.FlowLayoutPanel flpGames;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label titChooseFolder;
         protected internal System.Windows.Forms.TextBox tbMainPath;
@@ -306,8 +315,12 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.GroupBox groupScan;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button btScan;
+        private System.Windows.Forms.CheckBox cbHidden;
+        private System.Windows.Forms.Button btRescan;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.FlowLayoutPanel flpGames;
+        private System.Windows.Forms.TableLayoutPanel panelTop;
+        private System.Windows.Forms.RichTextBox boxLog;
     }
 }

@@ -115,5 +115,17 @@ namespace SappPasRoot.Properties {
                 this["CheatCodesFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ScanHiddenGames {
+            get {
+                return ((bool)(this["ScanHiddenGames"]));
+            }
+            set {
+                this["ScanHiddenGames"] = value;
+            }
+        }
     }
 }

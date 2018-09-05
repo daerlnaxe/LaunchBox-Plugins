@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace SappPasRoot.Core
         public int? LaunchBoxDbId { get; set; }
 
         public string Title { get; set; }
+        public bool Hide { get; set; }
 
         public PathsCollec ApplicationPath { get; set; }
         public PathsCollec ManualPath { get; set; }
@@ -54,13 +56,14 @@ namespace SappPasRoot.Core
 
         public MvGame(IGame srcGame, string launchBoxRoot)
         {
+            Debug.WriteLine($"[MvGame] New: '{srcGame.Id}': '{srcGame.Title}'");
+
             Title = srcGame.Title;
 
             Id = srcGame.Id;
-
+            Hide = srcGame.Hide;
 
             LaunchBoxDbId = srcGame.LaunchBoxDbId;
-            Console.WriteLine(srcGame.Id);
 
             #region Présent dans platform.xml
             ApplicationPath = new PathsCollec("ApplicationPath", srcGame.ApplicationPath, launchBoxRoot);
@@ -131,7 +134,6 @@ namespace SappPasRoot.Core
         /// <summary>
         /// Renvoie la collection des paths
         /// </summary>
-
         public PathsCollec[] GetPaths
         {
             get

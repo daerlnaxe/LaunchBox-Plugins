@@ -1,6 +1,7 @@
 ﻿using SappPasRoot.Graph;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -39,8 +40,29 @@ namespace SappPasRoot
 
         public void OnSelected()
         {
-            List_Platform sp = new List_Platform();
-            sp.ShowDialog();
+            var app = AppDomain.CurrentDomain.BaseDirectory;
+            TextWriterTraceListener textWriter = new TextWriterTraceListener(@".\Logs\SappPasRoot.log");
+            //Ajout bit à bit de deux options de sortie
+            textWriter.TraceOutputOptions = TraceOptions.Callstack | TraceOptions.ProcessId | TraceOptions.Timestamp;
+            ;
+            Debug.Listeners.Add(textWriter);
+            Debug.AutoFlush = true;
+
+            Debug.WriteLine($"\n {new string('=', 10)} Initialization {new string('=', 10)}");
+
+            try
+            {
+                //PluginHelper. .LaunchBoxMainForm.FormClosing += new FormClosingEventHandler(Fermeture);
+
+
+                List_Platform sp = new List_Platform();
+                sp.ShowDialog();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+
         }
 
     }

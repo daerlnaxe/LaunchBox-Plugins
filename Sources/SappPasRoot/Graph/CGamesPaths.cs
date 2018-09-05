@@ -69,6 +69,8 @@ namespace SappPasRoot.Graph
         public CGamesPaths()
         {
             InitializeComponent();
+            cbHidden.Checked = Properties.Settings.Default.ScanHiddenGames;
+
             //listView1.Items.Clear();
         }
 
@@ -86,51 +88,32 @@ namespace SappPasRoot.Graph
             // PluginHelper.LaunchBoxMainForm.FormClosing += LaunchBoxMainForm_FormClosing;
 
             boxLog.Text += @"Initialization" + Environment.NewLine;
+            Debug.WriteLine("[CGamePaths] Initialization");
 
-            _PlatformObject = platform;
-            PlatformName = _PlatformObject.Name;
-
-            boxLog.Text += $@"Platform '{_PlatformObject.Name}' selected" + Environment.NewLine;
-
-
+            _PlatformObject = platform;            
+            
             // Application folder
             AppPath = AppDomain.CurrentDomain.BaseDirectory;
-
-            _PlatformFolderRL = _PlatformObject.Folder;
-            _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
-
-
-            // Construction du dictionnaire des dossiers de la plateforme
-            Debug.WriteLine($"[Init - CGameP] [Application]: '{_PlatformFolderRL}'");
-            dicSystemPaths.Add("Application", _PlatformFolderRL);
-            foreach (var ob in _PlatformObject.GetAllPlatformFolders())
-            {
-                Debug.WriteLine($"[Init - CGameP] [{ob.MediaType}]: '{ob.FolderPath}'");
-                //boxLog.Text += $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine;
-                dicSystemPaths.Add(ob.MediaType, ob.FolderPath);
-            }
-
-            // Récupération des jeux avec tri        
-            _IPGames = _PlatformObject.GetAllGames(true, true)//(false, false)
-                                                          .OrderBy(x => x.Title).ToArray();
-
+                       
             // FakeGenerator();
         }
 
         #region Debug
-        public void DebugTest(IGame[] fakelist)
+        public void DebugTest(IPlatform fakePLat/*IGame[] fakelist*/)
         {
+            Debug.WriteLine("[CGamePaths] DebugTest");
+
             DebugMode = true;
             AppPath = @"I:\Frontend\LaunchBox\";
-            _IPGames = fakelist;
-            PlatformName = "Sega Mega Drive";
-            _PlatformFolderRL = @"..\..\fauxgames\Games\Sega Mega Drive";
-            _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
+            _PlatformObject = fakePLat;
+            //_IPGames = fakelist;           
 
+            /*
             // dicSystemPaths.Add("ApplicationPath");
+            dicSystemPaths.Add("Application",@"..\..\fauxgames\Roms");
             dicSystemPaths.Add("Manual", @"..\..\fauxgames\Manuals\Sega Mega Drive");
             dicSystemPaths.Add("Music", @"..\..\fauxgames\Music\Sega Mega Drive");
-            dicSystemPaths.Add("Video", @"..\..\fauxgames\Manuals\Sega Mega Drive");
+            dicSystemPaths.Add("Video", @"..\..\fauxgames\Manuals\Sega Mega Drive");*/
         }
 
         /// <summary>
@@ -161,9 +144,27 @@ namespace SappPasRoot.Graph
         /// <summary>
         /// 
         /// </summary>
-        private async void GrabMyShovel()
+        private void GrabMyShovel()
         {
+            boxLog.Text += $@"Platform '{_PlatformObject.Name}' selected" + Environment.NewLine;
+            Debug.WriteLine($"[CGamePaths] [GrabMyShovel] Initialisation");
+
+            PlatformName = _PlatformObject.Name;
+
+
+            // Construction des informations
             FillInformation();
+
+            // Construction du dictionnaire des dossiers de la plateforme
+            Debug.WriteLine($"[Init - CGameP] [Application]: '{_PlatformFolderRL}'");
+            dicSystemPaths.Add("Application", _PlatformFolderRL);
+            foreach (var ob in _PlatformObject.GetAllPlatformFolders())
+            {
+                Debug.WriteLine($"[Init - CGameP] [{ob.MediaType}]: '{ob.FolderPath}'");
+                //boxLog.Text += $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine;
+                dicSystemPaths.Add(ob.MediaType, ob.FolderPath);
+            }
+
 
             // Assignation du dernier chemin visité
             if (string.IsNullOrEmpty(Properties.Settings.Default.LastKPath))
@@ -171,6 +172,19 @@ namespace SappPasRoot.Graph
                 Properties.Settings.Default.LastKPath = _PlatformFolderHL;
             }
 
+            GetGames();
+            cbHidden.Enabled = true;
+        }
+
+        /// <summary>
+        /// Récupère les jeux et met en forme
+        /// </summary>
+        private async void GetGames()
+        {
+
+            // Récupération des jeux avec tri        
+            _IPGames = _PlatformObject.GetAllGames(cbHidden.Checked, true)//(false, false)
+                                                          .OrderBy(x => x.Title).ToArray();
             // Conversion to MvGame
             _AmVGames = MvGame.Convert(_IPGames, AppPath);
 
@@ -179,25 +193,19 @@ namespace SappPasRoot.Graph
             PathsWidth = AnalyseVPrinciple(_AmVGames);
 
             await GenerateTitles(_AmVGames);
-
         }
 
+
+        /// <summary>
+        /// Rempli les champs d'information et initialise certaines variables communes
+        /// </summary>
         private void FillInformation()
         {
             boxLog.Text += @"Filling of information fields" + Environment.NewLine;
             boxLog.Text += @"Transformation RelatLink To HardLink " + Environment.NewLine;
 
-            //boxLog.Text +=$@"PlatformFolder: {PlatformFolder}" + Environment.NewLine); ;
-
-            // conversion en dur du lien vers le dossier actuel           
-            /*_CRelatLink = PlatformFolder.Replace($@"\{Platform}", "");
-            _CRelatLink = _CRelatLink.Substring(0, _CRelatLink.LastIndexOf('\\'));
-            _CHardLink = Path.GetFullPath(Path.Combine(AppPath, _CRelatLink));
-
-            _NewRoot = _CHardLink;
-
-            this.tboxROldPath.Text = _CRelatLink;
-            this.tboxHOldPath.Text = tbMainPath.Text = _CHardLink;*/
+            _PlatformFolderRL = _PlatformObject.Folder;
+            _PlatformFolderHL = Path.GetFullPath(Path.Combine(AppPath, _PlatformFolderRL));
 
             this.labPName.Text = PlatformName;
 
@@ -217,18 +225,28 @@ namespace SappPasRoot.Graph
         private async Task GenerateTitles(MvGame[] aMvGames)
         {
             boxLog.Text += @"Creation of data graphic forms" + Environment.NewLine;
-            flpGames.Controls.Clear();
+            Debug.WriteLine("[CGamePaths] GenerateTitles");
+            Debug.Indent();
 
+            flpGames.Controls.Clear();
 
             foreach (var mvGame in aMvGames)
             {
-                toolStripStatusLabel1.Text = $"Création of bandeau: {mvGame.Title}";
+                /*
+                if (!cbHidden.Checked && mvGame.Hide)
+                {
+                    Debug.WriteLine($"[GenerateTitles] {mvGame.Title} hidden => pass");
+                    continue;
+                }*/
 
-                Console.WriteLine(mvGame.Title);
+                toolStripStatusLabel1.Text = $"Création of bandeau: '{mvGame.Title}'";
+                Debug.WriteLine($"[GenerateTitles] Creation of the '{mvGame.Title}' banner");
 
                 GameBandeauV bdTmp = StyleTitles(mvGame.Id);
                 bdTmp.Objet = mvGame;
                 bdTmp.Title = $" {mvGame.Title}";
+                if (mvGame.Hide) bdTmp.Title += " (Hidden)";
+
                 bdTmp.Resize_Me();
 
                 mvGame.Valide = CheckGame(mvGame);
@@ -242,8 +260,11 @@ namespace SappPasRoot.Graph
                 //lBandeaux.Add(bdTmp);
             }
 
+
             StyleMainFLP(ContRolledWidth);
             SetMainWindow();
+
+            Debug.Unindent();
         }
 
         /// <summary>
@@ -289,7 +310,6 @@ namespace SappPasRoot.Graph
                 Debug.WriteLine($"[CheckGame] {pathO.Type}: {pathO.Original_RLink}");
                 switch (pathO.Type)
                 {
-
                     case "ApplicationPath":
                         Debug.WriteLine($"[CheckGame] Dico[Application]: {dicSystemPaths["Application"]}");
                         valide &= pathO.Original_RLink.Contains(dicSystemPaths["Application"]);
@@ -502,7 +522,7 @@ namespace SappPasRoot.Graph
 
             //_Cols.Sum(x => x.Value);
             // Height size of each item
-            int minheightB = (BandHeight + 6) * 4;
+            int minheightB = (BandHeight + 6) * 2;
             //int minH = Screen.PrimaryScreen.Bounds.Height < minheightB ? Screen.PrimaryScreen.Bounds.Height : minheightB;
 
             flpGames.Size = flpGames.MinimumSize = new Size(largFLP, flpGames.Height);
@@ -515,7 +535,7 @@ namespace SappPasRoot.Graph
 
             boxLog.Text += @"Adaptation of window " + Environment.NewLine;
             int largr = flpGames.Width + 40;
-            int hautr = flpGames.Height + boxLog.Height + tlpInfos.Height + 100;
+            int hautr = flpGames.Height + boxLog.Height + tlpInfos.Height + 200;
 
             // Mainwindow size + Block according to primary screen
             largr = Screen.PrimaryScreen.Bounds.Width > largr ? largr : Screen.PrimaryScreen.Bounds.Width;
@@ -526,8 +546,7 @@ namespace SappPasRoot.Graph
             boxLog.Width = flpGames.Width;
             panelTop.Width = flpGames.Width;
         }
-
-
+        
         private void ResizeTextBox(object sender, EventArgs e)
         {
             GraphFunc.ResizeTextBox(sender);
@@ -592,6 +611,9 @@ namespace SappPasRoot.Graph
             boxLog.Text += "End of Simulation" + Environment.NewLine;
         }
 
+        /// <summary>
+        /// Change Destination paths (relat and hard) to show in simulate mode the result
+        /// </summary>
         private void AlterPath()
         {
             Debug.WriteLine("");
@@ -808,7 +830,15 @@ namespace SappPasRoot.Graph
 
         #endregion
 
-        private void btScan_Click(object sender, EventArgs e)
+        
+        private void btRescan_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ScanHiddenGames = cbHidden.Checked;
+            Properties.Settings.Default.Save();
+            GetGames();
+        }
+        
+        private void cbHidden_CheckedChanged(object sender, EventArgs e)
         {
 
         }

@@ -26,5 +26,8 @@
     <Setting Name="CheatCodesFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">CheatCodes</Value>
     </Setting>
+    <Setting Name="ScanHiddenGames" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
