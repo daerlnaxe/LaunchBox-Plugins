@@ -19,7 +19,7 @@ namespace SappPasRoot.Core
 
         public string Title { get; set; }
         public bool Hide { get; set; }
-
+        public bool Broken { get; }
         public PathsCollec ApplicationPath { get; set; }
         public PathsCollec ManualPath { get; set; }
         public PathsCollec MusicPath { get; set; }
@@ -62,6 +62,7 @@ namespace SappPasRoot.Core
 
             Id = srcGame.Id;
             Hide = srcGame.Hide;
+            Broken = srcGame.Broken;
 
             LaunchBoxDbId = srcGame.LaunchBoxDbId;
 

@@ -246,6 +246,7 @@ namespace SappPasRoot.Graph
                 bdTmp.Objet = mvGame;
                 bdTmp.Title = $" {mvGame.Title}";
                 if (mvGame.Hide) bdTmp.Title += " (Hidden)";
+                if (mvGame.Broken) bdTmp.Title += " (Broken)";
 
                 bdTmp.Resize_Me();
 
