@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Unbroken.LaunchBox.Plugins;
 using Unbroken.LaunchBox.Plugins.Data;
 using DxTrace;
-using
+using DxTBoxWpf.MessageBox;
 
 namespace CleanImages
 {
@@ -58,16 +58,53 @@ namespace CleanImages
         {
             ITrace.WriteLine("On Selected");
 
-            dx
-            
+            Launch(selectedGame);
             //  throw new NotImplementedException();
         }
 
         public void OnSelected(IGame[] selectedGames)
         {
             ITrace.WriteLine("On Selected[]");
-
+            foreach (IGame game in selectedGames)
+            {
+                Launch(game);
+            }
             // throw new NotImplementedException();
+        }
+
+        private void Launch(IGame game)
+        {
+            bool? res = DxMBox.Show(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
+            ITrace.WriteLine($"Window Result: {res}");
+
+            // obsolète ? 
+            ImageDetails[] images = game.GetAllImagesWithDetails();
+           
+            ITrace.WriteLine($"Images Found: {images.Length}");
+            foreach (ImageDetails image in images)
+            {
+                ITrace.WriteLine(image.ImageType);
+                ITrace.WriteLine(image.Region);
+                ITrace.WriteLine(image.FilePath);
+                ITrace.WriteLine();
+            }
+
+
+            /*
+            ITrace.WriteLine($"Méthode algo2");
+
+            List<string> stringImages = new List<string>();
+            
+            var platform = PluginHelper.DataManager.GetPlatformByName(game.Platform);
+            IPlatformFolder[] folders = platform.GetAllPlatformFolders();
+            foreach (var folder in folders)
+            {
+                ITrace.WriteLine($"Folder: {folder.MediaType}");
+                ITrace.WriteLine($"Folder: {folder.FolderPath}");
+
+            }
+            */
+
         }
     }
 }
