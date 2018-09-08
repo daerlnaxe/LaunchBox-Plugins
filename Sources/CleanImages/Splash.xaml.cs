@@ -23,5 +23,12 @@ namespace CleanImages
         {
             InitializeComponent();
         }
+
+        
+        public static void Pop()
+        {
+            Splash splashWdw = new Splash();
+            splashWdw.Show();
+        }
     }
 }

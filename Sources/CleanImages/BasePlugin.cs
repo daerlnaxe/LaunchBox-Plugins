@@ -2,7 +2,11 @@
 using DxTrace;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,11 +57,17 @@ namespace CleanImages
         static BasePlugin()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BasePlugin), new FrameworkPropertyMetadata(typeof(BasePlugin)));
+            //_App = AppDomain.CurrentDomain.BaseDirectory;
+            DxTrace.InfoToFile logFile = new InfoToFile(@".\Logs\Clean_Images.log", false);
+
+            ITrace.AddListener(logFile);
+
+            ITrace.WriteLine($"\n {new string('=', 10)} Initialization {new string('=', 10)}");
         }
 
         public bool SupportsMultipleGames => true;
 
-        public string Caption => "testc";
+        public string Caption => Lang.Title_Menu;
 
         public System.Drawing.Image IconImage => null;
 
@@ -99,23 +109,38 @@ namespace CleanImages
             // throw new NotImplementedException();
         }
 
-        private void Launch(IGame game)
+        private async void Launch(IGame game)
         {
             bool? res = DxMBox.Show(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
             ITrace.WriteLine($"Window Result: {res}");
 
             // obsolète ? 
+            Splash.Pop();
+
             ImageDetails[] images = game.GetAllImagesWithDetails();
+            await Calculate_MD5( images);
 
             ITrace.WriteLine($"Images Found: {images.Length}");
+
+            /*
             foreach (ImageDetails image in images)
             {
                 ITrace.WriteLine(image.ImageType);
                 ITrace.WriteLine(image.Region);
                 ITrace.WriteLine(image.FilePath);
                 ITrace.WriteLine();
-            }
+            }*/
 
+
+
+            /*
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(Worker1_DoWork);
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Worker1_RunWorkerCompleted);
+            worker.RunWorkerAsync();
+            */
+
+            //this.Visible = false;
 
             /*
             ITrace.WriteLine($"Méthode algo2");
@@ -131,6 +156,45 @@ namespace CleanImages
 
             }
             */
+        }
+
+        private async Task<string[]> Calculate_MD5(ImageDetails[] images)
+        {
+            /*Stream myFile = File.Create(@".\md5.txt");
+            TextWriterTraceListener twl = new TextWriterTraceListener(myFile);
+
+            Debug.Listeners.Add(twl);
+            Debug.AutoFlush = true;
+            */
+            string[] md5Sums = new string[images.Length];
+
+            foreach (ImageDetails image in images)
+            {
+                //Debug.WriteLine($"[Md5] {image.FilePath}");
+                ITrace.WriteLine($"[Md5] {image.ImageType}");
+                ITrace.WriteLine($"[Md5] {image.Region}");
+                ITrace.WriteLine($"[Md5] {image.FilePath}");
+                var hash = GetMD5HashFromFile(image.FilePath);
+
+                ITrace.WriteLine($"[Md5] {hash}");
+                ITrace.WriteLine();
+
+               // Debug.WriteLine($"[Md5] {hash}");
+            }
+
+            return md5Sums;
+        }
+
+
+        private string GetMD5HashFromFile(string fileName)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(fileName))
+                {
+                    return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", string.Empty);
+                }
+            }
         }
     }
 }
