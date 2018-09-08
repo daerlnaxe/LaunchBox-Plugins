@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Unbroken.LaunchBox.Plugins;
 using Unbroken.LaunchBox.Plugins.Data;
 using DxTrace;
+using
 
 namespace CleanImages
 {
@@ -36,6 +37,8 @@ namespace CleanImages
 
         public bool ShowInBigBox => false;
 
+
+        // Intervient avant selected, possibilité de restreindre aux roms, à voir
         public bool GetIsValidForGame(IGame selectedGame)
         {
             ITrace.WriteLine("GetIsValidForGames");
@@ -55,6 +58,8 @@ namespace CleanImages
         {
             ITrace.WriteLine("On Selected");
 
+            dx
+            
             //  throw new NotImplementedException();
         }
 
