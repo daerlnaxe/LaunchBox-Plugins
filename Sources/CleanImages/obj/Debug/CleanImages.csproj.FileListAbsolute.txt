@@ -33,7 +33,6 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanIm
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\DxTBoxWPF.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\DxTrace.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\fr\DxTrace.resources.dll
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.csprojAssemblyReference.cache
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\Splash.baml
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.g.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.Lang.resources
