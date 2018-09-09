@@ -1,4 +1,5 @@
 ﻿using CleanImages.IHM;
+using DxTBoxWPF.Images;
 using DxTBoxWPF.MessageBox;
 using DxTrace;
 using System;

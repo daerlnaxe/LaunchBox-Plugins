@@ -21,6 +21,9 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanIm
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\fr\CleanImages.resources.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\Unbroken.LaunchBox.Plugins.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\Splash.g.cs
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages_MarkupCompile.cache
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages_MarkupCompile.lref
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\CleanImages.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\CleanImages.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\fr\CleanImages.resources.dll
@@ -30,8 +33,8 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanIm
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\DxTBoxWPF.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\DxTrace.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\fr\DxTrace.resources.dll
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages_MarkupCompile.cache
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages_MarkupCompile.lref
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.csprojAssemblyReference.cache
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\Splash.baml
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.g.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.Lang.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.Properties.Resources.resources
@@ -42,9 +45,3 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\fr\Clea
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.csproj.CopyComplete
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.pdb
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\BigPic.g.cs
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\Splash.g.cs
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\Duplicate_W.g.cs
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\BigPic.baml
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\Splash.baml
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\Duplicate_W.baml
