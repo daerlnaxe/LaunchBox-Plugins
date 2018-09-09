@@ -1,4 +1,5 @@
-﻿using DxTBoxWpf.MessageBox;
+﻿using CleanImages.IHM;
+using DxTBoxWPF.MessageBox;
 using DxTrace;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,7 +60,7 @@ namespace CleanImages
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BasePlugin), new FrameworkPropertyMetadata(typeof(BasePlugin)));
             //_App = AppDomain.CurrentDomain.BaseDirectory;
-            DxTrace.InfoToFile logFile = new InfoToFile(@".\Logs\Clean_Images.log", false);
+            DxTrace.InfoToFile logFile = new InfoToFile(@".\Logs\Clean_Images.log", true);
 
             ITrace.AddListener(logFile);
 
@@ -109,91 +111,186 @@ namespace CleanImages
             // throw new NotImplementedException();
         }
 
-        private async void Launch(IGame game)
+        private void Launch(IGame game)
         {
-            bool? res = DxMBox.Show(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
+            bool? res = DxMBox.ShowDial(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
             ITrace.WriteLine($"Window Result: {res}");
-
-            // obsolète ? 
-            Splash.Pop();
-
-            ImageDetails[] images = game.GetAllImagesWithDetails();
-            await Calculate_MD5( images);
-
-            ITrace.WriteLine($"Images Found: {images.Length}");
-
-            /*
-            foreach (ImageDetails image in images)
+            if (res == true)
             {
-                ITrace.WriteLine(image.ImageType);
-                ITrace.WriteLine(image.Region);
-                ITrace.WriteLine(image.FilePath);
-                ITrace.WriteLine();
-            }*/
+                // obsolète ? 
 
 
+                ImageDetails[] images = game.GetAllImagesWithDetails();
+                ITrace.WriteLine($"Images Found: {images.Length}");
 
-            /*
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += new DoWorkEventHandler(Worker1_DoWork);
-            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Worker1_RunWorkerCompleted);
-            worker.RunWorkerAsync();
-            */
+                //ExtImageDetails[] extImages = ExtImageDetails.Convert(images);
+                var extImages = Array.ConvertAll(images, item => (ExtImageDetails)item);
 
-            //this.Visible = false;
+                Splash.Pop(images.Length);
+                Calculate_MD5(extImages);
 
-            /*
-            ITrace.WriteLine($"Méthode algo2");
 
-            List<string> stringImages = new List<string>();
-            
-            var platform = PluginHelper.DataManager.GetPlatformByName(game.Platform);
-            IPlatformFolder[] folders = platform.GetAllPlatformFolders();
-            foreach (var folder in folders)
-            {
-                ITrace.WriteLine($"Folder: {folder.MediaType}");
-                ITrace.WriteLine($"Folder: {folder.FolderPath}");
+                Splash.CloseIt();
 
+                // Scan des doublons;
+                List<List<ExtImageDetails>> Doublons = Scan(extImages);
+
+                // Traitement des doublons
+                int i=1;
+                foreach (var lDoublon in Doublons)
+                {
+                    ITrace.WriteLine($"{i} passe de doublons");
+                    TreatDuplicates(lDoublon);
+                    i++;
+                }
             }
-            */
         }
 
-        private async Task<string[]> Calculate_MD5(ImageDetails[] images)
+        private async void Calculate_MD5(ExtImageDetails[] images)
         {
-            /*Stream myFile = File.Create(@".\md5.txt");
-            TextWriterTraceListener twl = new TextWriterTraceListener(myFile);
+            ExtImageDetails[] extImages = new ExtImageDetails[images.Length];
 
-            Debug.Listeners.Add(twl);
-            Debug.AutoFlush = true;
-            */
-            string[] md5Sums = new string[images.Length];
-
-            foreach (ImageDetails image in images)
+            int i = 0;
+            foreach (ExtImageDetails image in images)
             {
+
                 //Debug.WriteLine($"[Md5] {image.FilePath}");
                 ITrace.WriteLine($"[Md5] {image.ImageType}");
                 ITrace.WriteLine($"[Md5] {image.Region}");
                 ITrace.WriteLine($"[Md5] {image.FilePath}");
-                var hash = GetMD5HashFromFile(image.FilePath);
+                ITrace.WriteLine("Calcul du md5");
+                //extImages[i].Md5Sum = 
+                image.Md5Sum = GetMD5HashFromFile(image.FilePath);
+                ITrace.WriteLine($"[Md5] Somme: {image.Md5Sum}");
 
-                ITrace.WriteLine($"[Md5] {hash}");
+
                 ITrace.WriteLine();
+                Splash.ProgressStatus = i;
+                i++;
 
-               // Debug.WriteLine($"[Md5] {hash}");
             }
 
-            return md5Sums;
         }
-
 
         private string GetMD5HashFromFile(string fileName)
         {
-            using (var md5 = MD5.Create())
+            try
             {
-                using (var stream = File.OpenRead(fileName))
+                using (var md5 = MD5.Create())
                 {
-                    return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", string.Empty);
+                    using (var stream = File.OpenRead(fileName))
+                    {
+                        string hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", string.Empty);
+                        ITrace.WriteLine($"[GetMD5HashFromFile] hash : {hash}");
+                        return hash;
+                    }
                 }
+            }
+            catch (Exception exc)
+            {
+                ITrace.WriteLine($"GetMd5HashFromFile: {exc}");
+                throw new Exception($"Erreur en GetMD5HashFromFile\n {exc}");
+            }
+        }
+
+        private List<List<ExtImageDetails>> Scan(ExtImageDetails[] extImages)
+        {
+            var toTreat = new List<List<ExtImageDetails>>();
+
+            // copy of extImages
+            List<ExtImageDetails> extCopy = extImages.ToList();
+
+            //ExtImageDetails[] extICopy = ExtImageDetails.ArrayCopy(extImages);
+
+            foreach (ExtImageDetails image in extImages)
+            {
+                if (image.doublon)
+                {
+                    ITrace.WriteLine($"[Scan] déjà scanné => pass ('{image.FilePath}')");
+                    continue;
+                }
+
+                if (String.IsNullOrEmpty(image.Md5Sum)) continue;
+
+                var doublons = GetDuplicates(image, extCopy);
+
+                if (doublons != null)
+                {
+                    ITrace.WriteLine($"[Scan] doublons = {doublons}");
+                    toTreat.Add(doublons);
+                }
+            }
+
+            return toTreat;
+        }
+
+        /// <summary>
+        /// Scanne une liste en fonction d'une référence
+        /// </summary>
+        /// <remarks>Enlève le premier élement qui est la référence pour réduire la liste</remarks>
+        /// <remarks>Enlève le doublon trouvé</remarks>
+        /// <remarks>Positionne le booléan doublon à true si occurence trouvée pour que la liste de référence passe par la suite</remarks>
+        /// <param name="imRef"></param>
+        /// <param name="extImages"></param>
+        /// <returns></returns>
+        private List<ExtImageDetails> GetDuplicates(ExtImageDetails imRef, List<ExtImageDetails> extImages)
+        {
+            List<ExtImageDetails> similaire = new List<ExtImageDetails>();
+            similaire.Add(imRef);       // On ajoute en référence
+            extImages.RemoveAt(0);      // On lève le premier élement qui est en cours d'exam;
+
+            ITrace.WriteLine($"\n[GetDuplicates] Recherche de similitudes pour '{imRef.FilePath}', {imRef.Md5Sum}, {imRef.doublon} dans tableau de taille {extImages.Count}");
+
+            for (int i = 0; i < extImages.Count; i++)
+            {
+                ExtImageDetails image = extImages[i];
+                ITrace.WriteLine($"Examen de element { i}, {image.FilePath}");
+
+                // Passer sur les images déjà repérées
+                //   if (image.doublon) continue;
+                try
+                {
+                    if (image.Md5Sum.Equals(imRef.Md5Sum))
+                    {
+                        extImages[i].doublon = true;
+                        extImages.RemoveAt(i);
+                        similaire.Add(image);
+                        ITrace.WriteLine($"[GetDuplicates] similitude '{image.FilePath}', {image.Md5Sum} ajoutée");
+                        i--;
+                    }
+                }
+                catch (Exception exc)
+                {
+                    ITrace.WriteLine($"[GetDuplicates] Erreur {exc}");
+                }
+            }
+
+            ITrace.WriteLine($"[GetDuplicates] Nombre d'occurence(s) trouvée(s): {similaire.Count}");
+
+            if (similaire.Count <= 1) return null;
+
+            return similaire;
+
+        }
+
+        private void TreatDuplicates(List<ExtImageDetails> extImages)
+        {
+            ITrace.WriteLine($"\n[TreatDuplicates] Traitement débuté pour: {extImages.Count} doublons");
+            Duplicate_W handleW = new Duplicate_W();
+            for (int i = 0; i < extImages.Count; i++)
+            {
+                if ((i+1)>extImages.Count)
+                {
+                    ITrace.WriteLine("[TreatDuplicates] Sortie");
+                    break;
+                }
+                //var image = extImages[i].FilePath;
+                ITrace.WriteLine($"[TreatDuplicates] {extImages[i].FilePath}");
+                ITrace.WriteLine($"[TreatDuplicates] {extImages[i+1].FilePath}");
+
+                handleW.SetLeftImage(extImages[i].FilePath);
+                handleW.SetRightImage(extImages[i+1].FilePath);
+                handleW.Show();
             }
         }
     }

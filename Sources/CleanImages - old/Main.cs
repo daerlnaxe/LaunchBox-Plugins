@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Unbroken.LaunchBox.Plugins;
 using Unbroken.LaunchBox.Plugins.Data;
 using DxTrace;
-using DxTBoxWpf.MessageBox;
+using DxTBoxWPF.MessageBox;
 
 namespace CleanImages
 {
@@ -74,7 +74,7 @@ namespace CleanImages
 
         private void Launch(IGame game)
         {
-            bool? res = DxMBox.Show(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
+            bool? res = DxMBox.ShowDial(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
             ITrace.WriteLine($"Window Result: {res}");
 
             // obsolète ? 

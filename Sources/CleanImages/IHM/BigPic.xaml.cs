@@ -12,23 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace CleanImages
+namespace CleanImages.IHM
 {
     /// <summary>
-    /// Logique d'interaction pour Splash.xaml
+    /// Logique d'interaction pour BigPic.xaml
     /// </summary>
-    public partial class Splash : Window
+    public partial class BigPic : Window
     {
-        public Splash()
+        public BigPic()
         {
             InitializeComponent();
-        }
-
-        
-        public static void Pop()
-        {
-            Splash splashWdw = new Splash();
-            splashWdw.Show();
         }
     }
 }
