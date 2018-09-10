@@ -35,12 +35,14 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanIm
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\fr\DxTrace.resources.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\IHM\Splash.baml
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.g.resources
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.Lang.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.Properties.Resources.resources
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.Lang.fr.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.csproj.GenerateResource.cache
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.csproj.CoreCompileInputs.cache
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\fr\CleanImages.resources.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.csproj.CopyComplete
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.pdb
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\fr\DxTBoxWPF.resources.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.csprojAssemblyReference.cache
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.Languages.Lang.resources
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.Languages.Lang.fr.resources

@@ -118,9 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Launch_Question" xml:space="preserve">
-    <value>Would you want to clean images relatives to this game ? It remove duplicates files,  but ask you before to do it.</value>
+    <value>Voulez vous nettoyer les images en relation à ce jeu ? Ca enlève les doublons, mais vous demande avant de le faire.</value>
+  </data>
+  <data name="No_Res" xml:space="preserve">
+    <value>Il n'y a aucun fichier dupliqué pour ce jeu</value>
+  </data>
+  <data name="Scan_Title" xml:space="preserve">
+    <value>Message du scanner</value>
   </data>
   <data name="Title_Menu" xml:space="preserve">
-    <value>Clean images...</value>
+    <value>Nettoyer les images...</value>
   </data>
 </root>

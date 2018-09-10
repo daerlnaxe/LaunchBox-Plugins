@@ -1,28 +1,20 @@
-﻿using CleanImages.IHM;
-using DxTBoxWPF.Images;
-using DxTBoxWPF.MessageBox;
+﻿using Unbroken.LaunchBox.Plugins;
+using Unbroken.LaunchBox.Plugins.Data;
 using DxTrace;
+using CleanImages.IHM;
+using DxTBoxWPF.Images;
+using DxTBoxWPF.Cont;
+using DxTBoxWPF.MessageBox;
+using CleanImages.Languages;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Unbroken.LaunchBox.Plugins;
-using Unbroken.LaunchBox.Plugins.Data;
+using System.Diagnostics;
 
 namespace CleanImages
 {
@@ -61,9 +53,11 @@ namespace CleanImages
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BasePlugin), new FrameworkPropertyMetadata(typeof(BasePlugin)));
             //_App = AppDomain.CurrentDomain.BaseDirectory;
-            DxTrace.InfoToFile logFile = new InfoToFile(@".\Logs\Clean_Images.log", true);
-
-            ITrace.AddListener(logFile);
+            if (Debugger.IsAttached)
+            {
+                InfoToFile logFile = new InfoToFile(@".\Logs\Clean_Images.log", true);
+                ITrace.AddListener(logFile);
+            }
 
             ITrace.WriteLine($"\n {new string('=', 10)} Initialization {new string('=', 10)}");
         }
@@ -98,7 +92,12 @@ namespace CleanImages
         {
             ITrace.WriteLine("On Selected");
 
-            Launch(selectedGame);
+            bool? res = DxMBox.ShowDial(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
+            ITrace.WriteLine($"Window Result: {res}");
+            if (res == true)
+            {
+                Launch(selectedGame);
+            }
             //  throw new NotImplementedException();
         }
 
@@ -114,38 +113,54 @@ namespace CleanImages
 
         private void Launch(IGame game)
         {
-            bool? res = DxMBox.ShowDial(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
-            ITrace.WriteLine($"Window Result: {res}");
-            if (res == true)
+            ITrace.WriteLine($"[Launch] process for {game.Title}");
+
+            ImageDetails[] images = game.GetAllImagesWithDetails();
+            ITrace.WriteLine($"[Launch] Images Found: {images.Length}");
+
+            //ExtImageDetails[] extImages = ExtImageDetails.Convert(images);
+            var extImages = Array.ConvertAll(images, item => (ExtImageDetails)item);
+
+            // A améliorer
+            Splash.Pop(images.Length);
+            Calculate_MD5(extImages);
+            Splash.CloseIt();
+
+            // Scan des doublons;
+            List<List<ExtImageDetails>> Doublons = Scan(extImages);
+
+            int i = 1;
+            int dNumber = Doublons.Count();
+
+            if (dNumber < 1)
             {
-                // obsolète ? 
+                DxMBox.ShowDial(Lang.No_Res, Lang.Scan_Title, DxMBoxButtons.Ok);
+            }
 
+            ITrace.WriteLine("\n[BasePlugin] Traitement des doublons");
+            // Traitement des doublons
+            foreach (var lDoublon in Doublons)
+            {
+                Duplicate_W duplicate_W = new Duplicate_W();
+                duplicate_W.Title = $"Clean Images - {i}/{dNumber}";
 
-                ImageDetails[] images = game.GetAllImagesWithDetails();
-                ITrace.WriteLine($"Images Found: {images.Length}");
-
-                //ExtImageDetails[] extImages = ExtImageDetails.Convert(images);
-                var extImages = Array.ConvertAll(images, item => (ExtImageDetails)item);
-
-                Splash.Pop(images.Length);
-                Calculate_MD5(extImages);
-
-
-                Splash.CloseIt();
-
-                // Scan des doublons;
-                List<List<ExtImageDetails>> Doublons = Scan(extImages);
-
-                // Traitement des doublons
-                int i=1;
-                foreach (var lDoublon in Doublons)
+                ITrace.WriteLine($"[BasePlugin] Nombre de doublons {dNumber} ayant la somme {lDoublon[0].Md5Sum}");
+                foreach (ExtImageDetails extImage in lDoublon)
                 {
-                    ITrace.WriteLine($"{i} passe de doublons");
-                    TreatDuplicates(lDoublon);
-                    i++;
+                    ITrace.WriteLine($"[BasePlugin] Ajout de {extImage.FilePath}");
+                    duplicate_W.QImages.Enqueue(new DxImage(extImage.ImageType, extImage.FilePath));
                 }
+
+                ITrace.WriteLine($"[BasePlugin] {i} passe de doublons");
+
+                duplicate_W.SetMainTitle(game.Title);
+                duplicate_W.ShowDialog();
+                //TreatDuplicates(lDoublon);
+
+                i++;
             }
         }
+
 
         private async void Calculate_MD5(ExtImageDetails[] images)
         {
@@ -274,25 +289,7 @@ namespace CleanImages
 
         }
 
-        private void TreatDuplicates(List<ExtImageDetails> extImages)
-        {
-            ITrace.WriteLine($"\n[TreatDuplicates] Traitement débuté pour: {extImages.Count} doublons");
-            Duplicate_W handleW = new Duplicate_W();
-            for (int i = 0; i < extImages.Count; i++)
-            {
-                if ((i+1)>extImages.Count)
-                {
-                    ITrace.WriteLine("[TreatDuplicates] Sortie");
-                    break;
-                }
-                //var image = extImages[i].FilePath;
-                ITrace.WriteLine($"[TreatDuplicates] {extImages[i].FilePath}");
-                ITrace.WriteLine($"[TreatDuplicates] {extImages[i+1].FilePath}");
 
-                handleW.SetLeftImage(extImages[i].FilePath);
-                handleW.SetRightImage(extImages[i+1].FilePath);
-                handleW.Show();
-            }
-        }
+
     }
 }

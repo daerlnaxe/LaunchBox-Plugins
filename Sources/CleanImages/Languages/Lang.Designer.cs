@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CleanImages {
+namespace CleanImages.Languages {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace CleanImages {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CleanImages.Lang", typeof(Lang).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CleanImages.Languages.Lang", typeof(Lang).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,24 @@ namespace CleanImages {
         internal static string Launch_Question {
             get {
                 return ResourceManager.GetString("Launch_Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à There is no duplicate images for this game..
+        /// </summary>
+        internal static string No_Res {
+            get {
+                return ResourceManager.GetString("No_Res", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Scanner message.
+        /// </summary>
+        internal static string Scan_Title {
+            get {
+                return ResourceManager.GetString("Scan_Title", resourceCulture);
             }
         }
         

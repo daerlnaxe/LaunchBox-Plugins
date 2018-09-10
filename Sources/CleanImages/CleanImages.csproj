@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DxTBoxWPF">
-      <HintPath>..\..\..\DlnxLocalTransfert\DxTBoxWPF\bin\Debug\DxTBoxWPF.dll</HintPath>
+    <Reference Include="DxTBoxWPF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\DlnxLocalTransfert\DxTBoxWPF\bin\Release\DxTBoxWPF.dll</HintPath>
     </Reference>
     <Reference Include="DxTrace">
       <HintPath>..\..\..\DxTrace\DxTrace\bin\Release\DxTrace.dll</HintPath>
@@ -67,12 +68,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Lang.Designer.cs">
+    <Compile Include="Languages\Lang.Designer.cs">
       <DependentUpon>Lang.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Lang.fr.Designer.cs">
+    <Compile Include="Languages\Lang.fr.Designer.cs">
       <DependentUpon>Lang.fr.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -90,11 +91,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Lang.fr.resx">
+    <EmbeddedResource Include="Languages\Lang.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Lang.fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Lang.resx">
+    <EmbeddedResource Include="Languages\Lang.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Lang.Designer.cs</LastGenOutput>
     </EmbeddedResource>
