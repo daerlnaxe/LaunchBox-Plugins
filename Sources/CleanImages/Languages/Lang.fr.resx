@@ -120,6 +120,9 @@
   <data name="Launch_Question" xml:space="preserve">
     <value>Voulez vous nettoyer les images en relation à ce jeu ? Ca enlève les doublons, mais vous demande avant de le faire.</value>
   </data>
+  <data name="Launch_Questions" xml:space="preserve">
+    <value>Voulez vous nettoyer les images en relation à ces jeux ? Ca enlève les doublons, mais vous demande avant de le faire.</value>
+  </data>
   <data name="No_Res" xml:space="preserve">
     <value>Il n'y a aucun fichier dupliqué pour ce jeu</value>
   </data>

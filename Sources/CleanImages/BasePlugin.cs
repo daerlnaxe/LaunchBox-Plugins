@@ -106,9 +106,13 @@ namespace CleanImages
         public void OnSelected(IGame[] selectedGames)
         {
             ITrace.WriteLine("On Selected[]");
-            foreach (IGame game in selectedGames)
+            bool? res = DxMBox.ShowDial(Lang.Launch_Questions, "Question", DxMBoxButtons.YesNo);
+            if (res == true)
             {
-                Launch(game);
+                foreach (IGame game in selectedGames)
+                {
+                    Launch(game);
+                }
             }
             // throw new NotImplementedException();
         }
@@ -136,7 +140,7 @@ namespace CleanImages
 
             if (dNumber < 1)
             {
-                DxMBox.ShowDial(Lang.No_Res, Lang.Scan_Title, DxMBoxButtons.Ok);
+                DxMBox.ShowDial($"{Lang.No_Res}: {game.Title}", Lang.Scan_Title, DxMBoxButtons.Ok);
             }
 
             ITrace.WriteLine("\n[BasePlugin] Traitement des doublons");

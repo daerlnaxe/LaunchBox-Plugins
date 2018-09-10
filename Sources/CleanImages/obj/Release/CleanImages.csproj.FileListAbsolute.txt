@@ -22,3 +22,4 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\fr\Cl
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages.csproj.CopyComplete
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages.pdb
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages.csprojAssemblyReference.cache
