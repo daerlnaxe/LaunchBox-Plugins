@@ -50,6 +50,8 @@ namespace CleanImages
     /// </summary>
     public class BasePlugin : Control, IGameMenuItemPlugin
     {
+        bool StopAll { get; }
+
         static BasePlugin()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BasePlugin), new FrameworkPropertyMetadata(typeof(BasePlugin)));
@@ -111,13 +113,14 @@ namespace CleanImages
             {
                 foreach (IGame game in selectedGames)
                 {
-                    Launch(game);
+                    var poursuivre = Launch(game);
+                    if (poursuivre == false) break;
                 }
             }
             // throw new NotImplementedException();
         }
 
-        private void Launch(IGame game)
+        private bool Launch(IGame game)
         {
             ITrace.WriteLine($"[Launch] process for {game.Title}");
 
@@ -162,11 +165,15 @@ namespace CleanImages
                 ITrace.WriteLine($"[BasePlugin] {i} passe de doublons");
 
                 duplicate_W.SetMainTitle(game.Title);
-                duplicate_W.ShowDialog();
-                //TreatDuplicates(lDoublon);
+                var res = duplicate_W.ShowDialog();
+
+                // Stop process
+                if (res == false) return false;
 
                 i++;
             }
+
+            return true;
         }
 
 
@@ -193,6 +200,7 @@ namespace CleanImages
                 i++;
 
             }
+
 
         }
 
