@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace CleanImages
 {
@@ -90,6 +91,7 @@ namespace CleanImages
 
         public void OnSelected(IGame selectedGame)
         {
+            Mouse.OverrideCursor = Cursors.Arrow;
             ITrace.WriteLine("On Selected");
 
             bool? res = DxMBox.ShowDial(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
@@ -142,7 +144,9 @@ namespace CleanImages
             foreach (var lDoublon in Doublons)
             {
                 Duplicate_W duplicate_W = new Duplicate_W();
+                duplicate_W.ForceCursor = true;
                 duplicate_W.Title = $"Clean Images - {i}/{dNumber}";
+                duplicate_W.SetHash(lDoublon[0].Md5Sum);
 
                 ITrace.WriteLine($"[BasePlugin] Nombre de doublons {dNumber} ayant la somme {lDoublon[0].Md5Sum}");
                 foreach (ExtImageDetails extImage in lDoublon)
