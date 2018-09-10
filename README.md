@@ -4,7 +4,7 @@ Plugin(s) for LaunchBox
 Informations available on [Wiki Page](https://github.com/daerlnaxe/LaunchBox-Plugins/wiki)
 
 ### Infos:
-- 10/09/2018 CleanImages 1.0.0.2
+- 10/09/2018 CleanImages 1.0.0.3
     - Scan images of a game, calcul md5 sums then ask by a window to the user what to do
 
 - 04/09/2018 SappPasRoot 2.0.0.4
