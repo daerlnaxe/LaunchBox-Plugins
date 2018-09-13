@@ -61,6 +61,33 @@ namespace CleanImages.Languages {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Search duplicates images..
+        /// </summary>
+        internal static string Duplicate_Begin {
+            get {
+                return ResourceManager.GetString("Duplicate_Begin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à End of duplicates research..
+        /// </summary>
+        internal static string Duplicate_End {
+            get {
+                return ResourceManager.GetString("Duplicate_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à There is no duplicate images for this game..
+        /// </summary>
+        internal static string Duplicate_No_Res {
+            get {
+                return ResourceManager.GetString("Duplicate_No_Res", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Would you want to clean images relatives to this game ? It remove duplicates files,  but ask you before to do it..
         /// </summary>
         internal static string Launch_Question {
@@ -79,11 +106,20 @@ namespace CleanImages.Languages {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à There is no duplicate images for this game..
+        ///   Recherche une chaîne localisée semblable à Beginning of the calculation for the md5 sums..
         /// </summary>
-        internal static string No_Res {
+        internal static string Md5_Begin {
             get {
-                return ResourceManager.GetString("No_Res", resourceCulture);
+                return ResourceManager.GetString("Md5_Begin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à End of the calculation..
+        /// </summary>
+        internal static string Md5_End {
+            get {
+                return ResourceManager.GetString("Md5_End", resourceCulture);
             }
         }
         
@@ -93,6 +129,15 @@ namespace CleanImages.Languages {
         internal static string Scan_Title {
             get {
                 return ResourceManager.GetString("Scan_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Research images ....
+        /// </summary>
+        internal static string Search_Images {
+            get {
+                return ResourceManager.GetString("Search_Images", resourceCulture);
             }
         }
         

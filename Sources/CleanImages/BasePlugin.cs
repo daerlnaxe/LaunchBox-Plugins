@@ -1,10 +1,11 @@
 ﻿using Unbroken.LaunchBox.Plugins;
 using Unbroken.LaunchBox.Plugins.Data;
 using DxTrace;
-using CleanImages.IHM;
+//using CleanImages.IHM;
 using DxTBoxWPF.Images;
 using DxTBoxWPF.Cont;
-using DxTBoxWPF.MessageBox;
+using DxTBoxWPF.MBox;
+using DxTBoxWPF.Progress;
 using CleanImages.Languages;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Diagnostics;
 using System.Windows.Input;
+using System.Threading.Tasks;
+using System.Threading;
+using DxTBoxWPF.Collec;
+using DxTBoxWPF.Common;
 
 namespace CleanImages
 {
@@ -51,16 +56,25 @@ namespace CleanImages
     public class BasePlugin : Control, IGameMenuItemPlugin
     {
         bool StopAll { get; }
+        /*public event Action<int> CurrentPosition;
+        public event Action<int> MaxProgress;
+        public event Action CurrentTotal;
+        public event Action<string> CurrentOperation;*/
+
+        /// <summary>
+        /// Window for multiple games
+        /// </summary>
+        DxCollecProgress cProgress;
 
         static BasePlugin()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BasePlugin), new FrameworkPropertyMetadata(typeof(BasePlugin)));
             //_App = AppDomain.CurrentDomain.BaseDirectory;
-            if (Debugger.IsAttached)
-            {
-                InfoToFile logFile = new InfoToFile(@".\Logs\Clean_Images.log", true);
-                ITrace.AddListener(logFile);
-            }
+#if DEBUG
+            InfoToFile logFile = new InfoToFile(@".\Logs\Clean_Images.log", true);
+            ITrace.AddListener(logFile);
+            ITrace.WriteLine("DebugMode");
+#endif
 
             ITrace.WriteLine($"\n {new string('=', 10)} Initialization {new string('=', 10)}");
         }
@@ -91,36 +105,57 @@ namespace CleanImages
             // throw new NotImplementedException();
         }
 
+
         public void OnSelected(IGame selectedGame)
         {
             Mouse.OverrideCursor = Cursors.Arrow;
             ITrace.WriteLine("On Selected");
 
-            bool? res = DxMBox.ShowDial(Lang.Launch_Question, "Question", DxMBoxButtons.YesNo);
+            bool? res = DxMBox.ShowDial(Lang.Launch_Question, "Question", DxButtons.YesNo);
             ITrace.WriteLine($"Window Result: {res}");
-            if (res == true)
+            try
             {
-                Launch(selectedGame);
+                if (res == true)
+                {
+                    Launch4One(selectedGame);
+                }
             }
-            //  throw new NotImplementedException();
+            catch (Exception exc)
+            {
+                ITrace.WriteLine(exc.ToString());
+            }
         }
+
 
         public void OnSelected(IGame[] selectedGames)
         {
+            Mouse.OverrideCursor = Cursors.Arrow;
             ITrace.WriteLine("On Selected[]");
-            bool? res = DxMBox.ShowDial(Lang.Launch_Questions, "Question", DxMBoxButtons.YesNo);
-            if (res == true)
+
+            try
             {
-                foreach (IGame game in selectedGames)
+                DxMCollec WCollec = new DxMCollec();
+                WCollec.SetCollection<IGame>(selectedGames);
+                WCollec.SetDisplay("Title");
+
+                if (WCollec.ShowDialog() == true)
                 {
-                    var poursuivre = Launch(game);
-                    if (poursuivre == false) break;
+                    LaunchThem(selectedGames);
                 }
+            }
+            catch (Exception exc)
+            {
+                ITrace.WriteLine(exc.ToString());
             }
             // throw new NotImplementedException();
         }
 
-        private bool Launch(IGame game)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        private bool Launch4One(IGame game)
         {
             ITrace.WriteLine($"[Launch] process for {game.Title}");
 
@@ -131,103 +166,231 @@ namespace CleanImages
             var extImages = Array.ConvertAll(images, item => (ExtImageDetails)item);
 
             // A améliorer
-            Splash.Pop(images.Length);
-            Calculate_MD5(extImages);
-            Splash.CloseIt();
+            //Splash.Pop(images.Length);
+
+            Md5Func Md5Job = new Md5Func();
+            Md5Job.CurrentPosition += (x) => { DxProgressB1.SCurrentProgress = x; };
+
+            Task t1 = Task.Run(() => Md5Job.Calculate_MD5(extImages, 10));
+            t1.ContinueWith((antecedant) => DxProgressB1.AsyncCloseIt());
+
+            //Calculate_MD5(extImages);
+
+            // La fenêtre bloque la suite tant qu'elle n'est pas fermée
+            DxProgressB1.ModalShow("CleanImages - Calculate MD5", images.Length);
+
+
+            ITrace.WriteLine("Fin de Calculate Md5");
 
             // Scan des doublons;
             List<List<ExtImageDetails>> Doublons = Scan(extImages);
 
-            int i = 1;
+
             int dNumber = Doublons.Count();
 
             if (dNumber < 1)
             {
-                DxMBox.ShowDial($"{Lang.No_Res}: {game.Title}", Lang.Scan_Title, DxMBoxButtons.Ok);
+                DxMBox.ShowDial($"{Lang.Duplicate_No_Res}: {game.Title}", Lang.Scan_Title, DxButtons.Ok);
             }
 
-            ITrace.WriteLine("\n[BasePlugin] Traitement des doublons");
-            // Traitement des doublons
-            foreach (var lDoublon in Doublons)
-            {
-                Duplicate_W duplicate_W = new Duplicate_W();
-                duplicate_W.ForceCursor = true;
-                duplicate_W.Title = $"Clean Images - {i}/{dNumber}";
-                duplicate_W.SetHash(lDoublon[0].Md5Sum);
-
-                ITrace.WriteLine($"[BasePlugin] Nombre de doublons {dNumber} ayant la somme {lDoublon[0].Md5Sum}");
-                foreach (ExtImageDetails extImage in lDoublon)
-                {
-                    ITrace.WriteLine($"[BasePlugin] Ajout de {extImage.FilePath}");
-                    duplicate_W.QImages.Enqueue(new DxImage(extImage.ImageType, extImage.FilePath));
-                }
-
-                ITrace.WriteLine($"[BasePlugin] {i} passe de doublons");
-
-                duplicate_W.SetMainTitle(game.Title);
-                var res = duplicate_W.ShowDialog();
-
-                // Stop process
-                if (res == false) return false;
-
-                i++;
-            }
+            //ManualProcess
+            PManualDuplicates(Doublons, game);
 
             return true;
         }
 
-
-        private async void Calculate_MD5(ExtImageDetails[] images)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="games"></param>
+        /// <returns></returns>
+        private async Task<bool> LaunchThem(IGame[] games)
         {
-            ExtImageDetails[] extImages = new ExtImageDetails[images.Length];
+            ITrace.WriteLine("[LaunchThem] Begin");
 
-            int i = 0;
-            foreach (ExtImageDetails image in images)
+            cProgress = new DxCollecProgress();
+            cProgress.SetCollection<IGame>(games, "Title");
+            //cProgress.CurrentTotal = 100;
+            cProgress.MaxProgress = 100;
+            cProgress.MaxTotal = games.Length;
+            Dictionary<IGame, List<List<ExtImageDetails>>> AllDoublons = new Dictionary<IGame, List<List<ExtImageDetails>>>();
+
+            cProgress.Show();
+            bool poursuite = false;
+
+            foreach (IGame game in games)
             {
+                ITrace.WriteLine($"[Launch] process for {game.Title}");
+                cProgress.CurrentOP = Lang.Search_Images;
 
-                //Debug.WriteLine($"[Md5] {image.FilePath}");
-                ITrace.WriteLine($"[Md5] {image.ImageType}");
-                ITrace.WriteLine($"[Md5] {image.Region}");
-                ITrace.WriteLine($"[Md5] {image.FilePath}");
-                ITrace.WriteLine("Calcul du md5");
-                //extImages[i].Md5Sum = 
-                image.Md5Sum = GetMD5HashFromFile(image.FilePath);
-                ITrace.WriteLine($"[Md5] Somme: {image.Md5Sum}");
+                ImageDetails[] images = game.GetAllImagesWithDetails();
+                ITrace.WriteLine($"[Launch] Images Found: {images.Length}");
+                cProgress.MaxProgress = images.Length;
 
+                var extImages = Array.ConvertAll(images, item => (ExtImageDetails)item);
 
-                ITrace.WriteLine();
-                Splash.ProgressStatus = i;
-                i++;
+                Md5Func Md5Job = new Md5Func();
+                ITrace.WriteLine($"[LaunchThem] {Lang.Md5_Begin}\n");
+                cProgress.CurrentOP = Lang.Md5_Begin;
 
-            }
+                Md5Job.CurrentPosition += (x) => { cProgress.CurrentProgress = x; };
+                Md5Job.CurrentPosition += (x) => { Console.WriteLine("md5job " + x); };
+                await Md5Job.Calculate_MD5(extImages, 10);
+                ITrace.WriteLine("après md5 await");
 
+                #region Scan des doublons;
+                cProgress.CurrentOP = Lang.Duplicate_Begin;
+                ITrace.WriteLine($"[LaunchThem] {Lang.Duplicate_Begin}");
 
-        }
+                List<List<ExtImageDetails>> doublons = Scan(extImages);
 
-        private string GetMD5HashFromFile(string fileName)
-        {
-            try
-            {
-                using (var md5 = MD5.Create())
+                cProgress.CurrentTotal++;
+
+                int dNumber = doublons.Count();
+                if (dNumber < 1)
                 {
-                    using (var stream = File.OpenRead(fileName))
-                    {
-                        string hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", string.Empty);
-                        ITrace.WriteLine($"[GetMD5HashFromFile] hash : {hash}");
-                        return hash;
-                    }
+                    cProgress.SetCurrentFinished(Lang.Duplicate_No_Res);
+                    ITrace.WriteLine($"[LaunchThem] {Lang.Duplicate_No_Res}");
+                    continue;
                 }
+                #endregion
+
+                if (cProgress.StopIt)
+                {
+                    ITrace.WriteLine("[LaunchThem] Stopped by user");
+                    cProgress.Close();
+                    return false;
+                }
+
+                //ManualProcess
+                bool resDupli= PManualDuplicates(doublons, game);
+                ITrace.WriteLine($"Resultat de resDupli {resDupli}");
+                if (!resDupli)
+                {
+                    ITrace.WriteLine("[LaunchThem] Stopped by user 2");
+                    cProgress.Close();
+                    return false;
+                }
+                               
+                cProgress.SetCurrentFinished("");
             }
-            catch (Exception exc)
+            return true;
+
+            Task t1 = Task
+                .Run(() => LaunchThemProcess(games, AllDoublons))
+                .ContinueWith((tResult) =>
+                {
+
+                    if (!tResult.Result)
+                    {
+                        ITrace.WriteLine("Task aborded");
+                        cProgress.AsyncClose();
+
+
+                    }
+
+                    if (tResult.Result)
+                    {
+                        ITrace.WriteLine("Task ended normally");
+                        cProgress.AsyncClose();
+                        poursuite = true;
+
+                    }
+                });
+
+
+            cProgress.ShowDialog();
+
+            if (!poursuite) return poursuite;
+
+            ITrace.WriteLine("Taille du dico" + AllDoublons.Count());
+            if (AllDoublons.Count() < 1) DxMBox.ShowDial("No doublon", "info", DxButtons.Ok);
+
+            // Traitement manuel
+            bool res;
+            foreach (IGame game in games)
             {
-                ITrace.WriteLine($"GetMd5HashFromFile: {exc}");
-                throw new Exception($"Erreur en GetMD5HashFromFile\n {exc}");
+                res = PManualDuplicates(AllDoublons[game], game);
+                if (!res) break;
             }
+
+            ITrace.WriteLine("[LaunchThem] End");
+            return true;
         }
 
+        /// <summary>
+        /// Core for LaunchThem
+        /// </summary>
+        /// <param name="games"></param>
+        private async Task<bool> LaunchThemProcess(IGame[] games, Dictionary<IGame, List<List<ExtImageDetails>>> AllDoublons)
+        {
+
+            foreach (IGame game in games)
+            {
+                ITrace.WriteLine($"\n[LaunchThem] process for {game.Title}");
+                cProgress.CurrentOP = Lang.Search_Images;
+                cProgress.CurrentTotal++;
+
+                ImageDetails[] images = game.GetAllImagesWithDetails();
+                ITrace.WriteLine($"[LaunchThem] Images Found: {images.Length}");
+                cProgress.MaxProgress = images.Length;
+
+                var extImages = Array.ConvertAll(images, item => (ExtImageDetails)item);
+
+                #region md5
+                Md5Func Md5Job = new Md5Func();
+                Md5Job.CurrentPosition += (x) => { cProgress.CurrentProgress = x; };
+                ITrace.WriteLine($"[LaunchThem] {Lang.Md5_Begin}\n");
+
+                cProgress.CurrentOP = Lang.Md5_Begin;
+
+                //await Task.Run(() => 
+                await Md5Job.Calculate_MD5(extImages, 10);//);
+
+                cProgress.CurrentOP = Lang.Md5_End;
+                ITrace.WriteLine($"[LaunchThem] {Lang.Md5_End} \n");
+                #endregion md5
+
+                #region Scan des doublons;
+                cProgress.CurrentOP = Lang.Duplicate_Begin;
+                ITrace.WriteLine($"[LaunchThem] {Lang.Duplicate_Begin}");
+
+                List<List<ExtImageDetails>> doublons = Scan(extImages);
+                AllDoublons.Add(game, doublons);
+
+                /*
+                int dNumber = Doublons.Count();
+                if (dNumber < 1)
+                {
+
+                    dxCProgress.AsyncSetCurrentFinished(Lang.Duplicate_No_Res);
+                    ITrace.WriteLine($"[LaunchThem] {Lang.Duplicate_No_Res}");
+                    continue;
+                }
+
+                dxCProgress.CurrentOP = Lang.Duplicate_End;
+                ITrace.WriteLine($"[LaunchThem] {Lang.Duplicate_End}");*/
+                #endregion
+
+
+                cProgress.AsyncSetCurrentFinished("");
+                if (cProgress.StopIt) return false;
+
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Search duplicates for each sum
+        /// </summary>
+        /// <param name="extImages"></param>
+        /// <returns></returns>
         private List<List<ExtImageDetails>> Scan(ExtImageDetails[] extImages)
         {
+            ITrace.Indent++;
+            ITrace.WriteLine("[Scan] Begin");
             var toTreat = new List<List<ExtImageDetails>>();
+            int nbToTreat = 0;
 
             // copy of extImages
             List<ExtImageDetails> extCopy = extImages.ToList();
@@ -236,6 +399,7 @@ namespace CleanImages
 
             foreach (ExtImageDetails image in extImages)
             {
+
                 if (image.doublon)
                 {
                     ITrace.WriteLine($"[Scan] déjà scanné => pass ('{image.FilePath}')");
@@ -250,9 +414,12 @@ namespace CleanImages
                 {
                     ITrace.WriteLine($"[Scan] doublons = {doublons}");
                     toTreat.Add(doublons);
+                    nbToTreat = toTreat.Count();
                 }
             }
 
+            ITrace.WriteLine($"[Scan] End: {nbToTreat}");
+            ITrace.Indent--;
             return toTreat;
         }
 
@@ -271,7 +438,8 @@ namespace CleanImages
             similaire.Add(imRef);       // On ajoute en référence
             extImages.RemoveAt(0);      // On lève le premier élement qui est en cours d'exam;
 
-            ITrace.WriteLine($"\n[GetDuplicates] Recherche de similitudes pour '{imRef.FilePath}', {imRef.Md5Sum}, {imRef.doublon} dans tableau de taille {extImages.Count}");
+            ITrace.Indent++;
+            ITrace.WriteLine($"[GetDuplicates] Recherche de similitudes pour '{imRef.FilePath}', {imRef.Md5Sum}, {imRef.doublon} dans tableau de taille {extImages.Count}");
 
             for (int i = 0; i < extImages.Count; i++)
             {
@@ -297,15 +465,53 @@ namespace CleanImages
                 }
             }
 
-            ITrace.WriteLine($"[GetDuplicates] Nombre d'occurence(s) trouvée(s): {similaire.Count}");
 
+            ITrace.WriteLine($"[GetDuplicates] Nombre d'occurence(s) trouvée(s): {similaire.Count}");
+            ITrace.Indent--;
             if (similaire.Count <= 1) return null;
 
             return similaire;
 
         }
 
+        private bool PManualDuplicates(List<List<ExtImageDetails>> Doublons, IGame game)
+        {
+            int ii = 1;
+            int dNumber = Doublons.Count();
 
+            ITrace.WriteLine("[PManualDuplicates] Traitement des doublons");
+            // Traitement des doublons
+            foreach (var lDoublon in Doublons)
+            {
+                Duplicate_W duplicate_W = new Duplicate_W();
+                duplicate_W.ForceCursor = true;
+                duplicate_W.Title = $"Clean Images - {ii}/{dNumber}";
+                duplicate_W.SetHash(lDoublon[0].Md5Sum);
+
+                ITrace.WriteLine($"[PManualDuplicates] Nombre de doublons ayant la somme {lDoublon[0].Md5Sum}: {dNumber}");
+                foreach (ExtImageDetails extImage in lDoublon)
+                {
+                    ITrace.WriteLine($"[PManualDuplicates] Add To Queue: {extImage.FilePath}");
+                    duplicate_W.QImages.Enqueue(new DxImage(extImage.ImageType, extImage.FilePath));
+                }
+
+                ITrace.WriteLine($"[PManualDuplicates] {ii} passe de doublons");
+
+                duplicate_W.SetMainTitle(game.Title);
+                //var res = duplicate_W.Dispatcher?.Invoke(duplicate_W.ShowDialog);
+                var res = duplicate_W.ShowDialog();
+                ITrace.WriteLine($"Resultat de duplicate show dialog {res}");
+                // Stop process
+                if (res == false)
+                {
+                    ITrace.WriteLine($"[PManualDuplicate] Arrêt utilisateur");
+                    return false;
+                }
+
+                ii++;
+            }
+            return true;
+        }
 
     }
 }

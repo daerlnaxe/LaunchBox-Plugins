@@ -117,17 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Duplicate_Begin" xml:space="preserve">
+    <value>Search duplicates images.</value>
+  </data>
+  <data name="Duplicate_End" xml:space="preserve">
+    <value>End of duplicates research.</value>
+  </data>
+  <data name="Duplicate_No_Res" xml:space="preserve">
+    <value>There is no duplicate images for this game.</value>
+  </data>
   <data name="Launch_Question" xml:space="preserve">
     <value>Would you want to clean images relatives to this game ? It remove duplicates files,  but ask you before to do it.</value>
   </data>
   <data name="Launch_Questions" xml:space="preserve">
     <value>Would you want to clean images relatives to this games ? It remove duplicates files,  but ask you before to do it.</value>
   </data>
-  <data name="No_Res" xml:space="preserve">
-    <value>There is no duplicate images for this game.</value>
+  <data name="Md5_Begin" xml:space="preserve">
+    <value>Beginning of the calculation for the md5 sums.</value>
+  </data>
+  <data name="Md5_End" xml:space="preserve">
+    <value>End of the calculation.</value>
   </data>
   <data name="Scan_Title" xml:space="preserve">
     <value>Scanner message</value>
+  </data>
+  <data name="Search_Images" xml:space="preserve">
+    <value>Research images ...</value>
   </data>
   <data name="Title_Menu" xml:space="preserve">
     <value>Clean images...</value>

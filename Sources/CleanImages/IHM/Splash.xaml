@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="Splash" Height="132" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
-        <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="40" Margin="10,25,0,0" VerticalAlignment="Top" Width="560"/>
-
+        <ProgressBar x:Name="progressBar" Maximum="{Binding Path=pMaximum}" Minimum="{Binding Path=pMinimum}" Value="{Binding Path=pValue}" Height="40" Margin="10,45,10,0" VerticalAlignment="Top" Loaded="progressBar_Loaded"/>
+        <StackPanel Height="30" Margin="10,10,10,0" VerticalAlignment="Top" Orientation="Horizontal">
+            <Label Content="Image:" Height="30" VerticalAlignment="Center"/>
+            <TextBlock TextWrapping="NoWrap" Text="{Binding Path=CurrentFile}" Width="729" VerticalAlignment="Center" Height="30" Padding="0,5,0,0" Margin="0"/>
+        </StackPanel>
     </Grid>
 </Window>

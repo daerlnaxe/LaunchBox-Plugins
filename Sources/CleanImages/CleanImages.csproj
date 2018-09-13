@@ -63,9 +63,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExtImageDetails.cs" />
-    <Compile Include="IHM\Splash.xaml.cs">
+    <None Include="IHM\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Languages\Lang.Designer.cs">
@@ -78,6 +78,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Md5Func.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -109,10 +110,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="IHM\Splash.xaml">
+    <None Include="IHM\Splash.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\def_img.png" />

@@ -8,10 +8,6 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Release\DxTBo
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Release\DxTrace.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Release\fr\DxTBoxWPF.resources.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Release\fr\DxTrace.resources.dll
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\IHM\Splash.g.cs
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages_MarkupCompile.cache
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages_MarkupCompile.lref
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\IHM\Splash.baml
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages.g.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages.Languages.Lang.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages.Properties.Resources.resources
