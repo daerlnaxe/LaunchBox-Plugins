@@ -48,3 +48,4 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\ReleaseCleanI
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\ReleaseCleanImages\DxTrace.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\ReleaseCleanImages\fr\DxTBoxWPF.resources.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\ReleaseCleanImages\fr\DxTrace.resources.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Release\CleanImages.csprojAssemblyReference.cache

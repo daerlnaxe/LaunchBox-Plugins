@@ -117,17 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Launch_Question" xml:space="preserve">
-    <value>Voulez vous nettoyer les images en relation à ce jeu ? Ca enlève les doublons, mais vous demande avant de le faire.</value>
+  <data name="Duplicate_Begin" xml:space="preserve">
+    <value>Recherche d'images dupliquées.</value>
   </data>
-  <data name="Launch_Questions" xml:space="preserve">
+  <data name="Duplicate_End" xml:space="preserve">
+    <value>Fin de la recherche des doublons.</value>
+  </data>
+  <data name="Duplicate_No_Res" xml:space="preserve">
+    <value>Il n'y a aucun fichier dupliqué pour ce jeu</value>
+  </data>
+  <data name="LaunchM_Question" xml:space="preserve">
     <value>Voulez vous nettoyer les images en relation à ces jeux ? Ca enlève les doublons, mais vous demande avant de le faire.</value>
   </data>
-  <data name="No_Res" xml:space="preserve">
-    <value>Il n'y a aucun fichier dupliqué pour ce jeu</value>
+  <data name="LaunchO_Question" xml:space="preserve">
+    <value>Voulez vous nettoyer les images en relation à ce jeu ? Ca enlève les doublons, mais vous demande avant de le faire.</value>
   </data>
   <data name="Scan_Title" xml:space="preserve">
     <value>Message du scanner</value>
+  </data>
+  <data name="Search_Images" xml:space="preserve">
+    <value>Recherche d'images ...</value>
   </data>
   <data name="Title_Menu" xml:space="preserve">
     <value>Nettoyer les images...</value>

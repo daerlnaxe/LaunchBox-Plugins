@@ -88,20 +88,20 @@ namespace CleanImages.Languages {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Would you want to clean images relatives to this game ? It remove duplicates files,  but ask you before to do it..
-        /// </summary>
-        internal static string Launch_Question {
-            get {
-                return ResourceManager.GetString("Launch_Question", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Would you want to clean images relatives to this games ? It remove duplicates files,  but ask you before to do it..
         /// </summary>
         internal static string Launch_Questions {
             get {
-                return ResourceManager.GetString("Launch_Questions", resourceCulture);
+                return ResourceManager.GetString("LaunchM_Question", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Would you want to clean images relatives to this game ? It remove duplicates files,  but ask you before to do it..
+        /// </summary>
+        internal static string Launch_Question {
+            get {
+                return ResourceManager.GetString("LaunchO_Question", resourceCulture);
             }
         }
         

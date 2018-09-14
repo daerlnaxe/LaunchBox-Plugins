@@ -73,10 +73,9 @@ namespace CleanImages
 #if DEBUG
             InfoToFile logFile = new InfoToFile(@".\Logs\Clean_Images.log", true);
             ITrace.AddListener(logFile);
-            ITrace.WriteLine("DebugMode");
+            ITrace.WriteLine($"\n {new string('=', 10)} Initialization DebugMode{new string('=', 10)}");
 #endif
 
-            ITrace.WriteLine($"\n {new string('=', 10)} Initialization {new string('=', 10)}");
         }
 
         public bool SupportsMultipleGames => true;
@@ -104,8 +103,11 @@ namespace CleanImages
 
             // throw new NotImplementedException();
         }
-
-
+        
+        /// <summary>
+        /// One game selected
+        /// </summary>
+        /// <param name="selectedGame"></param>
         public void OnSelected(IGame selectedGame)
         {
             Mouse.OverrideCursor = Cursors.Arrow;
@@ -125,9 +127,12 @@ namespace CleanImages
                 ITrace.WriteLine(exc.ToString());
             }
         }
-
-
-        public void OnSelected(IGame[] selectedGames)
+        
+        /// <summary>
+        /// Multi game selected
+        /// </summary>
+        /// <param name="selectedGames"></param>
+        public async void OnSelected(IGame[] selectedGames)
         {
             Mouse.OverrideCursor = Cursors.Arrow;
             ITrace.WriteLine("On Selected[]");
@@ -137,17 +142,17 @@ namespace CleanImages
                 DxMCollec WCollec = new DxMCollec();
                 WCollec.SetCollection<IGame>(selectedGames);
                 WCollec.SetDisplay("Title");
+                WCollec.Message = Lang.Launch_Questions;
 
                 if (WCollec.ShowDialog() == true)
                 {
-                    LaunchThem(selectedGames);
+                   await LaunchThem(selectedGames);
                 }
             }
             catch (Exception exc)
             {
                 ITrace.WriteLine(exc.ToString());
             }
-            // throw new NotImplementedException();
         }
 
         /// <summary>
@@ -157,19 +162,17 @@ namespace CleanImages
         /// <returns></returns>
         private bool Launch4One(IGame game)
         {
-            ITrace.WriteLine($"[Launch] process for {game.Title}");
+            ITrace.WriteLine($"[Launch4One] process for {game.Title}");
 
             ImageDetails[] images = game.GetAllImagesWithDetails();
-            ITrace.WriteLine($"[Launch] Images Found: {images.Length}");
+            ITrace.WriteLine($"[Launch4One] Images Found: {images.Length}");
 
             //ExtImageDetails[] extImages = ExtImageDetails.Convert(images);
             var extImages = Array.ConvertAll(images, item => (ExtImageDetails)item);
 
-            // A améliorer
-            //Splash.Pop(images.Length);
-
             Md5Func Md5Job = new Md5Func();
             Md5Job.CurrentPosition += (x) => { DxProgressB1.SCurrentProgress = x; };
+            Md5Job.CurrentFile += (file) => { DxProgressB1.SCurrentOP = file; };
 
             Task t1 = Task.Run(() => Md5Job.Calculate_MD5(extImages, 10));
             t1.ContinueWith((antecedant) => DxProgressB1.AsyncCloseIt());
@@ -177,14 +180,12 @@ namespace CleanImages
             //Calculate_MD5(extImages);
 
             // La fenêtre bloque la suite tant qu'elle n'est pas fermée
-            DxProgressB1.ModalShow("CleanImages - Calculate MD5", images.Length);
+            DxProgressB1.ModalShow("[Launch4One] CleanImages - Calculate MD5", images.Length);
 
-
-            ITrace.WriteLine("Fin de Calculate Md5");
+            ITrace.WriteLine("[Launch4One] Fin de Calculate Md5");
 
             // Scan des doublons;
             List<List<ExtImageDetails>> Doublons = Scan(extImages);
-
 
             int dNumber = Doublons.Count();
 
@@ -196,6 +197,7 @@ namespace CleanImages
             //ManualProcess
             PManualDuplicates(Doublons, game);
 
+            ITrace.WriteLine("[Launch4One] Fin");
             return true;
         }
 
@@ -213,10 +215,9 @@ namespace CleanImages
             //cProgress.CurrentTotal = 100;
             cProgress.MaxProgress = 100;
             cProgress.MaxTotal = games.Length;
-            Dictionary<IGame, List<List<ExtImageDetails>>> AllDoublons = new Dictionary<IGame, List<List<ExtImageDetails>>>();
+            
 
             cProgress.Show();
-            bool poursuite = false;
 
             foreach (IGame game in games)
             {
@@ -234,9 +235,7 @@ namespace CleanImages
                 cProgress.CurrentOP = Lang.Md5_Begin;
 
                 Md5Job.CurrentPosition += (x) => { cProgress.CurrentProgress = x; };
-                Md5Job.CurrentPosition += (x) => { Console.WriteLine("md5job " + x); };
                 await Md5Job.Calculate_MD5(extImages, 10);
-                ITrace.WriteLine("après md5 await");
 
                 #region Scan des doublons;
                 cProgress.CurrentOP = Lang.Duplicate_Begin;
@@ -263,7 +262,7 @@ namespace CleanImages
                 }
 
                 //ManualProcess
-                bool resDupli= PManualDuplicates(doublons, game);
+                bool resDupli = PManualDuplicates(doublons, game);
                 ITrace.WriteLine($"Resultat de resDupli {resDupli}");
                 if (!resDupli)
                 {
@@ -271,11 +270,18 @@ namespace CleanImages
                     cProgress.Close();
                     return false;
                 }
-                               
+
                 cProgress.SetCurrentFinished("");
             }
+
+            ITrace.WriteLine("[LaunchThem] End");
+
             return true;
 
+            #region obsolète
+            /*
+             *         Dictionary<IGame, List<List<ExtImageDetails>>> AllDoublons = new Dictionary<IGame, List<List<ExtImageDetails>>>();
+            bool poursuite = false;
             Task t1 = Task
                 .Run(() => LaunchThemProcess(games, AllDoublons))
                 .ContinueWith((tResult) =>
@@ -315,9 +321,12 @@ namespace CleanImages
             }
 
             ITrace.WriteLine("[LaunchThem] End");
-            return true;
+            return true;*/
+            #endregion
         }
 
+        #region obsolete
+        /*
         /// <summary>
         /// Core for LaunchThem
         /// </summary>
@@ -358,18 +367,6 @@ namespace CleanImages
                 List<List<ExtImageDetails>> doublons = Scan(extImages);
                 AllDoublons.Add(game, doublons);
 
-                /*
-                int dNumber = Doublons.Count();
-                if (dNumber < 1)
-                {
-
-                    dxCProgress.AsyncSetCurrentFinished(Lang.Duplicate_No_Res);
-                    ITrace.WriteLine($"[LaunchThem] {Lang.Duplicate_No_Res}");
-                    continue;
-                }
-
-                dxCProgress.CurrentOP = Lang.Duplicate_End;
-                ITrace.WriteLine($"[LaunchThem] {Lang.Duplicate_End}");*/
                 #endregion
 
 
@@ -378,7 +375,8 @@ namespace CleanImages
 
             }
             return true;
-        }
+        }*/
+        #endregion
 
         /// <summary>
         /// Search duplicates for each sum
