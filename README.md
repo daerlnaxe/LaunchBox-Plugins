@@ -4,7 +4,7 @@ Plugin(s) for LaunchBox
 Informations available on [Wiki Page](https://github.com/daerlnaxe/LaunchBox-Plugins/wiki)
 
 ### Infos:
-- 14/06/2020
+- 14/06/2020 SappPasRoot 2.0.1.5
     - Modifications for compatibility with LaunchBox 10.15    
     - .Net Framework 4.7.2
     - Bug correction: If platform had Hard Link path, it caused a crash.
