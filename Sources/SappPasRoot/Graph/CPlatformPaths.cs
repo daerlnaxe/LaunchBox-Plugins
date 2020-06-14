@@ -5,8 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CCLaunchBox;
@@ -14,9 +12,9 @@ using SappPasRoot.Core;
 using SappPasRoot.Languages;
 using Unbroken.LaunchBox.Plugins;
 using Unbroken.LaunchBox.Plugins.Data;
-using DxPaths.Windows;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using DxPaths.Windows;
 
 namespace SappPasRoot.Graph
 {
@@ -40,6 +38,7 @@ namespace SappPasRoot.Graph
         // Current folders
         private string _CHardLink;
         private string _CRelatLink;
+
         // Liens en dur
         private string _NewRoot;
 
@@ -205,10 +204,20 @@ namespace SappPasRoot.Graph
 
             // conversion en dur du lien vers le dossier actuel           
             _CRelatLink = PlatformFolder.Replace($@"\{Platform}", "");
-            _CRelatLink = _CRelatLink.Substring(0, _CRelatLink.LastIndexOf('\\'));
-            _CHardLink = Path.GetFullPath(Path.Combine(AppPath, _CRelatLink));
+            //MessageBox.Show(PlatformFolder);
 
-            _NewRoot = _CHardLink;
+            #region correction de bug: modifs en cas de lien dur
+            // On ne fait cette modif que si l'utilisateur utilise des liens relatifs
+            if (_CRelatLink.Substring(0, 3) == @"..\")
+            {
+                _CRelatLink = _CRelatLink.Substring(0, _CRelatLink.LastIndexOf('\\'));
+                _CHardLink = Path.GetFullPath(Path.Combine(AppPath, _CRelatLink));
+                _NewRoot = _CHardLink;
+            }
+            #endregion modifs en cas de lien dur
+
+
+
 
             this.tboxROldPath.Text = _CRelatLink;
             this.tboxHOldPath.Text = tbMainPath.Text = _CHardLink;
@@ -518,7 +527,7 @@ namespace SappPasRoot.Graph
             Properties.Settings.Default.MusicFolder = this.tbMusic.Text;
             Properties.Settings.Default.VideoFolder = this.tbVideo.Text;
             Properties.Settings.Default.Save();
-                                 
+
             DematrioChka();
 
             if (!DebugMode)
@@ -550,7 +559,7 @@ namespace SappPasRoot.Graph
                 btSimul.Visible = true;
             }
             //MessageBox.Show(Lang.Save_Ok, Lang.Save_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                       
+
         }
 
         /// <summary>
