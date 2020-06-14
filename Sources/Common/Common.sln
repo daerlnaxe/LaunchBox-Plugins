@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{96582B54-5499-4983-B774-798501DBF4B8}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SappPasRoot", "..\SappPasRoot\SappPasRoot.csproj", "{5CA8E348-3AA7-4AB1-848C-AA39E239E654}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanImages", "..\CleanImages\CleanImages.csproj", "{4C17979B-AE6F-4F74-BFC1-E826BD36B04A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCLaunchBox", "..\CCLaunchBox\CCLaunchBox.csproj", "{CF2D4AF7-8A6E-453A-B59B-C3E1A7072C72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4C17979B-AE6F-4F74-BFC1-E826BD36B04A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C17979B-AE6F-4F74-BFC1-E826BD36B04A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C17979B-AE6F-4F74-BFC1-E826BD36B04A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF2D4AF7-8A6E-453A-B59B-C3E1A7072C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF2D4AF7-8A6E-453A-B59B-C3E1A7072C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF2D4AF7-8A6E-453A-B59B-C3E1A7072C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF2D4AF7-8A6E-453A-B59B-C3E1A7072C72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

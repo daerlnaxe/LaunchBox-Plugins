@@ -142,7 +142,7 @@
     <value>Ce dossier n'existe pas</value>
   </data>
   <data name="Plugin_Title" xml:space="preserve">
-    <value>Macro méthode pour changer les dossiers</value>
+    <value>SPR: méthode macro pour changer les dossiers</value>
   </data>
   <data name="Save_Ok" xml:space="preserve">
     <value>Changements  Sauvegardés !</value>

@@ -11,6 +11,19 @@ namespace SappPasRoot.Core
 {
     public class LBGame: IGame
     {
+
+
+
+
+
+
+
+
+
+
+
+
+        #region old
         //Id utilisée sur les images etc
         public string Id { get; set; }
         public string TestID { get { return Id; } }
@@ -184,7 +197,17 @@ namespace SappPasRoot.Core
 
 
         public string[] SeriesValues { get; }
+        public bool OverrideDefaultStartupScreenSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool UseStartupScreen { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool HideAllNonExclusiveFullscreenWindows { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int StartupLoadDelay { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool HideMouseCursorInGame { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool DisableShutdownScreen { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool AggressiveWindowHiding { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool? Installed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        Image IGame.RatingImage => throw new NotImplementedException();
+        #endregion old
 
         #region fonctions
         public IAdditionalApplication AddNewAdditionalApplication()

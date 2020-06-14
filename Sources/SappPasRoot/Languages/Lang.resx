@@ -142,7 +142,7 @@
     <value>This folder does not exist</value>
   </data>
   <data name="Plugin_Title" xml:space="preserve">
-    <value>Macro way to change paths</value>
+    <value>SPR: Macro way to change paths</value>
   </data>
   <data name="Save_Ok" xml:space="preserve">
     <value>Changes Saved !</value>

@@ -51,8 +51,6 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPas
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\SappPasRoot.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\SappPasRoot.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\fr\SappPasRoot.resources.dll
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\DxPaths.dll
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\Unbroken.LaunchBox.Plugins.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\CCLaunchBox.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\DxPaths.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\fr\SappPasRoot.resources.dll
@@ -65,3 +63,5 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPas
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\CCLaunchBox.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.Graph.CGamesPaths.fr.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Debug\SappPasRoot.csprojAssemblyReference.cache
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\System.Drawing.Common.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Debug\SappPasRoot\Unbroken.LaunchBox.Plugins.dll

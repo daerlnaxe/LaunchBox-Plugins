@@ -19,7 +19,7 @@ namespace CleanImages.Languages {
     // à l'aide d'un outil, tel que ResGen ou Visual Studio.
     // Pour ajouter ou supprimer un membre, modifiez votre fichier .ResX, puis réexécutez ResGen
     // avec l'option /str ou régénérez votre projet VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Lang {
@@ -90,7 +90,7 @@ namespace CleanImages.Languages {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Would you want to clean images relatives to this games ? It remove duplicates files,  but ask you before to do it..
         /// </summary>
-        internal static string Launch_Questions {
+        internal static string LaunchM_Question {
             get {
                 return ResourceManager.GetString("LaunchM_Question", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace CleanImages.Languages {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Would you want to clean images relatives to this game ? It remove duplicates files,  but ask you before to do it..
         /// </summary>
-        internal static string Launch_Question {
+        internal static string LaunchO_Question {
             get {
                 return ResourceManager.GetString("LaunchO_Question", resourceCulture);
             }
