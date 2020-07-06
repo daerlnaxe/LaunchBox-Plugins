@@ -13,16 +13,6 @@ namespace SappPasRoot.Core
     {
 
 
-
-
-
-
-
-
-
-
-
-
         #region old
         //Id utilisée sur les images etc
         public string Id { get; set; }
@@ -209,6 +199,21 @@ namespace SappPasRoot.Core
         Image IGame.RatingImage => throw new NotImplementedException();
         #endregion old
 
+
+        #region New
+        public string GetVideoPath(string videoType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetNextVideoFilePath(string videoType, string extension)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+
+
         #region fonctions
         public IAdditionalApplication AddNewAdditionalApplication()
         {
@@ -334,9 +339,12 @@ namespace SappPasRoot.Core
         {
             throw new NotImplementedException();
         }
+
+
         #endregion
 
 
+        //ell
 
     }
 }
