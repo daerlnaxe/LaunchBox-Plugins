@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CCLaunchBox, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CCLaunchBox\bin\Release\CCLaunchBox.dll</HintPath>
+    </Reference>
     <Reference Include="DxPaths">
       <HintPath>..\..\..\..\..\Clouds\GDrive - Dx\Programmation\CSharp\DxPaths\bin\Release\DxPaths.dll</HintPath>
     </Reference>
@@ -134,12 +138,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CCLaunchBox\CCLaunchBox.csproj">
-      <Project>{cf2d4af7-8a6e-453a-b59b-c3e1a7072c72}</Project>
-      <Name>CCLaunchBox</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
