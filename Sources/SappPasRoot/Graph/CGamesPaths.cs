@@ -74,6 +74,11 @@ namespace SappPasRoot.Graph
             //listView1.Items.Clear();
         }
 
+        /// <summary>
+        /// Event window launched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CGamesPaths_Load(object sender, EventArgs e)
         {
             GrabMyShovel();
@@ -142,7 +147,7 @@ namespace SappPasRoot.Graph
         #endregion
 
         /// <summary>
-        /// 
+        /// Called when windows is launched
         /// </summary>
         private void GrabMyShovel()
         {
@@ -150,7 +155,6 @@ namespace SappPasRoot.Graph
             Debug.WriteLine($"[CGamePaths] [GrabMyShovel] Initialisation");
 
             PlatformName = _PlatformObject.Name;
-
 
             // Construction des informations
             FillInformation();
@@ -164,7 +168,6 @@ namespace SappPasRoot.Graph
                 //boxLog.Text += $@"{ob.MediaType}: {ob.FolderPath}" + Environment.NewLine;
                 dicSystemPaths.Add(ob.MediaType, ob.FolderPath);
             }
-
 
             // Assignation du dernier chemin visité
             if (string.IsNullOrEmpty(Properties.Settings.Default.LastKPath))
@@ -181,10 +184,23 @@ namespace SappPasRoot.Graph
         /// </summary>
         private async void GetGames()
         {
-
+            
             // Récupération des jeux avec tri        
             _IPGames = _PlatformObject.GetAllGames(cbHidden.Checked, true)//(false, false)
                                                           .OrderBy(x => x.Title).ToArray();
+
+            #region test
+            foreach (var huitre in _IPGames)
+            {
+
+                IAdditionalApplication[] additionnals = huitre.GetAllAdditionalApplications();
+                foreach(var app in additionnals)
+                {
+                    boxLog.Text += $"testing:{app.ApplicationPath}" + Environment.NewLine;
+                }
+            }
+            #endregion test
+
             // Conversion to MvGame
             _AmVGames = MvGame.Convert(_IPGames, AppPath);
 

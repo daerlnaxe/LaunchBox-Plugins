@@ -15,6 +15,11 @@ using Unbroken.LaunchBox.Plugins.Data;
 
 namespace SappPasRoot.Graph
 {
+
+    /* 
+     * IHM
+     * Used to show list of platforms, you can choose to launch modification for platform or games for the platform
+     */
     public partial class List_Platform : Form
     {
         // LaunchBox refuse two platforms with same name (to watching)
@@ -35,6 +40,9 @@ namespace SappPasRoot.Graph
             this.Close();
         }
 
+        /// <summary>
+        /// List Platforms, create a item for each
+        /// </summary>
         private void ListPlatform()
         {
             IPlatform[] platforms = PluginHelper.DataManager.GetAllPlatforms();
@@ -55,6 +63,7 @@ namespace SappPasRoot.Graph
 
         /// <summary>
         /// Double clic sur la liste de plateformes
+        /// Double clic event on platform list
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -66,6 +75,7 @@ namespace SappPasRoot.Graph
 
         /// <summary>
         /// Clic sur l'élement du menu contextuel
+        /// Clic on contextual menu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -75,7 +85,8 @@ namespace SappPasRoot.Graph
         }
 
         /// <summary>
-        /// Lanceur
+        /// Lanceur pour les modifications des plateformes
+        /// Launcher for platforms modifications
         /// </summary>
         private void Change_Platform_Paths()
         {
@@ -94,6 +105,7 @@ namespace SappPasRoot.Graph
 
         /// <summary>
         /// Menu Contextuel
+        /// Contextual Menu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -113,12 +125,22 @@ namespace SappPasRoot.Graph
             Change_Platform_Games_Paths(platSel);
         }
 
+        #region Relative to modifications on Game Paths
+        /// <summary>
+        /// Event when you choose to modify game paths
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cGamesPaths_Click(object sender, EventArgs e)
         {
             string platSel = lvPlatforms.SelectedItems[0].Text;
             Change_Platform_Games_Paths(platSel);
         }
 
+        /// <summary>
+        /// Function called when you want to modify game paths of a platform
+        /// </summary>
+        /// <param name="platSel"></param>
         private void Change_Platform_Games_Paths(string platSel)
         {
             Debug.WriteLine($"Change Platform Games Paths - Selected Platform: {platSel}");
@@ -126,7 +148,8 @@ namespace SappPasRoot.Graph
             tcpj.Initialization(dicPlatforms[platSel]);
             tcpj.ShowDialog();
         }
-
+        
+        #endregion
 
     }
 }
