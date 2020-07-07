@@ -58,6 +58,8 @@
             this.flpGames = new System.Windows.Forms.FlowLayoutPanel();
             this.panelTop = new System.Windows.Forms.TableLayoutPanel();
             this.boxLog = new System.Windows.Forms.RichTextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbAddAppPaths = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tlpInfos.SuspendLayout();
@@ -67,6 +69,7 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panelTop.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel2
@@ -76,6 +79,7 @@
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox1, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupScan, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.groupBox3, 2, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             // 
             // groupBox2
@@ -263,6 +267,19 @@
             resources.ApplyResources(this.boxLog, "boxLog");
             this.boxLog.Name = "boxLog";
             // 
+            // groupBox3
+            // 
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.cbAddAppPaths);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
+            // 
+            // cbAddAppPaths
+            // 
+            resources.ApplyResources(this.cbAddAppPaths, "cbAddAppPaths");
+            this.cbAddAppPaths.Name = "cbAddAppPaths";
+            this.cbAddAppPaths.UseVisualStyleBackColor = true;
+            // 
             // CGamesPaths
             // 
             resources.ApplyResources(this, "$this");
@@ -288,6 +305,8 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panelTop.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,5 +341,7 @@
         private System.Windows.Forms.FlowLayoutPanel flpGames;
         private System.Windows.Forms.TableLayoutPanel panelTop;
         private System.Windows.Forms.RichTextBox boxLog;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox cbAddAppPaths;
     }
 }

@@ -55,7 +55,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unbroken.LaunchBox.Plugins">
+    <Reference Include="Unbroken.LaunchBox.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=558191e84f56affc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>G:\Frontend\LaunchBox - Test\Metadata\Unbroken.LaunchBox.Plugins.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -64,6 +65,7 @@
     <Compile Include="Core\MvGame.cs" />
     <Compile Include="Core\PathsCollec.cs" />
     <Compile Include="Core\Params.cs" />
+    <Compile Include="EnumPathType.cs" />
     <Compile Include="Graph\Analyse.cs" />
     <Compile Include="Core\MvFolder.cs" />
     <Compile Include="Graph\CGamesPaths.cs">

@@ -20,10 +20,26 @@ namespace SappPasRoot.Core
         public string Title { get; set; }
         public bool Hide { get; set; }
         public bool Broken { get; }
+
+        /// <summary>
+        /// Path for the application
+        /// </summary>
         public PathsCollec ApplicationPath { get; set; }
+
+        /// <summary>
+        /// Manual Path
+        /// </summary>
         public PathsCollec ManualPath { get; set; }
         public PathsCollec MusicPath { get; set; }
         public PathsCollec VideoPath { get; set; }
+
+        #region 2020 List for manage mixed roms
+        /// <summary>
+        /// Additionnals roms paths to manage mixed roms mode
+        /// </summary>
+        public HashSet<PathsCollec> AddiRomPaths = new HashSet<PathsCollec>();
+        #endregion
+
 
         /// <summary>
         /// ..??
@@ -67,24 +83,41 @@ namespace SappPasRoot.Core
             LaunchBoxDbId = srcGame.LaunchBoxDbId;
 
             #region Présent dans platform.xml
-            ApplicationPath = new PathsCollec("ApplicationPath", srcGame.ApplicationPath, launchBoxRoot);
-            ManualPath = new PathsCollec("ManualPath", srcGame.ManualPath, launchBoxRoot);
-            MusicPath = new PathsCollec("MusicPath", srcGame.MusicPath, launchBoxRoot);
-            VideoPath = new PathsCollec("VideoPath", srcGame.VideoPath, launchBoxRoot);
+            ApplicationPath = new PathsCollec(EnumPathType.ApplicationPath, srcGame.ApplicationPath, launchBoxRoot);
+            ManualPath = new PathsCollec(EnumPathType.ManualPath, srcGame.ManualPath, launchBoxRoot);
+            MusicPath = new PathsCollec(EnumPathType.MusicPath, srcGame.MusicPath, launchBoxRoot);
+            VideoPath = new PathsCollec(EnumPathType.VideoPath, srcGame.VideoPath, launchBoxRoot);
             #endregion
 
 
+
             #region images
-            ScreenshotImagePath = new PathsCollec("ScreenshotImagePath", srcGame.ScreenshotImagePath, launchBoxRoot);
-            FrontImagePath = new PathsCollec("FrontImagePath", srcGame.FrontImagePath, launchBoxRoot);
-            MarqueeImagePath = new PathsCollec("MarqueeImagePath", srcGame.MarqueeImagePath, launchBoxRoot);
-            BackImagePath = new PathsCollec("BackImagePath", srcGame.BackImagePath, launchBoxRoot);
-            Box3DImagePath = new PathsCollec("Box3DImagePath", srcGame.Box3DImagePath, launchBoxRoot);
-            BackgroundImagePath = new PathsCollec("BackgroundImagePath", srcGame.BackgroundImagePath, launchBoxRoot);
-            Cart3DImagePath = new PathsCollec("Cart3DImagePath", srcGame.Cart3DImagePath, launchBoxRoot);
-            CartFrontImagePath = new PathsCollec("CartFrontImagePath", srcGame.CartFrontImagePath, launchBoxRoot);
-            CartBackImagePath = new PathsCollec("CartBackImagePath", srcGame.CartBackImagePath, launchBoxRoot);
-            ClearLogoImagePath = new PathsCollec("ClearLogoImagePath", srcGame.ClearLogoImagePath, launchBoxRoot);
+            ScreenshotImagePath = new PathsCollec(EnumPathType.ScreenshotImagePath, srcGame.ScreenshotImagePath, launchBoxRoot);
+            FrontImagePath = new PathsCollec(EnumPathType.FrontImagePath, srcGame.FrontImagePath, launchBoxRoot);
+            MarqueeImagePath = new PathsCollec(EnumPathType.MarqueeImagePath, srcGame.MarqueeImagePath, launchBoxRoot);
+            BackImagePath = new PathsCollec(EnumPathType.BackImagePath, srcGame.BackImagePath, launchBoxRoot);
+            Box3DImagePath = new PathsCollec(EnumPathType.Box3DImagePath, srcGame.Box3DImagePath, launchBoxRoot);
+            BackgroundImagePath = new PathsCollec(EnumPathType.BackgroundImagePath, srcGame.BackgroundImagePath, launchBoxRoot);
+            Cart3DImagePath = new PathsCollec(EnumPathType.Cart3DImagePath, srcGame.Cart3DImagePath, launchBoxRoot);
+            CartFrontImagePath = new PathsCollec(EnumPathType.CartFrontImagePath, srcGame.CartFrontImagePath, launchBoxRoot);
+            CartBackImagePath = new PathsCollec(EnumPathType.CartBackImagePath, srcGame.CartBackImagePath, launchBoxRoot);
+            ClearLogoImagePath = new PathsCollec(EnumPathType.ClearLogoImagePath, srcGame.ClearLogoImagePath, launchBoxRoot);
+            #endregion
+
+            #region  test pour les Additionnals apps
+            // 2020 Additionnal to manage also "roms mixed"
+            foreach (var addiApp in srcGame.GetAllAdditionalApplications())
+            {
+                /* Fitre sur les ids, si l'application a le même id que le jeu on conserve pour
+                 * changer les paths. Choix pour le moment, pour ne garder que les jeux, en attendant de
+                 * voir ce que ça donne au niveau de l'emploi des applications additionnelles dans Launchbox
+                */
+                if (addiApp.GameId != Id)
+                    continue;
+
+                AddiRomPaths.Add(new PathsCollec(EnumPathType.AdditionnalRom,  addiApp.ApplicationPath, launchBoxRoot));
+
+            }
             #endregion
 
         }
@@ -106,6 +139,10 @@ namespace SappPasRoot.Core
             return retMvG;
         }
 
+        ///<summary>
+        /// Enumerate Paths
+        /// Enumère les chemins
+        ///</summary>         
         /// <remarks>bug possible si mise à jour des paths nécessaires</remarks>
         public IEnumerable<PathsCollec> EnumGetPaths
         {

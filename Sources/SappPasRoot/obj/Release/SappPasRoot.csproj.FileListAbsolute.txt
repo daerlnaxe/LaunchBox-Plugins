@@ -26,7 +26,6 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\SappP
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\fr\SappPasRoot.resources.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\CCLaunchBox.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\DxPaths.dll
-E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\Unbroken.LaunchBox.Plugins.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\CCLaunchBox.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\DxPaths.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.Graph.CGamesPaths.resources
@@ -44,3 +43,4 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappP
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.csprojAssemblyReference.cache
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.Graph.CGamesPaths.fr.resources
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\Unbroken.LaunchBox.Plugins.dll

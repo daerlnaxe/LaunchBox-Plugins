@@ -17,6 +17,12 @@ using Unbroken.LaunchBox.Plugins.Data;
 
 namespace SappPasRoot.Graph
 {
+    /*
+     * Modification des chemins pour les fichiers
+     * La partie simulation va stocker en mémoire le nouveau chemin d'accès
+     */
+
+
     public partial class CGamesPaths : Form
     {
 
@@ -95,11 +101,11 @@ namespace SappPasRoot.Graph
             boxLog.Text += @"Initialization" + Environment.NewLine;
             Debug.WriteLine("[CGamePaths] Initialization");
 
-            _PlatformObject = platform;            
-            
+            _PlatformObject = platform;
+
             // Application folder
             AppPath = AppDomain.CurrentDomain.BaseDirectory;
-                       
+
             // FakeGenerator();
         }
 
@@ -184,22 +190,11 @@ namespace SappPasRoot.Graph
         /// </summary>
         private async void GetGames()
         {
-            
+
             // Récupération des jeux avec tri        
             _IPGames = _PlatformObject.GetAllGames(cbHidden.Checked, true)//(false, false)
                                                           .OrderBy(x => x.Title).ToArray();
 
-            #region test
-            foreach (var huitre in _IPGames)
-            {
-
-                IAdditionalApplication[] additionnals = huitre.GetAllAdditionalApplications();
-                foreach(var app in additionnals)
-                {
-                    boxLog.Text += $"testing:{app.ApplicationPath}" + Environment.NewLine;
-                }
-            }
-            #endregion test
 
             // Conversion to MvGame
             _AmVGames = MvGame.Convert(_IPGames, AppPath);
@@ -246,7 +241,7 @@ namespace SappPasRoot.Graph
 
             flpGames.Controls.Clear();
 
-            foreach (var mvGame in aMvGames)
+            foreach (MvGame mvGame in aMvGames)
             {
                 /*
                 if (!cbHidden.Checked && mvGame.Hide)
@@ -327,22 +322,22 @@ namespace SappPasRoot.Graph
                 Debug.WriteLine($"[CheckGame] {pathO.Type}: {pathO.Original_RLink}");
                 switch (pathO.Type)
                 {
-                    case "ApplicationPath":
+                    case EnumPathType.ApplicationPath:
                         Debug.WriteLine($"[CheckGame] Dico[Application]: {dicSystemPaths["Application"]}");
                         valide &= pathO.Original_RLink.Contains(dicSystemPaths["Application"]);
                         break;
 
-                    case "ManualPath":
+                    case EnumPathType.ManualPath:
                         Debug.WriteLine($"[CheckGame] Dico[Manual]: {dicSystemPaths["Manual"]}");
                         valide &= pathO.Original_RLink.Contains(dicSystemPaths["Manual"]);
                         break;
 
-                    case "MusicPath":
+                    case EnumPathType.MusicPath:
                         Debug.WriteLine($"[CheckGame] Dico[Music]: {dicSystemPaths["Music"]}");
                         valide &= pathO.Original_RLink.Contains(dicSystemPaths["Music"]);
                         break;
 
-                    case "VideoPath":
+                    case EnumPathType.VideoPath:
                         Debug.WriteLine($"[CheckGame] Dico[Video]: {dicSystemPaths["Video"]}");
                         valide &= pathO.Original_RLink.Contains(dicSystemPaths["Video"]);
                         break;
@@ -376,7 +371,7 @@ namespace SappPasRoot.Graph
                 Debug.WriteLine($"[GeneratePaths] Path {pathO.Type}: {pathO.Original_RLink}");
                 if (string.IsNullOrEmpty(pathO.Original_RLink)) continue;
 
-                DualBandV dbV = StylePaths(pathO.Type, PathsWidth);
+                DualBandV dbV = StylePaths(nameof(pathO.Type), PathsWidth);
                 gameBand.flp1.Controls.Add(dbV);
 
                 dbV.ucPaths21.RelatPath = pathO.Original_RLink;
@@ -563,7 +558,7 @@ namespace SappPasRoot.Graph
             boxLog.Width = flpGames.Width;
             panelTop.Width = flpGames.Width;
         }
-        
+
         private void ResizeTextBox(object sender, EventArgs e)
         {
             GraphFunc.ResizeTextBox(sender);
@@ -644,10 +639,12 @@ namespace SappPasRoot.Graph
 
                 Debug.Indent();
 
-                foreach (var pathO in game.EnumGetPaths)
+                // On examine tous les chemins, et en fonction du type on modifie les destinations
+                foreach (PathsCollec pathO in game.EnumGetPaths)
                 {
                     Debug.Write($@"type: {pathO.Type}: ");
 
+                    // On passe si le chemin d'origine est vide
                     if (string.IsNullOrEmpty(pathO.Original_RLink))
                     {
                         Debug.WriteLine("null");
@@ -657,13 +654,13 @@ namespace SappPasRoot.Graph
                     Debug.WriteLine($@"{pathO.Original_RLink}");
 
                     // modes
-                    string fichier = "";
-                    if (rbForced.Checked)
+                    string fichier = "";    // Récupération du nom du fichier ?
+                    if (rbForced.Checked)       // mode forcé
                     {
                         int pos = pathO.Original_RLink.LastIndexOf('\\');
                         fichier = pathO.Original_RLink.Substring(pos + 1); //+1 pour lever le \
                     }
-                    else if (rbKeepSub.Checked)
+                    else if (rbKeepSub.Checked) // Mode conservant les sous-dossiers 
                     {
                         int pos = pathO.Original_RLink.IndexOf($@"\{PlatformName}\");
                         fichier = pathO.Original_RLink.Substring(pos + PlatformName.Length + 2);
@@ -675,20 +672,21 @@ namespace SappPasRoot.Graph
 
                     switch (pathO.Type)
                     {
-                        case "ApplicationPath":
+                        case EnumPathType.ApplicationPath:
                             //  rootPath = _PlatformFolderRL;
                             rootPath = dicSystemPaths["Application"];
+
                             break;
 
-                        case "ManualPath":
+                        case EnumPathType.ManualPath:
                             rootPath = dicSystemPaths["Manual"];
                             break;
 
-                        case "MusicPath":
+                        case EnumPathType.MusicPath:
                             rootPath = dicSystemPaths["Music"];
                             break;
 
-                        case "VideoPath":
+                        case EnumPathType.VideoPath:
                             rootPath = dicSystemPaths["Video"];
                             break;
                         #region
@@ -739,6 +737,38 @@ namespace SappPasRoot.Graph
                     pathO.Destination_RLink = fileDest;
                     pathO.Destination_HLink = Path.GetFullPath(Path.Combine(AppPath, fileDest));
                 }
+
+                #region 2020
+
+                // Si la fonctoin pour modifier aussi les romx mixed n'est pas activée on passe
+                if (cbAddAppPaths.Checked != true)
+                    continue;
+
+                // Modifications sur les chemins des roms mixed
+                foreach (PathsCollec addiAppPath in game.AddiRomPaths)
+                {
+                    // modes
+                    string fichier = "";    // Récupération du nom du fichier ?
+                    if (rbForced.Checked)       // mode forcé
+                    {
+                        int pos = addiAppPath.Original_RLink.LastIndexOf('\\');
+                        fichier = addiAppPath.Original_RLink.Substring(pos + 1); //+1 pour lever le \
+                    }
+                    else if (rbKeepSub.Checked) // Mode conservant les sous-dossiers 
+                    {
+                        int pos = addiAppPath.Original_RLink.IndexOf($@"\{PlatformName}\");
+                        fichier = addiAppPath.Original_RLink.Substring(pos + PlatformName.Length + 2);
+                    }
+
+                    string fileDest = Path.Combine(dicSystemPaths["Application"], fichier);
+                    addiAppPath.Destination_RLink = fileDest;
+                    addiAppPath.Destination_HLink = Path.GetFullPath(Path.Combine(AppPath, fileDest));
+
+                    boxLog.Text += $"2020 : {addiAppPath.Original_RLink} => {addiAppPath.Destination_RLink}" + Environment.NewLine;
+                    boxLog.Text += $"2020 : {addiAppPath.Original_HLink} => {addiAppPath.Destination_HLink}" + Environment.NewLine;
+
+                }
+                #endregion --- 2020
             }
         }
         #endregion
@@ -748,7 +778,7 @@ namespace SappPasRoot.Graph
             this.Close();
         }
 
-        #region Application des changements 
+        #region Application des changements ---------------------------------------------------
 
         /// <summary>
         /// Modification des datas - Datas modification
@@ -760,6 +790,9 @@ namespace SappPasRoot.Graph
             ApplyChanges();
         }
 
+        /// <summary>
+        /// Method called by click on "Apply" button
+        /// </summary>
         private void ApplyChanges()
         {
             boxLog.Text += @"[ApplyChanges] Process start ..." + Environment.NewLine;
@@ -777,6 +810,7 @@ namespace SappPasRoot.Graph
 
                 DematrioChka(game);
             }
+
             Debug.Unindent();
 
             if (!DebugMode)
@@ -785,7 +819,7 @@ namespace SappPasRoot.Graph
                 PluginHelper.DataManager.Save();
                 MessageBox.Show(Lang.Save_Ok, Lang.Save_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            
+
             //FillInformation();
             GenerateTitles(_AmVGames);
             btApply.Visible = false;
@@ -815,24 +849,24 @@ namespace SappPasRoot.Graph
             if (originalGame == null) return;
 
 
-            // Passer tous les folders des mvGames dans IPGames
-            foreach (var collecOPaths in game.EnumGetPaths)
+            // Passer tous les dossiers cibles des mvGames dans IPGames
+            foreach (PathsCollec collecOPaths in game.EnumGetPaths)
             {
                 switch (collecOPaths.Type)
                 {
-                    case "ApplicationPath":
+                    case EnumPathType.ApplicationPath:
                         originalGame.ApplicationPath = collecOPaths.Destination_RLink;
                         break;
 
-                    case "ManualPath":
+                    case EnumPathType.ManualPath:
                         originalGame.ManualPath = collecOPaths.Destination_RLink;
                         break;
 
-                    case "MusicPath":
+                    case EnumPathType.MusicPath:
                         originalGame.MusicPath = collecOPaths.Destination_RLink;
                         break;
 
-                    case "VideoPath":
+                    case EnumPathType.VideoPath:
                         originalGame.VideoPath = collecOPaths.Destination_RLink;
                         break;
 
@@ -842,19 +876,27 @@ namespace SappPasRoot.Graph
                 collecOPaths.Original_HLink = collecOPaths.Destination_HLink;
                 collecOPaths.Destination_HLink = collecOPaths.Destination_RLink = Lang.Waiting;
             }
+
+            #region 2020 Prise en charge des mixed roms
+            foreach(var oMixedRoms in originalGame.GetAllAdditionalApplications())
+            {
+
+            }
+            #endregion
+
             Debug.Unindent();
         }
 
         #endregion
 
-        
+
         private void btRescan_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.ScanHiddenGames = cbHidden.Checked;
             Properties.Settings.Default.Save();
             GetGames();
         }
-        
+
         private void cbHidden_CheckedChanged(object sender, EventArgs e)
         {
 

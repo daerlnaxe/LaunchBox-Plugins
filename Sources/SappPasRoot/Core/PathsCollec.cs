@@ -9,13 +9,16 @@ namespace SappPasRoot.Core
 {
     public class PathsCollec
     {
-        public string Type { get; set; }
+        /// <summary>
+        /// Type de Chemin
+        /// </summary>
+        public EnumPathType Type { get; set; }
         public string Original_RLink { get; set; }
         public string Original_HLink { get; set; }
         public string Destination_RLink { get; set; }
         public string Destination_HLink { get; set; }
 
-        public PathsCollec(string type, string orelatlink, string refPath)
+        public PathsCollec(EnumPathType type, string orelatlink, string refPath)
         {
             Type = type;
             if (string.IsNullOrEmpty(orelatlink)) return;
