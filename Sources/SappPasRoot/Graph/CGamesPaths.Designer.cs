@@ -45,6 +45,8 @@
             this.groupScan = new System.Windows.Forms.GroupBox();
             this.btRescan = new System.Windows.Forms.Button();
             this.cbHidden = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbAddAppPaths = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.titChooseFolder = new System.Windows.Forms.Label();
             this.tbMainPath = new System.Windows.Forms.TextBox();
@@ -58,18 +60,18 @@
             this.flpGames = new System.Windows.Forms.FlowLayoutPanel();
             this.panelTop = new System.Windows.Forms.TableLayoutPanel();
             this.boxLog = new System.Windows.Forms.RichTextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.cbAddAppPaths = new System.Windows.Forms.CheckBox();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tlpInfos.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupScan.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panelTop.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel2
@@ -77,15 +79,12 @@
             resources.ApplyResources(this.tableLayoutPanel2, "tableLayoutPanel2");
             this.panelTop.SetColumnSpan(this.tableLayoutPanel2, 2);
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.groupBox1, 3, 0);
-            this.tableLayoutPanel2.Controls.Add(this.groupScan, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.groupBox3, 2, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             // 
             // groupBox2
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.tlpInfos);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
@@ -153,7 +152,7 @@
             this.rbForced.TabStop = true;
             this.toolTip1.SetToolTip(this.rbForced, resources.GetString("rbForced.ToolTip"));
             this.rbForced.UseVisualStyleBackColor = true;
-            this.rbForced.CheckedChanged += new System.EventHandler(this.CheckedChanged);
+            this.rbForced.CheckedChanged += new System.EventHandler(this.rbFM_CheckedCh);
             // 
             // rbKeepSub
             // 
@@ -162,7 +161,7 @@
             this.rbKeepSub.TabStop = true;
             this.toolTip1.SetToolTip(this.rbKeepSub, resources.GetString("rbKeepSub.ToolTip"));
             this.rbKeepSub.UseVisualStyleBackColor = true;
-            this.rbKeepSub.CheckedChanged += new System.EventHandler(this.CheckedChanged);
+            this.rbKeepSub.CheckedChanged += new System.EventHandler(this.rbKS_Changed);
             // 
             // groupScan
             // 
@@ -184,6 +183,21 @@
             resources.ApplyResources(this.cbHidden, "cbHidden");
             this.cbHidden.Name = "cbHidden";
             this.cbHidden.UseVisualStyleBackColor = true;
+            this.cbHidden.CheckedChanged += new System.EventHandler(this.cbHidden_CheckedChanged);
+            // 
+            // groupBox3
+            // 
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.cbAddAppPaths);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
+            // 
+            // cbAddAppPaths
+            // 
+            resources.ApplyResources(this.cbAddAppPaths, "cbAddAppPaths");
+            this.cbAddAppPaths.Name = "cbAddAppPaths";
+            this.cbAddAppPaths.UseVisualStyleBackColor = true;
+            this.cbAddAppPaths.CheckedChanged += new System.EventHandler(this.cbAddAppPaths_CheckedChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -255,10 +269,11 @@
             // panelTop
             // 
             resources.ApplyResources(this.panelTop, "panelTop");
-            this.panelTop.Controls.Add(this.boxLog, 0, 3);
+            this.panelTop.Controls.Add(this.boxLog, 0, 4);
             this.panelTop.Controls.Add(this.tableLayoutPanel2, 0, 0);
-            this.panelTop.Controls.Add(this.tableLayoutPanel1, 0, 1);
-            this.panelTop.Controls.Add(this.flpGames, 0, 2);
+            this.panelTop.Controls.Add(this.tableLayoutPanel1, 0, 2);
+            this.panelTop.Controls.Add(this.flpGames, 0, 3);
+            this.panelTop.Controls.Add(this.flowLayoutPanel2, 0, 1);
             this.panelTop.Name = "panelTop";
             // 
             // boxLog
@@ -267,18 +282,13 @@
             resources.ApplyResources(this.boxLog, "boxLog");
             this.boxLog.Name = "boxLog";
             // 
-            // groupBox3
+            // flowLayoutPanel2
             // 
-            resources.ApplyResources(this.groupBox3, "groupBox3");
-            this.groupBox3.Controls.Add(this.cbAddAppPaths);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.TabStop = false;
-            // 
-            // cbAddAppPaths
-            // 
-            resources.ApplyResources(this.cbAddAppPaths, "cbAddAppPaths");
-            this.cbAddAppPaths.Name = "cbAddAppPaths";
-            this.cbAddAppPaths.UseVisualStyleBackColor = true;
+            this.flowLayoutPanel2.Controls.Add(this.groupScan);
+            this.flowLayoutPanel2.Controls.Add(this.groupBox3);
+            this.flowLayoutPanel2.Controls.Add(this.groupBox1);
+            resources.ApplyResources(this.flowLayoutPanel2, "flowLayoutPanel2");
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             // 
             // CGamesPaths
             // 
@@ -290,7 +300,6 @@
             this.Load += new System.EventHandler(this.CGamesPaths_Load);
             this.Shown += new System.EventHandler(this.CGamesPaths_Shown);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tlpInfos.ResumeLayout(false);
@@ -299,14 +308,15 @@
             this.groupBox1.PerformLayout();
             this.groupScan.ResumeLayout(false);
             this.groupScan.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panelTop.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.flowLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -343,5 +353,6 @@
         private System.Windows.Forms.RichTextBox boxLog;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox cbAddAppPaths;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
     }
 }

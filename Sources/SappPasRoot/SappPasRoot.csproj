@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AAppPath.cs" />
+    <Compile Include="Core\BasePaths.cs" />
     <Compile Include="Core\LBGame.cs" />
     <Compile Include="Core\MvGame.cs" />
     <Compile Include="Core\PathsCollec.cs" />

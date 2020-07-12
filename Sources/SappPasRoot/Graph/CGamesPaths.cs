@@ -21,8 +21,6 @@ namespace SappPasRoot.Graph
      * Modification des chemins pour les fichiers
      * La partie simulation va stocker en mémoire le nouveau chemin d'accès
      */
-
-
     public partial class CGamesPaths : Form
     {
 
@@ -30,7 +28,7 @@ namespace SappPasRoot.Graph
         ///  Dossier de l'application - Utile au debugmode qui peut forcer du coup
         /// </summary>
         private string AppPath;
-        private bool DebugMode;
+        private bool DebugMode=false;
 
         // Platform
         public string PlatformName { get; set; }
@@ -152,6 +150,7 @@ namespace SappPasRoot.Graph
         }
         #endregion
 
+
         /// <summary>
         /// Called when windows is launched
         /// </summary>
@@ -228,7 +227,8 @@ namespace SappPasRoot.Graph
             this.tboxHOldPath.Text = Path.GetFullPath(Path.Combine(AppPath, mahou));
         }
 
-        #region Title
+
+        #region ---------- Title
         /// <summary>
         /// Création des bandeaux de titre
         /// </summary>
@@ -271,7 +271,6 @@ namespace SappPasRoot.Graph
                 flpGames.Refresh();
                 //lBandeaux.Add(bdTmp);
             }
-
 
             StyleMainFLP(ContRolledWidth);
             SetMainWindow();
@@ -350,6 +349,8 @@ namespace SappPasRoot.Graph
         }
         #endregion
 
+
+
         #region Graphismes Paths
         /// <summary>
         /// Genère les bandeaux de paths
@@ -362,7 +363,6 @@ namespace SappPasRoot.Graph
             boxLog.Text += $"Creation of the banner for { game.Title}" + Environment.NewLine;
 
             //int largeurBandeau = AnalyseVPrinciple(game.GetPaths);
-
 
             //largeurBandeau = 850;
 
@@ -544,10 +544,9 @@ namespace SappPasRoot.Graph
 
         private void SetMainWindow()
         {
-
             boxLog.Text += @"Adaptation of window " + Environment.NewLine;
             int largr = flpGames.Width + 40;
-            int hautr = flpGames.Height + boxLog.Height + tlpInfos.Height + 200;
+            int hautr = flpGames.Height + boxLog.Height + tlpInfos.Height + 300; // 200 avant
 
             // Mainwindow size + Block according to primary screen
             largr = Screen.PrimaryScreen.Bounds.Width > largr ? largr : Screen.PrimaryScreen.Bounds.Width;
@@ -564,16 +563,6 @@ namespace SappPasRoot.Graph
             GraphFunc.ResizeTextBox(sender);
         }
 
-
-        private void CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton cb = (RadioButton)sender;
-            if (cb.Checked)
-            {
-                btApply.Visible = false;
-                btSimul.Visible = true;
-            }
-        }
 
         #endregion
 
@@ -675,7 +664,6 @@ namespace SappPasRoot.Graph
                         case EnumPathType.ApplicationPath:
                             //  rootPath = _PlatformFolderRL;
                             rootPath = dicSystemPaths["Application"];
-
                             break;
 
                         case EnumPathType.ManualPath:
@@ -740,13 +728,19 @@ namespace SappPasRoot.Graph
 
                 #region 2020
 
-                // Si la fonctoin pour modifier aussi les romx mixed n'est pas activée on passe
-                if (cbAddAppPaths.Checked != true)
+                // Si la fonction pour modifier aussi les romx mixed n'est pas activée on passe
+                if (cbAddAppPaths.Checked != true || game.AddiRomPaths.Count == 0)
                     continue;
 
+                boxLog.Text += $"2020: Additionnal App Path Managing  -----" + Environment.NewLine;
                 // Modifications sur les chemins des roms mixed
-                foreach (PathsCollec addiAppPath in game.AddiRomPaths)
+                foreach (AAppPath addiAppPath in game.AddiRomPaths)
                 {
+                    // Conversions des / en \
+                    addiAppPath.Original_RLink = addiAppPath.Original_RLink.Replace('/','\\');
+                    addiAppPath.Original_HLink = addiAppPath.Original_HLink.Replace('/','\\');
+
+
                     // modes
                     string fichier = "";    // Récupération du nom du fichier ?
                     if (rbForced.Checked)       // mode forcé
@@ -760,6 +754,7 @@ namespace SappPasRoot.Graph
                         fichier = addiAppPath.Original_RLink.Substring(pos + PlatformName.Length + 2);
                     }
 
+                    boxLog.Text += $"$2020 : {fichier}";
                     string fileDest = Path.Combine(dicSystemPaths["Application"], fichier);
                     addiAppPath.Destination_RLink = fileDest;
                     addiAppPath.Destination_HLink = Path.GetFullPath(Path.Combine(AppPath, fileDest));
@@ -772,6 +767,7 @@ namespace SappPasRoot.Graph
             }
         }
         #endregion
+
 
         private void LaunchBoxMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -827,7 +823,7 @@ namespace SappPasRoot.Graph
         }
 
         /// <summary>
-        /// Envoie les paramètres aux originaux
+        /// Attibue les modifications de la simulation aux originaux
         /// </summary>
         /// <remarks>n'utilise pas la partie graphique</remarks>
         private void DematrioChka(MvGame game)
@@ -872,16 +868,26 @@ namespace SappPasRoot.Graph
 
                 }
 
+                // réinitialisation
                 collecOPaths.Original_RLink = collecOPaths.Destination_RLink;
                 collecOPaths.Original_HLink = collecOPaths.Destination_HLink;
                 collecOPaths.Destination_HLink = collecOPaths.Destination_RLink = Lang.Waiting;
             }
 
             #region 2020 Prise en charge des mixed roms
-            foreach(var oMixedRoms in originalGame.GetAllAdditionalApplications())
-            {
 
-            }
+            // Uniquement si la box est cochée
+            if (cbAddAppPaths.Checked == true)
+                foreach (IAdditionalApplication oMixedRoms in originalGame.GetAllAdditionalApplications())
+                {
+                    // Récupération des informations des chemins pour la mixes rom
+
+                    AAppPath paths = game.AddiRomPaths.FirstOrDefault(x => x.ID == oMixedRoms.Id);
+                    MessageBox.Show($"{paths.ID} {paths.Destination_HLink} - {paths.Destination_RLink}");
+
+                    //
+                    oMixedRoms.ApplicationPath = paths.Destination_RLink;
+                }
             #endregion
 
             Debug.Unindent();
@@ -889,7 +895,11 @@ namespace SappPasRoot.Graph
 
         #endregion
 
-
+        /// <summary>
+        /// Rescan des jeux, reset de la simulation ? Pour le moment non
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btRescan_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.ScanHiddenGames = cbHidden.Checked;
@@ -897,9 +907,65 @@ namespace SappPasRoot.Graph
             GetGames();
         }
 
+
+
+        #region Gestion des changements avant application (reset) ----------------
         private void cbHidden_CheckedChanged(object sender, EventArgs e)
+        {
+            btApply.Visible = false;
+            btSimul.Visible = true;
+        }
+
+        private void cbAddAppPaths_CheckedChanged(object sender, EventArgs e)
+        {
+            btApply.Visible = false;
+            btSimul.Visible = true;
+        }
+
+        private void rbKS_Changed(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            if (rb.Checked)
+            {
+                btApply.Visible = false;
+                btSimul.Visible = true;
+            }
+        }
+
+        private void rbFM_CheckedCh(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            if (rb.Checked)
+            {
+                btApply.Visible = false;
+                btSimul.Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// Remise à zéro de la simulation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RAZ_Simu(RadioButton rb)
         {
 
         }
+
+
+
+        /// <remarks>
+        /// Utilisé par keep sub, forced mode, 
+        /// </remarks>
+        private void CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton cb = (RadioButton)sender;
+
+        }
+
+
+
+
+        #endregion
     }
 }

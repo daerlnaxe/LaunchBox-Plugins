@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Unbroken.LaunchBox.Plugins;
 using Unbroken.LaunchBox.Plugins.Data;
 
@@ -37,7 +38,7 @@ namespace SappPasRoot.Core
         /// <summary>
         /// Additionnals roms paths to manage mixed roms mode
         /// </summary>
-        public HashSet<PathsCollec> AddiRomPaths = new HashSet<PathsCollec>();
+        public HashSet<AAppPath> AddiRomPaths = new HashSet<AAppPath>();
         #endregion
 
 
@@ -73,6 +74,7 @@ namespace SappPasRoot.Core
         public MvGame(IGame srcGame, string launchBoxRoot)
         {
             Debug.WriteLine($"[MvGame] New: '{srcGame.Id}': '{srcGame.Title}'");
+           // MessageBox.Show($"Game: {srcGame.Id}");
 
             Title = srcGame.Title;
 
@@ -104,19 +106,19 @@ namespace SappPasRoot.Core
             ClearLogoImagePath = new PathsCollec(EnumPathType.ClearLogoImagePath, srcGame.ClearLogoImagePath, launchBoxRoot);
             #endregion
 
-            #region  test pour les Additionnals apps
-            // 2020 Additionnal to manage also "roms mixed"
-            foreach (var addiApp in srcGame.GetAllAdditionalApplications())
+            #region  2020 Additionnals apps
+            // 2020 Additionnal to manage "roms mixed"
+            foreach (IAdditionalApplication addiApp in srcGame.GetAllAdditionalApplications())
             {
                 /* Fitre sur les ids, si l'application a le même id que le jeu on conserve pour
                  * changer les paths. Choix pour le moment, pour ne garder que les jeux, en attendant de
                  * voir ce que ça donne au niveau de l'emploi des applications additionnelles dans Launchbox
                 */
-                if (addiApp.GameId != Id)
+                if (addiApp.GameId != srcGame.Id)
                     continue;
 
-                AddiRomPaths.Add(new PathsCollec(EnumPathType.AdditionnalRom,  addiApp.ApplicationPath, launchBoxRoot));
-
+                AddiRomPaths.Add(new AAppPath( addiApp.Id,  addiApp.ApplicationPath, launchBoxRoot));
+               // MessageBox.Show($"{srcGame.Id} subid:{addiApp.Id}: {addiApp.ApplicationPath}");
             }
             #endregion
 
