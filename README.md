@@ -4,6 +4,12 @@ Plugin(s) for LaunchBox
 Informations available on [Wiki Page](https://github.com/daerlnaxe/LaunchBox-Plugins/wiki)
 
 ### Infos:
+- 12/07/2020 2.0.2.0
+    - Adding support for the paths relative to the additionnal applications (mostly for roms)
+    - Some graphics modification to add previous support.
+    - On game window raz simulation in case of checkbox or radiobutton modification.
+    - If i find some time i will perhaps make a version based on wpf/xaml.
+    
 - 06/07/2020 2.0.1.6 to follow Launchbox Update
 - 14/06/2020 SappPasRoot 2.0.1.5
     - Modifications for compatibility with LaunchBox 10.15    
