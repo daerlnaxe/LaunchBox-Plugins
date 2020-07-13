@@ -52,3 +52,5 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanIm
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.dll
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\obj\Debug\CleanImages.csprojAssemblyReference.cache
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\System.Drawing.Common.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\CleanImages\bin\Debug\CleanImages\DxTBoxWPF.dll.config

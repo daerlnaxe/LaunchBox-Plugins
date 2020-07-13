@@ -113,7 +113,8 @@ namespace CleanImages
             Mouse.OverrideCursor = Cursors.Arrow;
             ITrace.WriteLine("On Selected");
 
-            bool? res = DxMBox.ShowDial(Lang.Launch_Question, "Question", DxButtons.YesNo);
+            bool? res = DxMBox.ShowDial(Lang.LaunchO_Question, "Question", DxButtons.YesNo);
+            
             ITrace.WriteLine($"Window Result: {res}");
             try
             {
@@ -142,7 +143,7 @@ namespace CleanImages
                 DxMCollec WCollec = new DxMCollec();
                 WCollec.SetCollection<IGame>(selectedGames);
                 WCollec.SetDisplay("Title");
-                WCollec.Message = Lang.Launch_Questions;
+                WCollec.Message = Lang.LaunchM_Question;
 
                 if (WCollec.ShowDialog() == true)
                 {
