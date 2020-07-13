@@ -883,7 +883,7 @@ namespace SappPasRoot.Graph
                     // Récupération des informations des chemins pour la mixes rom
 
                     AAppPath paths = game.AddiRomPaths.FirstOrDefault(x => x.ID == oMixedRoms.Id);
-                    MessageBox.Show($"{paths.ID} {paths.Destination_HLink} - {paths.Destination_RLink}");
+                    //MessageBox.Show($"{paths.ID} {paths.Destination_HLink} - {paths.Destination_RLink}");
 
                     //
                     oMixedRoms.ApplicationPath = paths.Destination_RLink;

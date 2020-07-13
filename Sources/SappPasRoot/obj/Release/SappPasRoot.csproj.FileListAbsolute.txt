@@ -43,3 +43,4 @@ E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappP
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.pdb
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.Graph.CGamesPaths.fr.resources
 E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\bin\Release\Unbroken.LaunchBox.Plugins.dll
+E:\Programmation\Git-Hub\LaunchBox-Plugins\Sources\SappPasRoot\obj\Release\SappPasRoot.csprojAssemblyReference.cache
