@@ -58,7 +58,7 @@ namespace SappPasRoot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Music")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Musics")]
         public string MusicFolder {
             get {
                 return ((string)(this["MusicFolder"]));
